@@ -31,7 +31,9 @@ contract Campaign is Ownable {
         uint256 _amount, 
         uint256 _startDate, 
         uint256 _endDate) 
-    external {
+    external 
+    onlyOwner
+    {
         require(brandContract.isValidBrand(_idBrand), "Invalid brand");
         require(bytes(_name).length > 0, "Invalid campaign name");
         require(_endDate > _startDate, "Invalid dates");
