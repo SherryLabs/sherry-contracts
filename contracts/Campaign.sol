@@ -8,7 +8,7 @@ contract Campaign is Ownable {
     Brand public brandContract;
     uint256 public idCampaign;
 
-    struct Campaign {
+    struct CampaignStruct {
         uint256 idCampaign;
         uint256 idBrand;
         string name;
@@ -18,7 +18,7 @@ contract Campaign is Ownable {
         uint256 endDate;
     }
 
-    mapping(uint256 => Campaign) public campaigns;
+    mapping(uint256 => CampaignStruct) public campaigns;
 
     constructor(address _brandContract) Ownable(msg.sender) {
         require(_brandContract != address(0), "Invalid brand contract address");
@@ -26,19 +26,17 @@ contract Campaign is Ownable {
     }
 
     function createCampaign(
-        uint256 _idBrand, 
-        string memory _name, 
-        uint256 _amount, 
-        uint256 _startDate, 
-        uint256 _endDate) 
-    external 
-    onlyOwner
-    {
+        uint256 _idBrand,
+        string memory _name,
+        uint256 _amount,
+        uint256 _startDate,
+        uint256 _endDate
+    ) external onlyOwner {
         require(brandContract.isValidBrand(_idBrand), "Invalid brand");
         require(bytes(_name).length > 0, "Invalid campaign name");
         require(_endDate > _startDate, "Invalid dates");
         idCampaign++;
-        Campaign memory campaign = Campaign({
+        CampaignStruct memory campaign = CampaignStruct({
             idCampaign: idCampaign,
             idBrand: _idBrand,
             name: _name,
@@ -51,13 +49,13 @@ contract Campaign is Ownable {
     }
 
     function updateCampaign(
-        uint256 _idCampaign, 
-        string memory _name, 
-        uint256 _amount, 
-        uint256 _startDate, 
-        uint256 _endDate)
-    external { 
-        Campaign storage campaign = campaigns[_idCampaign];
+        uint256 _idCampaign,
+        string memory _name,
+        uint256 _amount,
+        uint256 _startDate,
+        uint256 _endDate
+    ) external {
+        CampaignStruct storage campaign = campaigns[_idCampaign];
         require(campaign.idCampaign != 0, "Campaign not found");
         require(bytes(_name).length > 0, "Invalid campaign name");
         require(_endDate > _startDate, "Invalid dates");
@@ -67,7 +65,35 @@ contract Campaign is Ownable {
         campaign.endDate = _endDate;
     }
 
-    function isValidCampaign(uint256 _idCampaign) external view returns (bool) {
+    function getCampaignById(
+        uint256 _idCampaign
+    )
+        external
+        view
+        returns (
+            uint256,
+            uint256,
+            string memory,
+            uint256,
+            bool,
+            uint256,
+            uint256
+        )
+    {
+        require(isValidCampaign(_idCampaign), "Campaign ID invalid");
+        CampaignStruct memory c = campaigns[_idCampaign];
+        return (
+            c.idCampaign,
+            c.idBrand,
+            c.name,
+            c.amount,
+            c.active,
+            c.startDate,
+            c.endDate
+        );
+    }
+
+    function isValidCampaign(uint256 _idCampaign) public view returns (bool) {
         return campaigns[_idCampaign].idCampaign != 0;
     }
 }
