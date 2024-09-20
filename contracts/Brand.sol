@@ -6,14 +6,14 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 contract Brand is Ownable {
     uint256 public idBrand;
 
-    struct Brand {
+    struct BrandStruct {
         uint256 idBrand;
         address brandOwner;
         string name;
         bool active;
     }
 
-    mapping(uint256 => Brand) public brands;
+    mapping(uint256 => BrandStruct) public brands;
     mapping(uint256 => address) public brandOperators;
 
     constructor() Ownable(msg.sender) {}
@@ -25,10 +25,9 @@ contract Brand is Ownable {
         require(bytes(_name).length > 0, "Invalid brand name");
         require(_brandOwner != address(0), "Invalid brand owner address");
         idBrand++;
-        Brand memory brand = Brand({
+        BrandStruct memory brand = BrandStruct({
             idBrand: idBrand,
             brandOwner: _brandOwner,
-            operators: _brandOwner,
             name: _name,
             active: true
         });
@@ -49,22 +48,22 @@ contract Brand is Ownable {
         );
         require(bytes(_name).length > 0, "Invalid brand name");
         require(_brandOwner != address(0), "Invalid brand owner address");
-        Brand storage brand = brands[_idBrand];
+        BrandStruct storage brand = brands[_idBrand];
         brand.name = _name;
         brand.brandOwner = _brandOwner;
     }
 
     function disableBrand(uint256 _idBrand) external onlyOwner {
-        Brand storage brand = brands[_idBrand];
+        BrandStruct storage brand = brands[_idBrand];
         brand.active = false;
     }
 
     function enableBrand(uint256 _idBrand) external onlyOwner {
-        Brand storage brand = brands[_idBrand];
+        BrandStruct storage brand = brands[_idBrand];
         brand.active = true;
     }
 
-    function getBrand(uint256 _idBrand) external view returns (Brand memory) {
+    function getBrand(uint256 _idBrand) external view returns (BrandStruct memory) {
         return brands[_idBrand];
     }
 
