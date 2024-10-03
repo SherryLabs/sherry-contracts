@@ -63,11 +63,16 @@ contract Brand is Ownable {
         brand.active = true;
     }
 
-    function getBrand(uint256 _idBrand) external view returns (BrandStruct memory) {
-        return brands[_idBrand];
+    function getBrand(uint256 _idBrand) 
+        public 
+        view 
+        returns(uint256, address, string memory, bool) {
+        require(isValidBrand(_idBrand), "Invalid brand");
+        Brand brand = brands[_idBrand];
+        return (brand.idBrand, brand.brandOwner, brand.name, brand.active);
     }
 
-    function isValidBrand(uint256 _idBrand) external view returns (bool) {
+    function isValidBrand(uint256 _idBrand) public view returns (bool) {
         address addressOwner = brands[_idBrand].brandOwner;
         return addressOwner != address(0);
     }
