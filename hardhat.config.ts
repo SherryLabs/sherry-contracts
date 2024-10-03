@@ -4,7 +4,8 @@ import "@nomicfoundation/hardhat-foundry";
 import dotenv from "dotenv";
 dotenv.config();
 
-const AVALANCHE_PRIVATE_KEY = process.env.PRIVATE_KEY || "";
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
+const ALCHEMY_ID = process.env.ALCHEMY_ID || "";
 
 const config: HardhatUserConfig = {
   solidity: "0.8.25",
@@ -13,13 +14,23 @@ const config: HardhatUserConfig = {
     avalancheFuji: { 
       url: "https://api.avax-test.network/ext/bc/C/rpc",
       chainId: 43113,
-      accounts: [`0x${AVALANCHE_PRIVATE_KEY}`]
+      accounts: [`0x${PRIVATE_KEY}`]
     },
     avalancheMainnet: {
       url: "https://api.avax.network/ext/bc/C/rpc",
       chainId: 43114,
-      accounts: [`0x${AVALANCHE_PRIVATE_KEY}`]
+      accounts: [`0x${PRIVATE_KEY}`]
      },
+     base: {
+      url: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      chainId: 8453,
+      accounts: [`0x${PRIVATE_KEY}`]
+     },
+     baseSepolia: {
+      url: `https://base-sepolia.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      chainId: 0,
+      accounts: [`0x${PRIVATE_KEY}`]
+     }
   }
 };
 

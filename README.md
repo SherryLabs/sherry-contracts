@@ -8,11 +8,20 @@ Para desplegar los contratos usando Hardhat Ignition, ejecuta el siguiente coman
 npx hardhat ignition deploy ./ignition/modules/Brand.ts --network avalancheFuji
 ```
 
-## Contratos Desplegados
+## Deployed Contracts
 
 Las addresses de los contratos desplegados en Avalanche Fuji son los siguientes:
+
+### Avalanche Fuji
 
 | Nombre del Contrato    | Dirección                                    |
 |------------------------|----------------------------------------------|
 | BrandModule#Brand      | `0x0914b8a17412F59f7240Fbd8bE753586fceA48a0` |
 | BrandModule#Campaign   | `0x3449afc2fCF3D51DC892658f0c69E47286B078d4` |
+
+### Base Sepolia
+
+| Nombre del Contrato    | Dirección                                    |
+|------------------------|----------------------------------------------|
+| BrandModule#Brand      | `` |
+| BrandModule#Campaign   | `` |
