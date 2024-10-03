@@ -5,7 +5,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Brand} from "./Brand.sol";
 
 contract Campaign is Ownable {
-    Brand public brandContract;
+    Brand public s_brandContract;
     uint256 public idCampaign;
 
     struct CampaignStruct {
@@ -18,11 +18,11 @@ contract Campaign is Ownable {
         uint256 endDate;
     }
 
-    mapping(uint256 => CampaignStruct) public campaigns;
+    mapping(uint256 => CampaignStruct) public s_campaigns;
 
     constructor(address _brandContract) Ownable(msg.sender) {
         require(_brandContract != address(0), "Invalid brand contract address");
-        brandContract = Brand(_brandContract);
+        s_brandContract = Brand(_brandContract);
     }
 
     function createCampaign(
@@ -32,7 +32,7 @@ contract Campaign is Ownable {
         uint256 _startDate,
         uint256 _endDate
     ) external onlyOwner {
-        require(brandContract.isValidBrand(_idBrand), "Invalid brand");
+        require(s_brandContract.isValidBrand(_idBrand), "Invalid brand");
         require(bytes(_name).length > 0, "Invalid campaign name");
         require(_endDate > _startDate, "Invalid dates");
         idCampaign++;
@@ -45,7 +45,7 @@ contract Campaign is Ownable {
             startDate: _startDate,
             endDate: _endDate
         });
-        campaigns[idCampaign] = campaign;
+        s_campaigns[idCampaign] = campaign;
     }
 
     function updateCampaign(
@@ -55,7 +55,7 @@ contract Campaign is Ownable {
         uint256 _startDate,
         uint256 _endDate
     ) external {
-        CampaignStruct storage campaign = campaigns[_idCampaign];
+        CampaignStruct storage campaign = s_campaigns[_idCampaign];
         require(campaign.idCampaign != 0, "Campaign not found");
         require(bytes(_name).length > 0, "Invalid campaign name");
         require(_endDate > _startDate, "Invalid dates");
@@ -81,7 +81,7 @@ contract Campaign is Ownable {
         )
     {
         require(isValidCampaign(_idCampaign), "Campaign ID invalid");
-        CampaignStruct memory c = campaigns[_idCampaign];
+        CampaignStruct memory c = s_campaigns[_idCampaign];
         return (
             c.idCampaign,
             c.idBrand,
@@ -94,6 +94,6 @@ contract Campaign is Ownable {
     }
 
     function isValidCampaign(uint256 _idCampaign) public view returns (bool) {
-        return campaigns[_idCampaign].idCampaign != 0;
+        return s_campaigns[_idCampaign].idCampaign != 0;
     }
 }
