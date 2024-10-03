@@ -1,12 +1,12 @@
 
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.25;
+pragma solidity ^0.8.25;
 
-import {Test} from 
+import "forge-std/Test.sol";
 import "../contracts/Brand.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-contract BrandTest is DSTest {
+contract BrandTest is Test {
     Brand brand;
     address owner = address(this);
     address brandOwner = address(0x123);
@@ -17,9 +17,9 @@ contract BrandTest is DSTest {
 
     function testCreateBrand() public {
         brand.createBrand("TestBrand", brandOwner);
-        (uint256 id, address owner, string memory name, bool active) = brand.getBrand(1);
+        (uint256 id, address _brandOwner, string memory name, bool active) = brand.getBrand(1);
         assertEq(id, 1);
-        assertEq(owner, brandOwner);
+        assertEq(_brandOwner, brandOwner);
         assertEq(name, "TestBrand");
         assertTrue(active);
     }
