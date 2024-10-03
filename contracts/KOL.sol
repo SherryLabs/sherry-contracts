@@ -75,10 +75,11 @@ contract KOL is Ownable {
         s_links[idLink] = link;
     }
 
-    function vote(uint256 _idLink) external {
+    function vote(uint256 _idLink) external returns(bool){
         require(s_links[_idLink].idCampaign != 0, "Link not found");
         require(!s_votesFollowers[_idLink][msg.sender], "Already voted");
         s_votesFollowers[idLink][msg.sender] = true;
+        return true;
         emit Voted(idLink, msg.sender);
     }
 

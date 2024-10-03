@@ -1,27 +1,66 @@
-# Sherry Smart 
+## Foundry
 
-## Instrucciones de Despliegue
+**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
 
-Para desplegar los contratos usando Hardhat Ignition, ejecuta el siguiente comando:
+Foundry consists of:
 
-```sh
-npx hardhat ignition deploy ./ignition/modules/Brand.ts --network avalancheFuji
+-   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
+-   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
+-   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
+-   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+
+## Documentation
+
+https://book.getfoundry.sh/
+
+## Usage
+
+### Build
+
+```shell
+$ forge build
 ```
 
-## Deployed Contracts
+### Test
 
-Las addresses de los contratos desplegados en Avalanche Fuji son los siguientes:
+```shell
+$ forge test
+```
 
-### Avalanche Fuji
+### Format
 
-| Nombre del Contrato    | Dirección                                    |
-|------------------------|----------------------------------------------|
-| BrandModule#Brand      | `0x0914b8a17412F59f7240Fbd8bE753586fceA48a0` |
-| BrandModule#Campaign   | `0x3449afc2fCF3D51DC892658f0c69E47286B078d4` |
+```shell
+$ forge fmt
+```
 
-### Base Sepolia
+### Gas Snapshots
 
-| Nombre del Contrato    | Dirección                                    |
-|------------------------|----------------------------------------------|
-| BrandModule#Brand      | `` |
-| BrandModule#Campaign   | `` |
+```shell
+$ forge snapshot
+```
+
+### Anvil
+
+```shell
+$ anvil
+```
+
+### Deploy
+
+```shell
+$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```
+
+### Cast
+
+```shell
+$ cast <subcommand>
+```
+
+### Help
+
+```shell
+$ forge --help
+$ anvil --help
+$ cast --help
+```
