@@ -68,8 +68,8 @@ contract Brand is Ownable {
         view 
         returns(uint256, address, string memory, bool) {
         require(isValidBrand(_idBrand), "Invalid brand");
-        Brand brand = brands[_idBrand];
-        return (brand.idBrand, brand.brandOwner, brand.name, brand.active);
+        BrandStruct memory b = brands[_idBrand];
+        return (b.idBrand, b.brandOwner, b.name, b.active);
     }
 
     function isValidBrand(uint256 _idBrand) public view returns (bool) {
