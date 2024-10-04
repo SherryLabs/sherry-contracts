@@ -61,6 +61,7 @@ contract BrandTest is Test {
 
     function testFailUpdateBrandUnauthorized() public {
         brand.createBrand("TestBrand", brandOwner);
+        vm.prank(address(0x1234));
         brand.updateBrand("UpdatedBrand", brandOwner, 1);
     }
 }
