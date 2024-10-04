@@ -6,10 +6,10 @@ import { ICampaign } from "./interface/ICampaign.sol";
 import { IKOL } from "./interface/IKOL.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Sherry {
-    Brand public s_brandContract;
-    Campaign public s_campaignContract;
-    KOL public s_kolContract;
+contract Sherry is Ownable {
+    IBrand public i_brandContract;
+    ICampaign public i_campaignContract;
+    IKOL public i_kolContract;
 
     constructor(
         address _brandContract,
@@ -22,9 +22,9 @@ contract Sherry {
             "Invalid campaign contract address"
         );
         require(_kolContract != address(0), "Invalid KOL contract address");
-        s_brandContract = Brand(_brandContract);
-        s_campaignContract = Campaign(_campaignContract);
-        s_kolContract = KOL(_kolContract);
+        i_brandContract = IBrand(_brandContract);
+        i_campaignContract = ICampaign(_campaignContract);
+        i_kolContract = IKOL(_kolContract);
     }
     
 }

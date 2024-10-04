@@ -79,8 +79,8 @@ contract KOL is Ownable {
         require(s_links[_idLink].idCampaign != 0, "Link not found");
         require(!s_votesFollowers[_idLink][msg.sender], "Already voted");
         s_votesFollowers[idLink][msg.sender] = true;
-        return true;
         emit Voted(idLink, msg.sender);
+        return true;
     }
 
     function updateCampaignContract(
