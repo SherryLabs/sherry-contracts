@@ -6,7 +6,7 @@ import {Campaign} from "./Campaign.sol";
 
 contract KOL is Ownable {
     Campaign public s_campaignContract;
-    uint256 public idKOLCampaign;
+    uint256 public idKolCampaign;
 
     struct KOLCampaign {
         address kol;
@@ -15,6 +15,9 @@ contract KOL is Ownable {
 
     mapping(address => bool) public s_kols;
     mapping(uint256 => KOLCampaign) public s_kolCampaign;
+    mapping(address => KOLCampaign[]) public s_campaignsKol;
+
+    event KolCampaignAdded(uint256 indexed idKolCampaign, address indexed kol, uint256 idCampaign);
 
     constructor(address _campaignContract) Ownable(msg.sender) {
         require(_campaignContract != address(0), "Invalid campaign contract address");
@@ -32,8 +35,10 @@ contract KOL is Ownable {
         require(isValidCampaign, "Invalid campaign");
 
         KOLCampaign memory kolCampaign = KOLCampaign({kol: msg.sender, idCampaign: _idCampaign});
-        idKOLCampaign++;
-        s_kolCampaign[idKOLCampaign] = kolCampaign;
+        idKolCampaign++;
+        s_kolCampaign[idKolCampaign] = kolCampaign;
+        s_campaignsKol[msg.sender].push(kolCampaign);
+        emit KolCampaignAdded(idKolCampaign, msg.sender, _idCampaign);
     }
 
     function updateCampaignContract(address _campaignContract) external onlyOwner {
@@ -45,6 +50,11 @@ contract KOL is Ownable {
         require(isValidKolCampaign(_id), "Invalid");
         KOLCampaign memory kc = s_kolCampaign[_id];
         return (kc.kol, kc.idCampaign);
+    }
+
+    function getKolCampaignsByAddress(address _kol) public view returns (KOLCampaign[] memory) {
+        require(s_kols[_kol], "Invalid Kol");
+        return s_campaignsKol[_kol];
     }
 
     function isValidKolCampaign(uint256 _id) public view returns (bool) {
