@@ -42,11 +42,10 @@ contract Sherry is Ownable {
     }
 
     function createLink(uint256 _idKolCampaign, string memory _link) external {
-        KOLCampaign memory _kolCampaign = s_kolCampaigns[_idKolCampaign][msg.sender];
-        require(_kolCampaign.idCampaign != 0, "Campaign not found");
-
+        (address kol, uint256 idCampaign) = i_kolContract.getKOLCampaign(_idKolCampaign);
+        require(idCampaign != 0, "Campaign not found");
         idLink++;
-        Link memory link = Link({kol: msg.sender, idCampaign: _kolCampaign.idCampaign, link: _link});
+        Link memory link = Link({kol: msg.sender, idCampaign: idCampaign, link: _link});
         s_links[idLink] = link;
     }
 
