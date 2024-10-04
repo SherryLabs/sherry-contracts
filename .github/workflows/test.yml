@@ -27,8 +27,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cargo install --path forge --force
-          forge install
           npm install
 
       - name: Show Forge version
