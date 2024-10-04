@@ -23,9 +23,7 @@ contract Brand is Ownable {
         require(_brandOwner != address(0), "Invalid brand owner address");
         idBrand++;
         BrandStruct memory brand = BrandStruct({idBrand: idBrand, brandOwner: _brandOwner, name: _name, active: true});
-
         brands[idBrand] = brand;
-
         brandOperators[idBrand] = _brandOwner;
     }
 
