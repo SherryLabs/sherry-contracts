@@ -15,7 +15,7 @@ contract KOL is Ownable {
 
     mapping(address => bool) public s_kols;
     mapping(uint256 => KOLCampaign) public s_kolCampaign;
-    
+
     constructor(address _campaignContract) Ownable(msg.sender) {
         require(_campaignContract != address(0), "Invalid campaign contract address");
         s_campaignContract = Campaign(_campaignContract);
@@ -26,7 +26,7 @@ contract KOL is Ownable {
         s_kols[_address] = true;
     }
 
-    function addKolToCampaign(uint256 _idCampaign) external  {
+    function addKolToCampaign(uint256 _idCampaign) external {
         require(s_kols[msg.sender], "Invalid KOL");
         bool isValidCampaign = s_campaignContract.isValidCampaign(_idCampaign);
         require(isValidCampaign, "Invalid campaign");
