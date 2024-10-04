@@ -1,5 +1,5 @@
 # Brand
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/484332c803da90ab573ada999b49ba83ba4fca50/src/Brand.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/2fd4840f6f8521f3419b23a60a2607a11251a45b/src/Brand.sol)
 
 **Inherits:**
 Ownable

@@ -14,23 +14,17 @@ contract Sherry is Ownable {
     uint256 public idLink;
 
     struct Link {
+        uint256 idKolCampaign;
         address kol;
         uint256 idCampaign;
-        string link;
+        string url;
     }
-
-    /*
-    struct KOLCampaign {
-        address kol;
-        uint256 idCampaign;
-    }
-    */
 
     mapping(uint256 => Link) public s_links;
     mapping(uint256 => mapping(address => bool)) public s_votesFollowers;
 
     event Voted(uint256 indexed idLink, address indexed voter);
-    event LinkCreated(uint256 idLink, uint256 idKOL, uint256 idCampaign, string link);
+    event LinkCreated(uint256 indexed idLink, address indexed kol, uint256 indexed idCampaign, string url);
 
     constructor(address _brandContract, address _campaignContract, address _kolContract) Ownable(msg.sender) {
         require(_brandContract != address(0), "Invalid brand contract address");
@@ -41,12 +35,14 @@ contract Sherry is Ownable {
         i_kolContract = IKOL(_kolContract);
     }
 
-    function createLink(uint256 _idKolCampaign, string memory _link) external {
+    function createLink(uint256 _idKolCampaign, string memory _url) external {
         (address kol, uint256 idCampaign) = i_kolContract.getKOLCampaign(_idKolCampaign);
+        require(kol == msg.sender, "You can only create links for yourself");
         require(idCampaign != 0, "Campaign not found");
         idLink++;
-        Link memory link = Link({kol: msg.sender, idCampaign: idCampaign, link: _link});
+        Link memory link = Link({idKolCampaign: _idKolCampaign, kol: kol, idCampaign: idCampaign, url: _url});
         s_links[idLink] = link;
+        emit LinkCreated(idLink, kol, idCampaign, _url);
     }
 
     function vote(uint256 _idLink) external returns (bool) {

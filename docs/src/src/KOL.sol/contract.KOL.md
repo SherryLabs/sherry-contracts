@@ -1,5 +1,5 @@
 # KOL
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/484332c803da90ab573ada999b49ba83ba4fca50/src/KOL.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/2fd4840f6f8521f3419b23a60a2607a11251a45b/src/KOL.sol)
 
 **Inherits:**
 Ownable
@@ -13,17 +13,10 @@ Campaign public s_campaignContract;
 ```
 
 
-### idLink
+### idKolCampaign
 
 ```solidity
-uint256 public idLink;
-```
-
-
-### idKOLCampaign
-
-```solidity
-uint256 public idKOLCampaign;
+uint256 public idKolCampaign;
 ```
 
 
@@ -34,24 +27,17 @@ mapping(address => bool) public s_kols;
 ```
 
 
-### s_links
+### s_kolCampaign
 
 ```solidity
-mapping(uint256 => Link) public s_links;
+mapping(uint256 => KOLCampaign) public s_kolCampaign;
 ```
 
 
-### s_kolCampaigns
+### s_campaignsKol
 
 ```solidity
-mapping(uint256 => mapping(address => KOLCampaign)) public s_kolCampaigns;
-```
-
-
-### s_votesFollowers
-
-```solidity
-mapping(uint256 => mapping(address => bool)) public s_votesFollowers;
+mapping(address => KOLCampaign[]) public s_campaignsKol;
 ```
 
 
@@ -74,21 +60,7 @@ function addKol(address _address) external onlyOwner;
 
 
 ```solidity
-function addKolToCampaign(uint256 _idCampaign) external onlyOwner;
-```
-
-### createLink
-
-
-```solidity
-function createLink(uint256 _idKolCampaign, string memory _link) external;
-```
-
-### vote
-
-
-```solidity
-function vote(uint256 _idLink) external returns (bool);
+function addKolToCampaign(uint256 _idCampaign) external;
 ```
 
 ### updateCampaignContract
@@ -98,17 +70,32 @@ function vote(uint256 _idLink) external returns (bool);
 function updateCampaignContract(address _campaignContract) external onlyOwner;
 ```
 
-## Events
-### Voted
+### getKOLCampaign
+
 
 ```solidity
-event Voted(uint256 indexed idLink, address indexed voter);
+function getKOLCampaign(uint256 _id) public view returns (address, uint256);
 ```
 
-### LinkCreated
+### getKolCampaignsByAddress
+
 
 ```solidity
-event LinkCreated(uint256 idLink, uint256 idKOL, uint256 idCampaign, string link);
+function getKolCampaignsByAddress(address _kol) public view returns (KOLCampaign[] memory);
+```
+
+### isValidKolCampaign
+
+
+```solidity
+function isValidKolCampaign(uint256 _id) public view returns (bool);
+```
+
+## Events
+### KolCampaignAdded
+
+```solidity
+event KolCampaignAdded(uint256 indexed idKolCampaign, address indexed kol, uint256 idCampaign);
 ```
 
 ## Structs
@@ -118,16 +105,6 @@ event LinkCreated(uint256 idLink, uint256 idKOL, uint256 idCampaign, string link
 struct KOLCampaign {
     address kol;
     uint256 idCampaign;
-}
-```
-
-### Link
-
-```solidity
-struct Link {
-    address kol;
-    uint256 idCampaign;
-    string link;
 }
 ```
 
