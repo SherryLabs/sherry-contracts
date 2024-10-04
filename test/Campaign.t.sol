@@ -16,13 +16,29 @@ contract CampaignTest is Test {
 
     function testCreateCampaign() public {
         brand.createBrand("First Name", address(this));
-        (uint256 id, address _brandOwner, string memory name, bool active) = brand.getBrand(1);
+        (uint256 id, , , ) = brand.getBrand(1);
         assertEq(id, 1);
-        uint256 initialTimestamp = 1000;
-        vm.warp(initialTimestamp);
-        uint256 startDate = block.timestamp - 100;
+        vm.warp(0);
+        uint256 startDate = block.timestamp;
         uint256 endDate = block.timestamp + 1 days;
-        
-        //campaign.createCampaign(1, "First Campaign", 100, startDate, endDate);
+        campaign.createCampaign(1, "First Campaign", 100, startDate, endDate);
+        uint256 idCampaign = campaign.idCampaign();
+        assertEq(idCampaign, 1);
     }
+
+    function testCreateCampaignInvalidBrand() external {
+        uint256 startDate = block.timestamp;
+        uint256 endDate = block.timestamp + 1 days;
+        vm.expectRevert("Invalid brand");
+        campaign.createCampaign(1, "First Campaign", 100, startDate, endDate);
+        brand.createBrand("First Name", address(this));
+        vm.expectRevert("Invalid campaign name");
+        campaign.createCampaign(1, "", 100, startDate, endDate);
+        vm.expectRevert("Invalid dates");
+        campaign.createCampaign(1, "First Campaign", 100, endDate, startDate);
+        campaign.createCampaign(1, "First Campaign", 100, startDate, endDate);
+        assertEq(campaign.idCampaign(), 1);
+    }
+
+
 }

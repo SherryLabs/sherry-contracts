@@ -2,10 +2,10 @@
 pragma solidity ^0.8.25;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {Brand} from "./Brand.sol";
+import {IBrand} from "./interface/IBrand.sol";
 
 contract Campaign is Ownable {
-    Brand public s_brandContract;
+    IBrand public s_brandContract;
     uint256 public idCampaign;
 
     struct CampaignStruct {
@@ -22,7 +22,7 @@ contract Campaign is Ownable {
 
     constructor(address _brandContract) Ownable(msg.sender) {
         require(_brandContract != address(0), "Invalid brand contract address");
-        s_brandContract = Brand(_brandContract);
+        s_brandContract = IBrand(_brandContract);
     }
 
     function createCampaign(
