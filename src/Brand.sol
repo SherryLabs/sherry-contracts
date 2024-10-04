@@ -18,34 +18,22 @@ contract Brand is Ownable {
 
     constructor() Ownable(msg.sender) {}
 
-    function createBrand(
-        string memory _name,
-        address _brandOwner
-    ) external onlyOwner {
+    function createBrand(string memory _name, address _brandOwner) external onlyOwner {
         require(bytes(_name).length > 0, "Invalid brand name");
         require(_brandOwner != address(0), "Invalid brand owner address");
         idBrand++;
-        BrandStruct memory brand = BrandStruct({
-            idBrand: idBrand,
-            brandOwner: _brandOwner,
-            name: _name,
-            active: true
-        });
+        BrandStruct memory brand = BrandStruct({idBrand: idBrand, brandOwner: _brandOwner, name: _name, active: true});
 
         brands[idBrand] = brand;
 
         brandOperators[idBrand] = _brandOwner;
     }
 
-    function updateBrand(
-        string memory _name,
-        address _brandOwner,
-        uint256 _idBrand
-    ) external isOperatorOrOwner(_idBrand) {
-        require(
-            msg.sender == owner() || brands[_idBrand].brandOwner == msg.sender,
-            "Unauthorized"
-        );
+    function updateBrand(string memory _name, address _brandOwner, uint256 _idBrand)
+        external
+        isOperatorOrOwner(_idBrand)
+    {
+        require(msg.sender == owner() || brands[_idBrand].brandOwner == msg.sender, "Unauthorized");
         require(bytes(_name).length > 0, "Invalid brand name");
         require(_brandOwner != address(0), "Invalid brand owner address");
         BrandStruct storage brand = brands[_idBrand];
@@ -63,10 +51,7 @@ contract Brand is Ownable {
         brand.active = true;
     }
 
-    function getBrand(uint256 _idBrand) 
-        public 
-        view 
-        returns(uint256, address, string memory, bool) {
+    function getBrand(uint256 _idBrand) public view returns (uint256, address, string memory, bool) {
         require(isValidBrand(_idBrand), "Invalid brand");
         BrandStruct memory b = brands[_idBrand];
         return (b.idBrand, b.brandOwner, b.name, b.active);
@@ -78,10 +63,7 @@ contract Brand is Ownable {
     }
 
     modifier isOperatorOrOwner(uint256 _idBrand) {
-        require(
-            msg.sender == owner() || brandOperators[_idBrand] == msg.sender,
-            "Unauthorized"
-        );
+        require(msg.sender == owner() || brandOperators[_idBrand] == msg.sender, "Unauthorized");
         _;
     }
 }

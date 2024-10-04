@@ -2,7 +2,7 @@
 pragma solidity ^0.8.25;
 
 import "forge-std/Test.sol";
-import "../contracts/Brand.sol";
+import "../src/Brand.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 contract BrandTest is Test {

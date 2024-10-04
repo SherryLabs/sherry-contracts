@@ -65,32 +65,14 @@ contract Campaign is Ownable {
         campaign.endDate = _endDate;
     }
 
-    function getCampaignById(
-        uint256 _idCampaign
-    )
+    function getCampaignById(uint256 _idCampaign)
         external
         view
-        returns (
-            uint256,
-            uint256,
-            string memory,
-            uint256,
-            bool,
-            uint256,
-            uint256
-        )
+        returns (uint256, uint256, string memory, uint256, bool, uint256, uint256)
     {
         require(isValidCampaign(_idCampaign), "Campaign ID invalid");
         CampaignStruct memory c = s_campaigns[_idCampaign];
-        return (
-            c.idCampaign,
-            c.idBrand,
-            c.name,
-            c.amount,
-            c.active,
-            c.startDate,
-            c.endDate
-        );
+        return (c.idCampaign, c.idBrand, c.name, c.amount, c.active, c.startDate, c.endDate);
     }
 
     function isValidCampaign(uint256 _idCampaign) public view returns (bool) {

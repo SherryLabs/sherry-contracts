@@ -3,6 +3,7 @@ pragma solidity ^0.8.25;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Campaign} from "./Campaign.sol";
+
 contract KOL is Ownable {
     Campaign public s_campaignContract;
 
@@ -26,18 +27,10 @@ contract KOL is Ownable {
     mapping(uint256 => mapping(address => bool)) public s_votesFollowers;
 
     event Voted(uint256 indexed idLink, address indexed voter);
-    event LinkCreated(
-        uint256 idLink,
-        uint256 idKOL,
-        uint256 idCampaign,
-        string link
-    );
+    event LinkCreated(uint256 idLink, uint256 idKOL, uint256 idCampaign, string link);
 
     constructor(address _campaignContract) Ownable(msg.sender) {
-        require(
-            _campaignContract != address(0),
-            "Invalid campaign contract address"
-        );
+        require(_campaignContract != address(0), "Invalid campaign contract address");
         s_campaignContract = Campaign(_campaignContract);
     }
 
@@ -49,15 +42,12 @@ contract KOL is Ownable {
     function addKolToCampaign(
         //address _addressKol,
         uint256 _idCampaign
-    ) external onlyOwner() {
+    ) external onlyOwner {
         require(s_kols[msg.sender], "Invalid KOL");
         bool isValidCampaign = s_campaignContract.isValidCampaign(_idCampaign);
         require(isValidCampaign, "Invalid campaign");
 
-        KOLCampaign memory kolCampaign = KOLCampaign({
-            kol: msg.sender,
-            idCampaign: _idCampaign
-        });
+        KOLCampaign memory kolCampaign = KOLCampaign({kol: msg.sender, idCampaign: _idCampaign});
         idKOLCampaign++;
         s_kolCampaigns[idKOLCampaign][msg.sender] = kolCampaign;
     }
@@ -67,29 +57,20 @@ contract KOL is Ownable {
         require(_kolCampaign.idCampaign != 0, "Campaign not found");
 
         idLink++;
-        Link memory link = Link({
-            kol: msg.sender,
-            idCampaign: _kolCampaign.idCampaign,
-            link: _link
-        });
+        Link memory link = Link({kol: msg.sender, idCampaign: _kolCampaign.idCampaign, link: _link});
         s_links[idLink] = link;
     }
 
-    function vote(uint256 _idLink) external returns(bool){
+    function vote(uint256 _idLink) external returns (bool) {
         require(s_links[_idLink].idCampaign != 0, "Link not found");
         require(!s_votesFollowers[_idLink][msg.sender], "Already voted");
         s_votesFollowers[idLink][msg.sender] = true;
-        return true;
         emit Voted(idLink, msg.sender);
+        return true;
     }
 
-    function updateCampaignContract(
-        address _campaignContract
-    ) external onlyOwner {
-        require(
-            _campaignContract != address(0),
-            "Invalid campaign contract address"
-        );
+    function updateCampaignContract(address _campaignContract) external onlyOwner {
+        require(_campaignContract != address(0), "Invalid campaign contract address");
         s_campaignContract = Campaign(_campaignContract);
     }
 }
