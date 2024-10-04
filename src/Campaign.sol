@@ -76,6 +76,11 @@ contract Campaign is Ownable {
     }
 
     function isValidCampaign(uint256 _idCampaign) public view returns (bool) {
-        return s_campaigns[_idCampaign].idCampaign != 0;
+        CampaignStruct memory c = s_campaigns[_idCampaign];
+        require(_idCampaign <= idCampaign, "Invalid Campaign ID");
+        require(c.idCampaign != 0, "Invalid Campaign");
+        require(c.active, "Campaign inactive");
+        require(block.timestamp <= c.endDate, "Campaign has ended");
+        return true;
     }
 }
