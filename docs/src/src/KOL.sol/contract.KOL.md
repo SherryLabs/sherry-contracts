@@ -1,5 +1,5 @@
 # KOL
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/0397b52a9122a39e14e9d4b74fb341f977b54dd3/src/KOL.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/484332c803da90ab573ada999b49ba83ba4fca50/src/KOL.sol)
 
 **Inherits:**
 Ownable

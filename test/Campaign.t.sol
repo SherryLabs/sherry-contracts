@@ -8,7 +8,7 @@ import "../src/Brand.sol";
 contract CampaignTest is Test {
     Campaign campaign;
     Brand brand;
-    
+
     function setUp() public {
         brand = new Brand();
         campaign = new Campaign(address(brand));
@@ -16,7 +16,7 @@ contract CampaignTest is Test {
 
     function testCreateCampaign() public {
         brand.createBrand("First Name", address(this));
-        (uint256 id, , , ) = brand.getBrand(1);
+        (uint256 id,,,) = brand.getBrand(1);
         assertEq(id, 1);
         vm.warp(0);
         uint256 startDate = block.timestamp;
@@ -39,6 +39,4 @@ contract CampaignTest is Test {
         campaign.createCampaign(1, "First Campaign", 100, startDate, endDate);
         assertEq(campaign.idCampaign(), 1);
     }
-
-
 }
