@@ -11,6 +11,27 @@ contract Sherry is Ownable {
     ICampaign public i_campaignContract;
     IKOL public i_kolContract;
 
+    uint256 public idLink;
+
+    struct Link {
+        address kol;
+        uint256 idCampaign;
+        string link;
+    }
+
+    /*
+    struct KOLCampaign {
+        address kol;
+        uint256 idCampaign;
+    }
+    */
+
+    mapping(uint256 => Link) public s_links;
+    mapping(uint256 => mapping(address => bool)) public s_votesFollowers;
+
+    event Voted(uint256 indexed idLink, address indexed voter);
+    event LinkCreated(uint256 idLink, uint256 idKOL, uint256 idCampaign, string link);
+
     constructor(address _brandContract, address _campaignContract, address _kolContract) Ownable(msg.sender) {
         require(_brandContract != address(0), "Invalid brand contract address");
         require(_campaignContract != address(0), "Invalid campaign contract address");
@@ -18,5 +39,22 @@ contract Sherry is Ownable {
         i_brandContract = IBrand(_brandContract);
         i_campaignContract = ICampaign(_campaignContract);
         i_kolContract = IKOL(_kolContract);
+    }
+
+    function createLink(uint256 _idKolCampaign, string memory _link) external {
+        KOLCampaign memory _kolCampaign = s_kolCampaigns[_idKolCampaign][msg.sender];
+        require(_kolCampaign.idCampaign != 0, "Campaign not found");
+
+        idLink++;
+        Link memory link = Link({kol: msg.sender, idCampaign: _kolCampaign.idCampaign, link: _link});
+        s_links[idLink] = link;
+    }
+
+    function vote(uint256 _idLink) external returns (bool) {
+        require(s_links[_idLink].idCampaign != 0, "Link not found");
+        require(!s_votesFollowers[_idLink][msg.sender], "Already voted");
+        s_votesFollowers[idLink][msg.sender] = true;
+        emit Voted(idLink, msg.sender);
+        return true;
     }
 }
