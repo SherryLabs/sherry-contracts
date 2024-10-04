@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
@@ -27,14 +26,14 @@ contract BrandTest is Test {
     function testUpdateBrand() public {
         brand.createBrand("TestBrand", brandOwner);
         brand.updateBrand("UpdatedBrand", brandOwner, 1);
-        (, , string memory name, ) = brand.getBrand(1);
+        (,, string memory name,) = brand.getBrand(1);
         assertEq(name, "UpdatedBrand");
     }
 
     function testDisableBrand() public {
         brand.createBrand("TestBrand", brandOwner);
         brand.disableBrand(1);
-        (, , , bool active) = brand.getBrand(1);
+        (,,, bool active) = brand.getBrand(1);
         assertFalse(active);
     }
 
@@ -42,7 +41,7 @@ contract BrandTest is Test {
         brand.createBrand("TestBrand", brandOwner);
         brand.disableBrand(1);
         brand.enableBrand(1);
-        (, , , bool active) = brand.getBrand(1);
+        (,,, bool active) = brand.getBrand(1);
         assertTrue(active);
     }
 
