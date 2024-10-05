@@ -1,9 +1,9 @@
 # IBrand
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/2fd4840f6f8521f3419b23a60a2607a11251a45b/src/interface/IBrand.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/09d6263aefcffa8d872e75c7801f76e7deb5685b/src/interface/IBrand.sol)
 
-Interface para la gestión de marcas en el contrato.
+Interface para la gestión de marcas.
 
-*Define las funciones necesarias para crear, actualizar, obtener y validar marcas.*
+*Define las funciones necesarias para crear y actualizar marcas.*
 
 
 ## Functions
@@ -46,7 +46,10 @@ Obtiene los detalles de una marca.
 
 
 ```solidity
-function getBrand(uint256 _idBrand) external view returns (BrandStruct memory);
+function getBrand(uint256 _idBrand)
+    external
+    view
+    returns (uint256 idBrand, address brandOwner, string memory name, bool active);
 ```
 **Parameters**
 
@@ -58,7 +61,10 @@ function getBrand(uint256 _idBrand) external view returns (BrandStruct memory);
 
 |Name|Type|Description|
 |----|----|-----------|
-|`<none>`|`BrandStruct`|Estructura BrandStruct con los detalles de la marca.|
+|`idBrand`|`uint256`|Identificador único de la marca.|
+|`brandOwner`|`address`|Dirección del propietario de la marca.|
+|`name`|`string`|Nombre de la marca.|
+|`active`|`bool`|Estado de la marca (activa o inactiva).|
 
 
 ### disableBrand

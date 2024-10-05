@@ -1,9 +1,9 @@
 # ICampaign
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/2fd4840f6f8521f3419b23a60a2607a11251a45b/src/interface/ICampaign.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/09d6263aefcffa8d872e75c7801f76e7deb5685b/src/interface/ICampaign.sol)
 
 Interface para la gestión de campañas.
 
-*Define las funciones necesarias para crear y actualizar campañas.*
+*Define las funciones necesarias para crear, actualizar, obtener y validar campañas.*
 
 
 ## Functions
@@ -46,4 +46,92 @@ function updateCampaign(uint256 _idCampaign, string memory _name, uint256 _amoun
 |`_startDate`|`uint256`|Nueva fecha de inicio de la campaña (timestamp).|
 |`_endDate`|`uint256`|Nueva fecha de finalización de la campaña (timestamp).|
 
+
+### getCampaignById
+
+Obtiene los detalles de una campaña por su identificador.
+
+
+```solidity
+function getCampaignById(uint256 _idCampaign)
+    external
+    view
+    returns (
+        uint256 idCampaign,
+        uint256 idBrand,
+        string memory name,
+        uint256 amount,
+        bool active,
+        uint256 startDate,
+        uint256 endDate
+    );
+```
+**Parameters**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`_idCampaign`|`uint256`|Identificador de la campaña a obtener.|
+
+**Returns**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`idCampaign`|`uint256`|Identificador único de la campaña.|
+|`idBrand`|`uint256`|Identificador de la marca asociada a la campaña.|
+|`name`|`string`|Nombre de la campaña.|
+|`amount`|`uint256`|Monto objetivo de la campaña.|
+|`active`|`bool`|Estado de la campaña (activa o inactiva).|
+|`startDate`|`uint256`|Fecha de inicio de la campaña (timestamp).|
+|`endDate`|`uint256`|Fecha de finalización de la campaña (timestamp).|
+
+
+### isValidCampaign
+
+Verifica si una campaña es válida.
+
+
+```solidity
+function isValidCampaign(uint256 _idCampaign) external view returns (bool);
+```
+**Parameters**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`_idCampaign`|`uint256`|Identificador de la campaña a verificar.|
+
+**Returns**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`<none>`|`bool`|Booleano que indica si la campaña es válida.|
+
+
+## Structs
+### CampaignStruct
+Estructura que representa una campaña.
+
+
+```solidity
+struct CampaignStruct {
+    uint256 idCampaign;
+    uint256 idBrand;
+    string name;
+    uint256 amount;
+    bool active;
+    uint256 startDate;
+    uint256 endDate;
+}
+```
+
+**Properties**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`idCampaign`|`uint256`|Identificador único de la campaña.|
+|`idBrand`|`uint256`|Identificador de la marca asociada a la campaña.|
+|`name`|`string`|Nombre de la campaña.|
+|`amount`|`uint256`|Monto objetivo de la campaña.|
+|`active`|`bool`|Estado de la campaña (activa o inactiva).|
+|`startDate`|`uint256`|Fecha de inicio de la campaña (timestamp).|
+|`endDate`|`uint256`|Fecha de finalización de la campaña (timestamp).|
 
