@@ -57,5 +57,4 @@ contract SherryTest is Test {
         sherry.vote(1);
         console.log(sherry.s_votes(1));
     }
-    
 }
