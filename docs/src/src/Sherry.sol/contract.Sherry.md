@@ -1,5 +1,5 @@
 # Sherry
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/09d6263aefcffa8d872e75c7801f76e7deb5685b/src/Sherry.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/3bf09ae64235cad3c49f973ecfe9d2e4b7b5f336/src/Sherry.sol)
 
 **Inherits:**
 Ownable
@@ -45,6 +45,13 @@ mapping(uint256 => Link) public s_links;
 
 ```solidity
 mapping(uint256 => mapping(address => bool)) public s_votesFollowers;
+```
+
+
+### s_votes
+
+```solidity
+mapping(uint256 => uint256) public s_votes;
 ```
 
 

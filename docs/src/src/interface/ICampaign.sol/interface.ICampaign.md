@@ -1,5 +1,5 @@
 # ICampaign
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/09d6263aefcffa8d872e75c7801f76e7deb5685b/src/interface/ICampaign.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/3bf09ae64235cad3c49f973ecfe9d2e4b7b5f336/src/interface/ICampaign.sol)
 
 Interface para la gestión de campañas.
 

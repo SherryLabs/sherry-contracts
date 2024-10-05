@@ -4,7 +4,7 @@ pragma solidity ^0.8.25;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Sherry is Ownable(msg.sender) {
+contract SherryBackup is Ownable(msg.sender) {
 /*
     uint256 public idBrand;
     IERC20 public usdcToken;

@@ -47,7 +47,7 @@ contract KOL is Ownable {
     }
 
     function getKOLCampaign(uint256 _id) public view returns (address, uint256) {
-        require(isValidKolCampaign(_id), "Invalid");
+        require(isValidKolCampaign(_id), "Invalid KOLCampaign");
         KOLCampaign memory kc = s_kolCampaign[_id];
         return (kc.kol, kc.idCampaign);
     }
