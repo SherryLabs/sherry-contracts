@@ -22,6 +22,7 @@ contract Sherry is Ownable {
 
     mapping(uint256 => Link) public s_links;
     mapping(uint256 => mapping(address => bool)) public s_votesFollowers;
+    mapping(uint256 => uint256) public s_votes;
 
     event Voted(uint256 indexed idLink, address indexed voter);
     event LinkCreated(uint256 indexed idLink, address indexed kol, uint256 indexed idCampaign, string url);
@@ -49,6 +50,7 @@ contract Sherry is Ownable {
         require(s_links[_idLink].idCampaign != 0, "Link not found");
         require(!s_votesFollowers[_idLink][msg.sender], "Already voted");
         s_votesFollowers[idLink][msg.sender] = true;
+        s_votes[_idLink]++;
         emit Voted(idLink, msg.sender);
         return true;
     }
