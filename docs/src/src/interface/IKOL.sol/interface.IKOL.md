@@ -1,47 +1,124 @@
 # IKOL
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/2fd4840f6f8521f3419b23a60a2607a11251a45b/src/interface/IKOL.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/09d6263aefcffa8d872e75c7801f76e7deb5685b/src/interface/IKOL.sol)
+
+Interface para la gestión de KOLs y sus campañas.
+
+*Define las funciones necesarias para agregar KOLs y asignarlos a campañas.*
 
 
 ## Functions
-### createKOL
+### addKol
+
+Agrega un nuevo KOL.
 
 
 ```solidity
-function createKOL(string memory _name, address _kolOwner) external;
+function addKol(address _address) external;
 ```
+**Parameters**
 
-### updateKOL
+|Name|Type|Description|
+|----|----|-----------|
+|`_address`|`address`|Dirección del KOL.|
+
+
+### addKolToCampaign
+
+Asigna un KOL a una campaña.
 
 
 ```solidity
-function updateKOL(string memory _name, address _kolOwner, uint256 _idKOL) external;
+function addKolToCampaign(uint256 _idCampaign) external;
 ```
+**Parameters**
 
-### disableKOL
+|Name|Type|Description|
+|----|----|-----------|
+|`_idCampaign`|`uint256`|Identificador de la campaña.|
+
+
+### isKol
+
+Verifica si una dirección es un KOL válido.
 
 
 ```solidity
-function disableKOL(uint256 _idKOL) external;
+function isKol(address _address) external view returns (bool);
 ```
+**Parameters**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`_address`|`address`|Dirección a verificar.|
+
+**Returns**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`<none>`|`bool`|Booleano que indica si la dirección es un KOL válido.|
+
+
+### getCampaignsByKol
+
+Obtiene las campañas asociadas a un KOL.
+
+
+```solidity
+function getCampaignsByKol(address _kol) external view returns (KOLCampaign[] memory);
+```
+**Parameters**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`_kol`|`address`|Dirección del KOL.|
+
+**Returns**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`<none>`|`KOLCampaign[]`|Array de estructuras KOLCampaign asociadas al KOL.|
+
 
 ### getKOLCampaign
 
 
 ```solidity
-function getKOLCampaign(uint256 _id) external returns (address, uint256);
+function getKOLCampaign(uint256 _id) external view returns (address, uint256);
 ```
 
-### enableKOL
+## Events
+### KolCampaignAdded
+Evento emitido cuando se agrega una campaña de KOL.
 
 
 ```solidity
-function enableKOL(uint256 _idKOL) external;
+event KolCampaignAdded(uint256 indexed idKolCampaign, address indexed kol, uint256 idCampaign);
 ```
 
-### isValidKolCampaign
+**Parameters**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`idKolCampaign`|`uint256`|Identificador único de la campaña de KOL.|
+|`kol`|`address`|Dirección del KOL.|
+|`idCampaign`|`uint256`|Identificador de la campaña.|
+
+## Structs
+### KOLCampaign
+Estructura que representa una campaña de KOL.
 
 
 ```solidity
-function isValidKolCampaign(uint256 _id) external returns (bool isValid);
+struct KOLCampaign {
+    address kol;
+    uint256 idCampaign;
+}
 ```
+
+**Properties**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`kol`|`address`|Dirección del KOL.|
+|`idCampaign`|`uint256`|Identificador de la campaña.|
 

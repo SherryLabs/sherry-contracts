@@ -1,8 +1,8 @@
 pragma solidity ^0.8.25;
 
 /// @title IBrand Interface
-/// @notice Interface para la gestión de marcas en el contrato.
-/// @dev Define las funciones necesarias para crear, actualizar, obtener y validar marcas.
+/// @notice Interface para la gestión de marcas.
+/// @dev Define las funciones necesarias para crear y actualizar marcas.
 interface IBrand {
     /// @notice Estructura que representa una marca.
     /// @param idBrand Identificador único de la marca.
@@ -29,8 +29,14 @@ interface IBrand {
 
     /// @notice Obtiene los detalles de una marca.
     /// @param _idBrand Identificador de la marca a obtener.
-    /// @return Estructura BrandStruct con los detalles de la marca.
-    function getBrand(uint256 _idBrand) external view returns (BrandStruct memory);
+    /// @return idBrand Identificador único de la marca.
+    /// @return brandOwner Dirección del propietario de la marca.
+    /// @return name Nombre de la marca.
+    /// @return active Estado de la marca (activa o inactiva).
+    function getBrand(uint256 _idBrand)
+        external
+        view
+        returns (uint256 idBrand, address brandOwner, string memory name, bool active);
 
     /// @notice Desactiva una marca.
     /// @param _idBrand Identificador de la marca a desactivar.

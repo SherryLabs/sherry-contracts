@@ -1,15 +1,43 @@
 pragma solidity ^0.8.25;
 
+/// @title IKOL Interface
+/// @notice Interface para la gestión de KOLs y sus campañas.
+/// @dev Define las funciones necesarias para agregar KOLs y asignarlos a campañas.
 interface IKOL {
-    function createKOL(string memory _name, address _kolOwner) external;
+    /// @notice Estructura que representa una campaña de KOL.
+    /// @param kol Dirección del KOL.
+    /// @param idCampaign Identificador de la campaña.
+    struct KOLCampaign {
+        address kol;
+        uint256 idCampaign;
+    }
 
-    function updateKOL(string memory _name, address _kolOwner, uint256 _idKOL) external;
+    /// @notice Evento emitido cuando se agrega una campaña de KOL.
+    /// @param idKolCampaign Identificador único de la campaña de KOL.
+    /// @param kol Dirección del KOL.
+    /// @param idCampaign Identificador de la campaña.
+    event KolCampaignAdded(uint256 indexed idKolCampaign, address indexed kol, uint256 idCampaign);
 
-    function disableKOL(uint256 _idKOL) external;
+    /// @notice Agrega un nuevo KOL.
+    /// @param _address Dirección del KOL.
+    function addKol(address _address) external;
 
-    function getKOLCampaign(uint256 _id) external returns (address, uint256);
+    /// @notice Asigna un KOL a una campaña.
+    /// @param _idCampaign Identificador de la campaña.
+    function addKolToCampaign(uint256 _idCampaign) external;
 
-    function enableKOL(uint256 _idKOL) external;
+    /// @notice Verifica si una dirección es un KOL válido.
+    /// @param _address Dirección a verificar.
+    /// @return Booleano que indica si la dirección es un KOL válido.
+    function isKol(address _address) external view returns (bool);
 
-    function isValidKolCampaign(uint256 _id) external returns (bool isValid);
+    /// @notice Obtiene las campañas asociadas a un KOL.
+    /// @param _kol Dirección del KOL.
+    /// @return Array de estructuras KOLCampaign asociadas al KOL.
+    function getCampaignsByKol(address _kol) external view returns (KOLCampaign[] memory);
+
+    // @notice Obtiene Info KOL Campaign asociada al Id Kol Campaign
+    // @param _id Id KolCampaign
+    // @return Address del Kol y el ID de la Campaña.
+    function getKOLCampaign(uint256 _id) external view returns (address, uint256);
 }
