@@ -70,6 +70,15 @@ En el caso de `Sherry` podrás encontrar la configuración de despliegue en el f
 
 ## Addresses Contratos
 
+### Base Mainnet
+
+| Contrato | Dirección |
+|----------|-----------|
+| Brand    | null |
+| Campaign | null |
+| KOL      | null |
+| Sherry   | null |
+
 ### Base Sepolia
 
 | Contrato | Dirección |
