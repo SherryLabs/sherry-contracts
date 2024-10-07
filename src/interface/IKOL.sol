@@ -20,7 +20,7 @@ interface IKOL {
 
     /// @notice Agrega un nuevo KOL.
     /// @param _address Dirección del KOL.
-    function addKol(address _address) external;
+    function joinAsKol(address _address) external;
 
     /// @notice Asigna un KOL a una campaña.
     /// @param _idCampaign Identificador de la campaña.

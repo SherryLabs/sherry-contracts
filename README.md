@@ -74,7 +74,7 @@ En el caso de `Sherry` podrás encontrar la configuración de despliegue en el f
 
 | Contrato | Dirección |
 |----------|-----------|
-| Brand    | 0xa3CA6021b432a88EEFb5b53B31833e19195b4ecB |
-| Campaign | 0x5aDDD36200C7Df43Ee655c872f40B460f7056f8d |
-| KOL      | 0x22bf4Be375941853e42ce559258362819b7ee637 |
-| Sherry   | 0xE46b6b941BbBf93be4D422C96aaf4749CAf9a386 |
+| Brand    | 0x7F895FB1aFBce37f1eeb94e1A273542De657FeEE |
+| Campaign | 0x36285B0876E0B45771C5c76885B35d4FE5b39b10 |
+| KOL      | 0x21fb3E1D7a7a218fdd9C28b0b18D8b9Cb49Fe259 |
+| Sherry   | 0x0914b8a17412F59f7240Fbd8bE753586fceA48a0 |

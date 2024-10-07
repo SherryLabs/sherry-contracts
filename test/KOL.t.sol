@@ -16,9 +16,9 @@ contract KOLTest is Test {
         kol = new KOL(address(campaign));
     }
 
-    function testAddKol() public {
+    function testJoinAsKol() public {
         address kolAddress = address(1337);
-        kol.addKol(kolAddress);
+        kol.joinAsKol(kolAddress);
         assertEq(kol.s_kols(kolAddress), true);
     }
 
@@ -29,7 +29,7 @@ contract KOLTest is Test {
         uint256 startDate = block.timestamp;
         uint256 endDate = block.timestamp + 1 days;
         campaign.createCampaign(1, "First Campaign", 100, startDate, endDate);
-        kol.addKol(kolAddress);
+        kol.joinAsKol(kolAddress);
         uint256 idCampaign = campaign.idCampaign();
         vm.prank(kolAddress);
         kol.addKolToCampaign(idCampaign);

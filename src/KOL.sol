@@ -24,7 +24,7 @@ contract KOL is Ownable {
         s_campaignContract = Campaign(_campaignContract);
     }
 
-    function addKol(address _address) external onlyOwner {
+    function joinAsKol(address _address) external {
         require(_address != address(0), "Invalid KOL address");
         s_kols[_address] = true;
     }

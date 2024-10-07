@@ -1,5 +1,5 @@
 # IKOL
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/3bf09ae64235cad3c49f973ecfe9d2e4b7b5f336/src/interface/IKOL.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/fdb300e3abd281a7d82d54715b2fdb9684b96277/src/interface/IKOL.sol)
 
 Interface para la gestión de KOLs y sus campañas.
 
@@ -7,13 +7,13 @@ Interface para la gestión de KOLs y sus campañas.
 
 
 ## Functions
-### addKol
+### joinAsKol
 
 Agrega un nuevo KOL.
 
 
 ```solidity
-function addKol(address _address) external;
+function joinAsKol(address _address) external;
 ```
 **Parameters**
 

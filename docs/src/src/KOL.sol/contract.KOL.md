@@ -1,5 +1,5 @@
 # KOL
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/3bf09ae64235cad3c49f973ecfe9d2e4b7b5f336/src/KOL.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/fdb300e3abd281a7d82d54715b2fdb9684b96277/src/KOL.sol)
 
 **Inherits:**
 Ownable
@@ -49,11 +49,11 @@ mapping(address => KOLCampaign[]) public s_campaignsKol;
 constructor(address _campaignContract) Ownable(msg.sender);
 ```
 
-### addKol
+### joinAsKol
 
 
 ```solidity
-function addKol(address _address) external onlyOwner;
+function joinAsKol(address _address) external;
 ```
 
 ### addKolToCampaign

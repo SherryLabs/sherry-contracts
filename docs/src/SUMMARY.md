@@ -10,4 +10,4 @@
   - [Campaign](src/Campaign.sol/contract.Campaign.md)
   - [KOL](src/KOL.sol/contract.KOL.md)
   - [Sherry](src/Sherry.sol/contract.Sherry.md)
-  - [Sherry](src/SherryBackup.sol/contract.Sherry.md)
+  - [SherryBackup](src/SherryBackup.sol/contract.SherryBackup.md)
