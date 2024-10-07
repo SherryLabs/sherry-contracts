@@ -6,4 +6,4 @@
 - [Campaign](Campaign.sol/contract.Campaign.md)
 - [KOL](KOL.sol/contract.KOL.md)
 - [Sherry](Sherry.sol/contract.Sherry.md)
-- [Sherry](SherryBackup.sol/contract.Sherry.md)
+- [SherryBackup](SherryBackup.sol/contract.SherryBackup.md)

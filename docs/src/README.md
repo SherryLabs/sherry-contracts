@@ -67,3 +67,14 @@ forge test
 Para desplegar los contratos en una red de EVM Compatible, puedes utilizar herramientas como `hardhat-ignition` o `scripts` personalizados. Asegúrate de configurar las direcciones y parámetros necesarios en los scripts de despliegue.
 
 En el caso de `Sherry` podrás encontrar la configuración de despliegue en el folder `ignition/modules`
+
+## Addresses Contratos
+
+### Base Sepolia
+
+| Contrato | Dirección |
+|----------|-----------|
+| Brand    | 0x7F895FB1aFBce37f1eeb94e1A273542De657FeEE |
+| Campaign | 0x36285B0876E0B45771C5c76885B35d4FE5b39b10 |
+| KOL      | 0x21fb3E1D7a7a218fdd9C28b0b18D8b9Cb49Fe259 |
+| Sherry   | 0x0914b8a17412F59f7240Fbd8bE753586fceA48a0 |

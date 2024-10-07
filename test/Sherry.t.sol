@@ -28,7 +28,7 @@ contract SherryTest is Test {
         uint256 startDate = block.timestamp;
         uint256 endDate = block.timestamp + 1 days;
         campaign.createCampaign(1, "Nike", 100, startDate, endDate);
-        kol.addKol(kolAddress);
+        kol.joinAsKol(kolAddress);
         // Se setea el KOL como el caller
         vm.startPrank(kolAddress);
         // El KOL se puede agregar a si mismo a la campaña
@@ -46,7 +46,7 @@ contract SherryTest is Test {
         uint256 startDate = block.timestamp;
         uint256 endDate = block.timestamp + 1 days;
         campaign.createCampaign(1, "Nike", 100, startDate, endDate);
-        kol.addKol(kolAddress);
+        kol.joinAsKol(kolAddress);
         // Se setea el KOL como el caller
         vm.startPrank(kolAddress);
         // El KOL se puede agregar a si mismo a la campaña
