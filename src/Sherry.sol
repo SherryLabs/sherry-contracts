@@ -20,6 +20,8 @@ contract Sherry is Ownable {
         string url;
     }
 
+    Post[] posts = Post[];
+
     mapping(uint256 => Post) public s_posts;
     mapping(uint256 => mapping(address => bool)) public s_votesFollowers;
     mapping(uint256 => uint256) public s_votes;

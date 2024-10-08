@@ -117,18 +117,18 @@ En el caso de `Sherry` podrás encontrar la configuración de despliegue en el f
 
 ### Base Mainnet
 
-| Contrato | Dirección |
+| **Contrato** | **Dirección** |
 |----------|-----------|
-| Brand    | null |
-| Campaign | null |
-| KOL      | null |
-| Sherry   | null |
+| `Brand`    | null |
+| `Campaign` | null |
+| `KOL`      | null |
+| `Sherry`   | null |
 
 ### Base Sepolia
 
-| Contrato | Dirección |
+| **Contrato** | **Dirección** |
 |----------|-----------|
-| Brand    | 0x3449afc2fCF3D51DC892658f0c69E47286B078d4 |
-| Campaign | 0x4DC7CdD6d7062add8bB3e4512E987aC111388335 |
-| KOL      | 0xb435c1EE65b371f5204C94f34a9be0eA31e5c1bd |
-| Sherry   | 0x812810512193d623a68e467cc314511a581E4546 |
+| `Brand`    | 0x3449afc2fCF3D51DC892658f0c69E47286B078d4 |
+| `Campaign` | 0x4DC7CdD6d7062add8bB3e4512E987aC111388335 |
+| `KOL`      | 0xb435c1EE65b371f5204C94f34a9be0eA31e5c1bd |
+| `Sherry`   | 0x812810512193d623a68e467cc314511a581E4546 |
