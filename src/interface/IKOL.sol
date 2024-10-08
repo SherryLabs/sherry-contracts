@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
 /// @title IKOL Interface
@@ -12,11 +13,24 @@ interface IKOL {
         uint256 idCampaign;
     }
 
-    /// @notice Evento emitido cuando se agrega una campaña de KOL.
-    /// @param idKolCampaign Identificador único de la campaña de KOL.
-    /// @param kol Dirección del KOL.
-    /// @param idCampaign Identificador de la campaña.
+    /**
+     * @dev Emitted when a new KolCampaign is added.
+     * @param idKolCampaign The unique identifier of the KolCampaign.
+     * @param kol The address of the KOL (Key Opinion Leader).
+     * @param idCampaign The unique identifier of the Campaign.
+     */
     event KolCampaignAdded(uint256 indexed idKolCampaign, address indexed kol, uint256 idCampaign);
+    /**
+     * @dev Emitted when the campaign contract is updated.
+     * @param campaignContract The address of the updated campaign contract.
+     */
+    event CampaignContractUpdated(address indexed campaignContract);
+
+    /**
+     * @dev Emitted when a KOL joins.
+     * @param kol The address of the KOL who joined.
+     */
+    event KolJoined(address indexed kol);
 
     /// @notice Agrega un nuevo KOL.
     /// @param _address Dirección del KOL.

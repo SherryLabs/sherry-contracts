@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
 /// @title ICampaign Interface
@@ -21,6 +22,22 @@ interface ICampaign {
         uint256 startDate;
         uint256 endDate;
     }
+
+    /**
+     * @dev Emitted when a new campaign is created.
+     * @param idCampaign The unique identifier of the campaign.
+     * @param idBrand The unique identifier of the brand associated with the campaign.
+     * @param name The name of the campaign.
+     * @param amount The amount associated with the campaign.
+     */
+    event CampaignCreated(uint256 indexed idCampaign, uint256 indexed idBrand, string name, uint256 amount);
+    /**
+     * @dev Emitted when an existing campaign is updated.
+     * @param idCampaign The unique identifier of the campaign.
+     * @param name The updated name of the campaign.
+     * @param amount The updated amount associated with the campaign.
+     */
+    event CampaignUpdated(uint256 indexed idCampaign, string name, uint256 amount);
 
     /// @notice Crea una nueva campaña.
     /// @param _idBrand Identificador de la marca asociada a la campaña.

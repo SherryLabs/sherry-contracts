@@ -41,7 +41,7 @@ forge test
 El contrato Brand gestiona las marcas en la blockchain. Permite crear, actualizar, obtener y validar marcas.
 
 - `createBrand(string memory _name, address _brandOwner)`: Crea una nueva marca.
-- `updateBrand(string memory _name, address _brandOwner, uint256 _idBrand)`: - Actualiza una marca existente.
+- `updateBrand(string memory _name, address _brandOwner, uint256 _idBrand)`: Actualiza una marca existente.
 - `getBrand(uint256 _idBrand)`: Obtiene los detalles de una marca.
 - `disableBrand(uint256 _idBrand)`: Desactiva una marca.
 - `enableBrand(uint256 _idBrand)`: Activa una marca.
@@ -131,3 +131,19 @@ En el caso de `Sherry` podrás encontrar la configuración de despliegue en el f
 | `Campaign` | 0xce9D74DDBB13CAB9FB5019E9C859f20f4bcE3723 |
 | `KOL`      | 0xd6b8f5Ddf0dA19C4bEF691A93666605A451A39Cc |
 | `Sherry`   | 0xe0e07c70b7fB31d58AFf69C1750520baebaa632D |
+
+## Seed Contract
+
+Para inicializar los contratos con datos de prueba, puedes utilizar los siguientes comandos:
+
+```shell
+npx hardhat run scripts/seed.ts
+```
+
+Para inicializar los contratos en la red Base Sepolia, utiliza:
+
+```shell
+npx hardhat run scripts/seed.ts --network baseSepolia
+```
+
+Estos scripts se encargan de poblar los contratos con datos iniciales necesarios para su funcionamiento.
