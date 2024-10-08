@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/gilbertsahumada/projects/sherry-contracts/src/Brand.sol": {
-      "lastModificationDate": 1728357008679,
-      "contentHash": "319e35ad44aefd34dd95762844401be0",
+      "lastModificationDate": 1728410332482,
+      "contentHash": "ff54a231756557ff95c0db670ae75195",
       "sourceName": "src/Brand.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -338,8 +338,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/Campaign.sol": {
-      "lastModificationDate": 1728357008678,
-      "contentHash": "2c74bad544785d7c90f56d9efa22fe28",
+      "lastModificationDate": 1728410327302,
+      "contentHash": "9ca6007543e977f82c1124845cbecc08",
       "sourceName": "src/Campaign.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -377,8 +377,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/KOL.sol": {
-      "lastModificationDate": 1728357008678,
-      "contentHash": "bc5d757824549fd178bf2f0658ceac38",
+      "lastModificationDate": 1728410327302,
+      "contentHash": "340ccfbeddc4e3de6e7486a84774d62c",
       "sourceName": "src/KOL.sol",
       "solcConfig": {
         "version": "0.8.25",

@@ -18,6 +18,8 @@ contract KOL is Ownable {
     mapping(address => KOLCampaign[]) public s_campaignsKol;
 
     event KolCampaignAdded(uint256 indexed idKolCampaign, address indexed kol, uint256 idCampaign);
+    event CampaignContractUpdated(address indexed campaignContract);
+    event KolJoined(address indexed kol);
 
     constructor(address _campaignContract) Ownable(msg.sender) {
         require(_campaignContract != address(0), "Invalid campaign contract address");
@@ -27,6 +29,7 @@ contract KOL is Ownable {
     function joinAsKol(address _address) external {
         require(_address != address(0), "Invalid KOL address");
         s_kols[_address] = true;
+        emit KolJoined(_address);
     }
 
     function addKolToCampaign(uint256 _idCampaign) external {
@@ -44,6 +47,7 @@ contract KOL is Ownable {
     function updateCampaignContract(address _campaignContract) external onlyOwner {
         require(_campaignContract != address(0), "Invalid campaign contract address");
         s_campaignContract = Campaign(_campaignContract);
+        emit CampaignContractUpdated(_campaignContract);
     }
 
     function getKOLCampaign(uint256 _id) public view returns (address, uint256) {
