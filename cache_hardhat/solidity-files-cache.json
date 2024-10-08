@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/gilbertsahumada/projects/sherry-contracts/src/Brand.sol": {
-      "lastModificationDate": 1728090387970,
+      "lastModificationDate": 1728357008679,
       "contentHash": "319e35ad44aefd34dd95762844401be0",
       "sourceName": "src/Brand.sol",
       "solcConfig": {
@@ -114,7 +114,7 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/SherryBackup.sol": {
-      "lastModificationDate": 1728090877850,
+      "lastModificationDate": 1728357008678,
       "contentHash": "d7add79b2e9b7dfa1b587f98ce079766",
       "sourceName": "src/SherryBackup.sol",
       "solcConfig": {
@@ -189,8 +189,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/Sherry.sol": {
-      "lastModificationDate": 1728354259257,
-      "contentHash": "e14add5619ec02b20bd68691723b70b2",
+      "lastModificationDate": 1728358323541,
+      "contentHash": "4daa6bdce123e1c97d57c4bd4aecc54b",
       "sourceName": "src/Sherry.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -230,7 +230,7 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/interface/IBrand.sol": {
-      "lastModificationDate": 1728090387969,
+      "lastModificationDate": 1728357008679,
       "contentHash": "51356fe38678b490306d1b336dff4424",
       "sourceName": "src/interface/IBrand.sol",
       "solcConfig": {
@@ -266,7 +266,7 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/interface/ICampaign.sol": {
-      "lastModificationDate": 1728090387969,
+      "lastModificationDate": 1728357008678,
       "contentHash": "44a614cbabf68d4c285693e8216b56eb",
       "sourceName": "src/interface/ICampaign.sol",
       "solcConfig": {
@@ -302,7 +302,7 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/interface/IKOL.sol": {
-      "lastModificationDate": 1728329432592,
+      "lastModificationDate": 1728357008678,
       "contentHash": "c273fc026dd22d1eca04c3de70d9ba6b",
       "sourceName": "src/interface/IKOL.sol",
       "solcConfig": {
@@ -338,7 +338,7 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/Campaign.sol": {
-      "lastModificationDate": 1728090387969,
+      "lastModificationDate": 1728357008678,
       "contentHash": "2c74bad544785d7c90f56d9efa22fe28",
       "sourceName": "src/Campaign.sol",
       "solcConfig": {
@@ -377,7 +377,7 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/KOL.sol": {
-      "lastModificationDate": 1728329409709,
+      "lastModificationDate": 1728357008678,
       "contentHash": "bc5d757824549fd178bf2f0658ceac38",
       "sourceName": "src/KOL.sol",
       "solcConfig": {
@@ -416,7 +416,7 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/interface/ISherry.sol": {
-      "lastModificationDate": 1728090387970,
+      "lastModificationDate": 1728357008678,
       "contentHash": "113767229e3dfe4160c08de2ce9506c2",
       "sourceName": "src/interface/ISherry.sol",
       "solcConfig": {

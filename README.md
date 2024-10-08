@@ -112,7 +112,6 @@ En el caso de `Sherry` podrás encontrar la configuración de despliegue en el f
 - **external_url**: Un enlace externo asociado al post.
 - **attributes**: Una lista de atributos adicionales que describen el post, como la red social en la que se publicó y el tipo de contenido.
 
-
 ## Addresses Contratos
 
 ### Base Mainnet
@@ -128,7 +127,7 @@ En el caso de `Sherry` podrás encontrar la configuración de despliegue en el f
 
 | **Contrato** | **Dirección** |
 |----------|-----------|
-| `Brand`    | 0x3449afc2fCF3D51DC892658f0c69E47286B078d4 |
-| `Campaign` | 0x4DC7CdD6d7062add8bB3e4512E987aC111388335 |
-| `KOL`      | 0xb435c1EE65b371f5204C94f34a9be0eA31e5c1bd |
-| `Sherry`   | 0x812810512193d623a68e467cc314511a581E4546 |
+| `Brand`    | 0x45f92b64944A2ADCDaE9A4F09C3A5EA4a8FE5525 |
+| `Campaign` | 0xce9D74DDBB13CAB9FB5019E9C859f20f4bcE3723 |
+| `KOL`      | 0xd6b8f5Ddf0dA19C4bEF691A93666605A451A39Cc |
+| `Sherry`   | 0xe0e07c70b7fB31d58AFf69C1750520baebaa632D |
