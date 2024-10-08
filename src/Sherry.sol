@@ -58,7 +58,7 @@ contract Sherry is Ownable {
         return true;
     }
 
-    function getUri(uint256 _idPost) external returns (string memory){
+    function getUri(uint256 _idPost) public view returns (string memory) {
         require(s_posts[_idPost].idCampaign != 0, "post not found");
         return s_posts[_idPost].url;
     }
