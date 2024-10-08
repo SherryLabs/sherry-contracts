@@ -1,3 +1,7 @@
 {
-  "CheckSenderModule#CheckSender": "0xb0c46cAb920d4577ad6F901D7C56972836A981ad"
+  "CheckSenderModule#CheckSender": "0xb0c46cAb920d4577ad6F901D7C56972836A981ad",
+  "ProtocolModule#Brand": "0xbd84C59CE99A4A6e48727DA7581794442BA7C2eD",
+  "ProtocolModule#Campaign": "0xbd9a06cC557a9e3Eb72C44943dfC13438683e1b9",
+  "ProtocolModule#KOL": "0xa1ea6cdA04359666d944f9129FE5FC98d534b056",
+  "ProtocolModule#Sherry": "0x9674Ee4cC4321e1641c4c9D0F484F8dc99420aD7"
 }
