@@ -20,6 +20,8 @@ contract Sherry is Ownable {
         string url;
     }
 
+    Post[] public posts;
+
     mapping(uint256 => Post) public s_posts;
     mapping(uint256 => mapping(address => bool)) public s_votesFollowers;
     mapping(uint256 => uint256) public s_votes;
@@ -44,6 +46,7 @@ contract Sherry is Ownable {
         idPost++;
         Post memory post = Post({idKolCampaign: _idKolCampaign, kol: kol, idCampaign: idCampaign, url: _url});
         s_posts[idPost] = post;
+        posts.push(post);
         emit postCreated(idPost, kol, idCampaign, _url);
     }
 
