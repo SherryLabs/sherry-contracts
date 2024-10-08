@@ -20,7 +20,7 @@ contract SherryTest is Test {
         sherry = new Sherry(address(brand), address(campaign), address(kol));
     }
 
-    function testCreateLink() external {
+    function testCreatePost() external {
         uint256 idKolCampaign = 1;
         address kolAddress = address(1337);
         string memory url = "https://";
@@ -34,7 +34,7 @@ contract SherryTest is Test {
         // El KOL se puede agregar a si mismo a la campaña
         kol.addKolToCampaign(1);
         // El KOL solo puede crear links para el mismo
-        sherry.createLink(idKolCampaign, url);
+        sherry.createPost(idKolCampaign, url);
         vm.stopPrank();
     }
 
@@ -51,8 +51,8 @@ contract SherryTest is Test {
         vm.startPrank(kolAddress);
         // El KOL se puede agregar a si mismo a la campaña
         kol.addKolToCampaign(1);
-        // El KOL solo puede crear links para el mismo
-        sherry.createLink(idKolCampaign, url);
+        // El KOL solo puede crear posts para el mismo
+        sherry.createPost(idKolCampaign, url);
         vm.stopPrank();
         sherry.vote(1);
         console.log(sherry.s_votes(1));

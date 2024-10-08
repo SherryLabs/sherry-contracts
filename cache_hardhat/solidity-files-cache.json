@@ -189,8 +189,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/Sherry.sol": {
-      "lastModificationDate": 1728090893028,
-      "contentHash": "84be88b52cfb5f50827827149a4fc8fd",
+      "lastModificationDate": 1728354259257,
+      "contentHash": "e14add5619ec02b20bd68691723b70b2",
       "sourceName": "src/Sherry.sol",
       "solcConfig": {
         "version": "0.8.25",

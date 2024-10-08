@@ -68,6 +68,51 @@ Para desplegar los contratos en una red de EVM Compatible, puedes utilizar herra
 
 En el caso de `Sherry` podrás encontrar la configuración de despliegue en el folder `ignition/modules`
 
+## Metadata Posts 
+
+```json
+{
+  "name": "Post Sherry v1.0",
+  "image": "https://ipfs.io/IPFS_HASH",
+  "description": "Este es mi primer post",
+  "external_url": "https://getsherry.link/sd8745",
+  "attributes": [
+    {
+      "trait_type": "Network",
+      "value": "Instagram"
+    },
+    {
+      "trait_type": "Content Type",
+      "value": "Post"
+    }
+  ]
+}
+```
+
+### Atributos
+
+| **Campo**        | **Descripción**                                           |
+|--------------|-------------------------------------------------------|
+| `name`         | Nombre del post.                                      |
+| `image`        | URL de la imagen del post almacenada en IPFS.         |
+| `description`  | Descripción del post.                                 |
+| `external_url` | URL externa asociada al post.                         |
+| `attributes`   | Atributos adicionales del post, como la red social y el tipo de contenido. |
+
+| **Atributo**     | **Valor**       |
+|--------------|-------------|
+| `Network`      | Instagram   |
+| `Content Type` | Post        |
+
+### Descripción de los Campos
+
+- **name**: El nombre del post, en este caso "Post Sherry v1.0".
+- **image**: La URL de la imagen del post, almacenada en IPFS.
+- **description**: Una breve descripción del post.
+- **external_url**: Un enlace externo asociado al post.
+- **attributes**: Una lista de atributos adicionales que describen el post, como la red social en la que se publicó y el tipo de contenido.
+
+
 ## Addresses Contratos
 
 ### Base Mainnet
@@ -83,7 +128,7 @@ En el caso de `Sherry` podrás encontrar la configuración de despliegue en el f
 
 | Contrato | Dirección |
 |----------|-----------|
-| Brand    | 0x7F895FB1aFBce37f1eeb94e1A273542De657FeEE |
-| Campaign | 0x36285B0876E0B45771C5c76885B35d4FE5b39b10 |
-| KOL      | 0x21fb3E1D7a7a218fdd9C28b0b18D8b9Cb49Fe259 |
-| Sherry   | 0x0914b8a17412F59f7240Fbd8bE753586fceA48a0 |
+| Brand    | 0x3449afc2fCF3D51DC892658f0c69E47286B078d4 |
+| Campaign | 0x4DC7CdD6d7062add8bB3e4512E987aC111388335 |
+| KOL      | 0xb435c1EE65b371f5204C94f34a9be0eA31e5c1bd |
+| Sherry   | 0x812810512193d623a68e467cc314511a581E4546 |
