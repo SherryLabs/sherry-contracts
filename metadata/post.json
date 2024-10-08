@@ -1,0 +1,16 @@
+{
+  "name": "Post Sherry v1.0",
+  "image": "https://ipfs.io/IPFS_HASH",
+  "description": "Este es mi primer post",
+  "external_url": "https://getsherry.link/sd8745",
+  "attributes": [
+    {
+      "trait_type": "Network",
+      "value": "Instagram"
+    },
+    {
+      "trait_type": "Content Type",
+      "value": "Post"
+    }
+  ]
+}
