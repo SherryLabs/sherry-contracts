@@ -127,10 +127,10 @@ En el caso de `Sherry` podrás encontrar la configuración de despliegue en el f
 
 | **Contrato** | **Dirección** |
 |----------|-----------|
-| `Brand`    | 0x45f92b64944A2ADCDaE9A4F09C3A5EA4a8FE5525 |
-| `Campaign` | 0xce9D74DDBB13CAB9FB5019E9C859f20f4bcE3723 |
-| `KOL`      | 0xd6b8f5Ddf0dA19C4bEF691A93666605A451A39Cc |
-| `Sherry`   | 0xe0e07c70b7fB31d58AFf69C1750520baebaa632D |
+| `Brand`    | 0xbd84C59CE99A4A6e48727DA7581794442BA7C2eD |
+| `Campaign` | 0xbd9a06cC557a9e3Eb72C44943dfC13438683e1b9 |
+| `KOL`      | 0xa1ea6cdA04359666d944f9129FE5FC98d534b056 |
+| `Sherry`   | 0x9674Ee4cC4321e1641c4c9D0F484F8dc99420aD7 |
 
 ## Seed Contract
 
