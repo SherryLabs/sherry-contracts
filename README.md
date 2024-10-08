@@ -68,6 +68,20 @@ Para desplegar los contratos en una red de EVM Compatible, puedes utilizar herra
 
 En el caso de `Sherry` podrás encontrar la configuración de despliegue en el folder `ignition/modules`
 
+Para desplegarlos y verificarlos puedes ejecutar
+
+### Local 
+
+```shell
+npx hardhat ignition deploy ignition/modules/SherryProtocol.ts
+```
+
+### Testnet
+
+```shell
+npx hardhat ignition deploy ignition/modules/SherryProtocol.ts --network baseSepolia --verify
+```
+
 ## Metadata Posts 
 
 ```json
