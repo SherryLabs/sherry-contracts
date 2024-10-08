@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
 /// @title IBrand Interface
@@ -15,6 +16,22 @@ interface IBrand {
         string name;
         bool active;
     }
+
+    /**
+     * @dev Emitted when a new brand is created.
+     * @param idBrand The unique identifier of the brand.
+     * @param brandOwner The address of the owner of the brand.
+     * @param name The name of the brand.
+     */
+    event BrandCreated(uint256 indexed idBrand, address indexed brandOwner, string name);
+
+    /**
+     * @dev Emitted when an existing brand is updated.
+     * @param idBrand The unique identifier of the brand.
+     * @param brandOwner The address of the owner of the brand.
+     * @param name The updated name of the brand.
+     */
+    event BrandUpdated(uint256 indexed idBrand, address indexed brandOwner, string name);
 
     /// @notice Crea una nueva marca.
     /// @param _name Nombre de la marca.

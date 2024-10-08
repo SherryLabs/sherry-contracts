@@ -16,6 +16,9 @@ contract Brand is Ownable {
     mapping(uint256 => BrandStruct) public brands;
     mapping(uint256 => address) public brandOperators;
 
+    event BrandCreated(uint256 indexed idBrand, address indexed brandOwner, string name);
+    event BrandUpdated(uint256 indexed idBrand, address indexed brandOwner, string name);
+
     constructor() Ownable(msg.sender) {}
 
     function createBrand(string memory _name, address _brandOwner) external onlyOwner {
@@ -25,6 +28,7 @@ contract Brand is Ownable {
         BrandStruct memory brand = BrandStruct({idBrand: idBrand, brandOwner: _brandOwner, name: _name, active: true});
         brands[idBrand] = brand;
         brandOperators[idBrand] = _brandOwner;
+        emit BrandCreated(idBrand, _brandOwner, _name);
     }
 
     function updateBrand(string memory _name, address _brandOwner, uint256 _idBrand)
@@ -37,6 +41,7 @@ contract Brand is Ownable {
         BrandStruct storage brand = brands[_idBrand];
         brand.name = _name;
         brand.brandOwner = _brandOwner;
+        emit BrandUpdated(_idBrand, _brandOwner, _name);
     }
 
     function disableBrand(uint256 _idBrand) external onlyOwner {

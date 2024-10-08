@@ -20,6 +20,9 @@ contract Campaign is Ownable {
 
     mapping(uint256 => CampaignStruct) public s_campaigns;
 
+    event CampaignCreated(uint256 indexed idCampaign, uint256 indexed idBrand, string name, uint256 amount);
+    event CampaignUpdated(uint256 indexed idCampaign, string name, uint256 amount);
+
     constructor(address _brandContract) Ownable(msg.sender) {
         require(_brandContract != address(0), "Invalid brand contract address");
         s_brandContract = IBrand(_brandContract);
@@ -46,6 +49,7 @@ contract Campaign is Ownable {
             endDate: _endDate
         });
         s_campaigns[idCampaign] = campaign;
+        emit CampaignCreated(idCampaign, _idBrand, _name, _amount);
     }
 
     function updateCampaign(
@@ -63,6 +67,7 @@ contract Campaign is Ownable {
         campaign.amount = _amount;
         campaign.startDate = _startDate;
         campaign.endDate = _endDate;
+        emit CampaignUpdated(_idCampaign, _name, _amount);
     }
 
     function getCampaignById(uint256 _idCampaign)

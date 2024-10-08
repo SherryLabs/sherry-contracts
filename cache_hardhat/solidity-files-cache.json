@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/gilbertsahumada/projects/sherry-contracts/src/Brand.sol": {
-      "lastModificationDate": 1728357008679,
-      "contentHash": "319e35ad44aefd34dd95762844401be0",
+      "lastModificationDate": 1728410332482,
+      "contentHash": "ff54a231756557ff95c0db670ae75195",
       "sourceName": "src/Brand.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -189,8 +189,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/Sherry.sol": {
-      "lastModificationDate": 1728358323541,
-      "contentHash": "4daa6bdce123e1c97d57c4bd4aecc54b",
+      "lastModificationDate": 1728429845908,
+      "contentHash": "8a94053001dd6ed71417cdd2767f43fc",
       "sourceName": "src/Sherry.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -230,8 +230,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/interface/IBrand.sol": {
-      "lastModificationDate": 1728357008679,
-      "contentHash": "51356fe38678b490306d1b336dff4424",
+      "lastModificationDate": 1728420604231,
+      "contentHash": "8e0002d64d21595b1bea77ea53bf0ddc",
       "sourceName": "src/interface/IBrand.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -266,8 +266,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/interface/ICampaign.sol": {
-      "lastModificationDate": 1728357008678,
-      "contentHash": "44a614cbabf68d4c285693e8216b56eb",
+      "lastModificationDate": 1728420604231,
+      "contentHash": "0d6134f07c97d1936e95914a34604745",
       "sourceName": "src/interface/ICampaign.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -302,8 +302,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/interface/IKOL.sol": {
-      "lastModificationDate": 1728357008678,
-      "contentHash": "c273fc026dd22d1eca04c3de70d9ba6b",
+      "lastModificationDate": 1728420604231,
+      "contentHash": "c73b38390eb2303b7445cc8790e96121",
       "sourceName": "src/interface/IKOL.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -338,8 +338,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/Campaign.sol": {
-      "lastModificationDate": 1728357008678,
-      "contentHash": "2c74bad544785d7c90f56d9efa22fe28",
+      "lastModificationDate": 1728420604233,
+      "contentHash": "9ca6007543e977f82c1124845cbecc08",
       "sourceName": "src/Campaign.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -377,8 +377,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/KOL.sol": {
-      "lastModificationDate": 1728357008678,
-      "contentHash": "bc5d757824549fd178bf2f0658ceac38",
+      "lastModificationDate": 1728420604233,
+      "contentHash": "340ccfbeddc4e3de6e7486a84774d62c",
       "sourceName": "src/KOL.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -416,8 +416,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/interface/ISherry.sol": {
-      "lastModificationDate": 1728357008678,
-      "contentHash": "113767229e3dfe4160c08de2ce9506c2",
+      "lastModificationDate": 1728420605720,
+      "contentHash": "2b80f5e793b6b9ca89b1a941752f218a",
       "sourceName": "src/interface/ISherry.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -449,6 +449,42 @@
       ],
       "artifacts": [
         "ISherry"
+      ]
+    },
+    "/Users/gilbertsahumada/projects/sherry-contracts/src/CheckSender.sol": {
+      "lastModificationDate": 1728429202515,
+      "contentHash": "783b7b5ef046b009793c8d26925226ee",
+      "sourceName": "src/CheckSender.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.25"
+      ],
+      "artifacts": [
+        "CheckSender"
       ]
     }
   }
