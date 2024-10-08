@@ -41,7 +41,6 @@ contract Sherry is Ownable {
 
     function createPost(uint256 _idKolCampaign, string memory _url) external {
         (address kol, uint256 idCampaign) = i_kolContract.getKOLCampaign(_idKolCampaign);
-        require(kol == msg.sender, "You can only create posts for yourself");
         require(idCampaign != 0, "Campaign not found");
         idPost++;
         Post memory post = Post({idKolCampaign: _idKolCampaign, kol: kol, idCampaign: idCampaign, url: _url});
