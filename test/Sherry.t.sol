@@ -32,7 +32,7 @@ contract SherryTest is Test {
         // Se setea el KOL como el caller
         vm.startPrank(kolAddress);
         // El KOL se puede agregar a si mismo a la campaña
-        kol.addKolToCampaign(1);
+        kol.addKolToCampaign(1, kolAddress);
         // El KOL solo puede crear links para el mismo
         sherry.createPost(idKolCampaign, url);
         vm.stopPrank();
@@ -50,7 +50,7 @@ contract SherryTest is Test {
         // Se setea el KOL como el caller
         vm.startPrank(kolAddress);
         // El KOL se puede agregar a si mismo a la campaña
-        kol.addKolToCampaign(1);
+        kol.addKolToCampaign(1, kolAddress);
         // El KOL solo puede crear posts para el mismo
         sherry.createPost(idKolCampaign, url);
         vm.stopPrank();

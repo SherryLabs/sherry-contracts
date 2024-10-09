@@ -32,6 +32,6 @@ contract KOLTest is Test {
         kol.joinAsKol(kolAddress);
         uint256 idCampaign = campaign.idCampaign();
         vm.prank(kolAddress);
-        kol.addKolToCampaign(idCampaign);
+        kol.addKolToCampaign(idCampaign, kolAddress);
     }
 }
