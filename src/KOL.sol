@@ -32,16 +32,16 @@ contract KOL is Ownable {
         emit KolJoined(_address);
     }
 
-    function addKolToCampaign(uint256 _idCampaign) external {
-        require(s_kols[msg.sender], "Invalid KOL");
+    function addKolToCampaign(uint256 _idCampaign, address _kol) external {
+        require(s_kols[_kol], "Invalid KOL");
         bool isValidCampaign = s_campaignContract.isValidCampaign(_idCampaign);
         require(isValidCampaign, "Invalid campaign");
 
-        KOLCampaign memory kolCampaign = KOLCampaign({kol: msg.sender, idCampaign: _idCampaign});
+        KOLCampaign memory kolCampaign = KOLCampaign({kol: _kol, idCampaign: _idCampaign});
         idKolCampaign++;
         s_kolCampaign[idKolCampaign] = kolCampaign;
-        s_campaignsKol[msg.sender].push(kolCampaign);
-        emit KolCampaignAdded(idKolCampaign, msg.sender, _idCampaign);
+        s_campaignsKol[_kol].push(kolCampaign);
+        emit KolCampaignAdded(idKolCampaign, _kol, _idCampaign);
     }
 
     function updateCampaignContract(address _campaignContract) external onlyOwner {

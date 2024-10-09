@@ -10,10 +10,10 @@ async function main() {
     const accounts = await hre.ethers.getSigners();
 
     // Direcciones de los contratos desplegados
-    const brandContractAddress = "0x45f92b64944A2ADCDaE9A4F09C3A5EA4a8FE5525";
-    const campaignContractAddress = "0xce9D74DDBB13CAB9FB5019E9C859f20f4bcE3723";
-    const kolContractAddress = "0xd6b8f5Ddf0dA19C4bEF691A93666605A451A39Cc";
-    const sherryContractAddress = "0xe0e07c70b7fB31d58AFf69C1750520baebaa632D";
+    const brandContractAddress = "0x657E6d2274eD0952C8F8Ed58F16756d99A823Bd8";
+    const campaignContractAddress = "0x71AA6213cea1fFfc38576f262acDC2666BdC7e98";
+    const kolContractAddress = "0x766485E35331c92784F257dB68EEA899930C6DAB";
+    const sherryContractAddress = "0x727E61467e0A5A72E2234fe0dEDc09526884b14d";
 
     // Obtener instancias de los contratos
     const brandContract = await hre.ethers.getContractAt("Brand", brandContractAddress);

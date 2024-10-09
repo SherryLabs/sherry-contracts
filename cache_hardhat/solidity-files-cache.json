@@ -377,8 +377,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/KOL.sol": {
-      "lastModificationDate": 1728420604233,
-      "contentHash": "340ccfbeddc4e3de6e7486a84774d62c",
+      "lastModificationDate": 1728432257704,
+      "contentHash": "fc6f10eed0cb1a3a7f0aafa2fb72f5b1",
       "sourceName": "src/KOL.sol",
       "solcConfig": {
         "version": "0.8.25",
@@ -452,8 +452,8 @@
       ]
     },
     "/Users/gilbertsahumada/projects/sherry-contracts/src/CheckSender.sol": {
-      "lastModificationDate": 1728429202515,
-      "contentHash": "783b7b5ef046b009793c8d26925226ee",
+      "lastModificationDate": 1728430134365,
+      "contentHash": "a92912e150d10db2f203efa1785952ea",
       "sourceName": "src/CheckSender.sol",
       "solcConfig": {
         "version": "0.8.25",
