@@ -28,7 +28,7 @@ contract Sherry is Ownable {
     mapping(uint256 => mapping(address => bool)) public s_votesByCampaign;
 
     event Voted(uint256 indexed idPost, address indexed voter);
-    event postCreated(uint256 indexed idPost, address indexed kol, uint256 indexed idCampaign, string url);
+    event PostCreated(uint256 indexed idPost, address indexed kol, uint256 indexed idCampaign, string url);
 
     constructor(address _brandContract, address _campaignContract, address _kolContract) Ownable(msg.sender) {
         require(_brandContract != address(0), "Invalid brand contract address");
@@ -46,7 +46,7 @@ contract Sherry is Ownable {
         Post memory post = Post({idKolCampaign: _idKolCampaign, kol: kol, idCampaign: idCampaign, url: _url});
         s_posts[idPost] = post;
         posts.push(post);
-        emit postCreated(idPost, kol, idCampaign, _url);
+        emit PostCreated(idPost, kol, idCampaign, _url);
     }
 
     function vote(uint256 _idPost) external returns (bool) {
