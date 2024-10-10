@@ -17,17 +17,20 @@ interface ISherry {
         string url;
     }
 
-    /// @notice Emitted when a vote is cast on a post.
-    /// @param idPost The ID of the post that was voted on.
-    /// @param voter The address of the voter.
+    /**
+     * @dev Emitted when a vote is cast on a post.
+     * @param idPost The ID of the post that was voted on.
+     * @param voter The address of the voter.
+     */
     event Voted(uint256 indexed idPost, address indexed voter);
-
-    /// @notice Emitted when a new post is created.
-    /// @param idPost The ID of the newly created post.
-    /// @param kol The address of the KOL who created the post.
-    /// @param idCampaign The ID of the campaign associated with the post.
-    /// @param url The URL of the newly created post.
-    event postCreated(uint256 indexed idPost, address indexed kol, uint256 indexed idCampaign, string url);
+    /**
+     * @dev Emitted when a new post is created.
+     * @param idPost The ID of the newly created post.
+     * @param kol The address of the Key Opinion Leader (KOL) who created the post.
+     * @param idCampaign The ID of the campaign associated with the post.
+     * @param url The URL of the post.
+     */
+    event PostCreated(uint256 indexed idPost, address indexed kol, uint256 indexed idCampaign, string url);
 
     /// @notice Creates a new post.
     /// @param _idKolCampaign The ID of the KOL campaign.

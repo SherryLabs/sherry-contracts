@@ -54,7 +54,7 @@ contract SherryTest is Test {
         // El KOL solo puede crear posts para el mismo
         sherry.createPost(idKolCampaign, url);
         vm.stopPrank();
-        sherry.vote(1);
+        sherry.vote(1, kolAddress);
         console.log(sherry.s_votes(1));
     }
 }
