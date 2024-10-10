@@ -49,14 +49,14 @@ contract Sherry is Ownable {
         emit PostCreated(idPost, kol, idCampaign, _url);
     }
 
-    function vote(uint256 _idPost) external returns (bool) {
+    function vote(uint256 _idPost, address _voter) external returns (bool) {
         require(s_posts[_idPost].idCampaign != 0, "post not found");
         uint256 idCampaign = s_posts[_idPost].idCampaign;
-        require(!s_votesByCampaign[idCampaign][msg.sender], "Already voted for this campaign");
-        s_votesByCampaign[idCampaign][msg.sender] = true;
-        s_votesFollowers[idPost][msg.sender] = true;
+        require(!s_votesByCampaign[idCampaign][_voter], "Already voted for this campaign");
+        s_votesByCampaign[idCampaign][_voter] = true;
+        s_votesFollowers[idPost][_voter] = true;
         s_votes[_idPost]++;
-        emit Voted(idPost, msg.sender);
+        emit Voted(idPost, _voter);
         return true;
     }
 
