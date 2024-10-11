@@ -31,9 +31,9 @@ contract KOLTest is Test {
         uint256 startDate = block.timestamp;
         uint256 endDate = block.timestamp + 1 days;
         campaign.createCampaign(1, "First Campaign", 100, startDate, endDate, uri);
-        kol.joinAsKol(kolAddress);
+        //kol.joinAsKol(kolAddress);
         uint256 idCampaign = campaign.idCampaign();
-        vm.prank(kolAddress);
+        //vm.prank(kolAddress);
         kol.addKolToCampaign(idCampaign, kolAddress);
     }
 }

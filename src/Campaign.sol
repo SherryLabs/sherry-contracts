@@ -30,11 +30,7 @@ contract Campaign is Ownable {
         uint256 endDate,
         string uri
     );
-    event CampaignUpdated(
-        uint256 indexed idCampaign,
-        string name,
-        uint256 amount
-    );
+    event CampaignUpdated(uint256 indexed idCampaign, string name, uint256 amount);
 
     constructor(address _brandContract) Ownable(msg.sender) {
         require(_brandContract != address(0), "Invalid brand contract address");
@@ -63,15 +59,7 @@ contract Campaign is Ownable {
             endDate: _endDate
         });
         s_campaigns[idCampaign] = campaign;
-        emit CampaignCreated(
-            idCampaign,
-            _idBrand,
-            _name,
-            _amount,
-            _startDate,
-            _endDate,
-            _uri
-        );
+        emit CampaignCreated(idCampaign, _idBrand, _name, _amount, _startDate, _endDate, _uri);
     }
 
     function updateCampaign(
@@ -92,46 +80,25 @@ contract Campaign is Ownable {
         emit CampaignUpdated(_idCampaign, _name, _amount);
     }
 
-    function getCampaignById(
-        uint256 _idCampaign
-    )
+    function getCampaignById(uint256 _idCampaign)
         external
         view
-        returns (
-            uint256,
-            uint256,
-            string memory,
-            uint256,
-            bool,
-            uint256,
-            uint256
-        )
+        returns (uint256, uint256, string memory, uint256, bool, uint256, uint256)
     {
         require(isValidCampaign(_idCampaign), "Campaign ID invalid");
         CampaignStruct memory c = s_campaigns[_idCampaign];
-        return (
-            c.idCampaign,
-            c.idBrand,
-            c.name,
-            c.amount,
-            c.active,
-            c.startDate,
-            c.endDate
-        );
+        return (c.idCampaign, c.idBrand, c.name, c.amount, c.active, c.startDate, c.endDate);
     }
 
     function isValidCampaign(uint256 _idCampaign) public view returns (bool) {
         CampaignStruct memory c = s_campaigns[_idCampaign];
-        require(_idCampaign <= idCampaign, "Invalid Campaign ID");
         require(c.idCampaign != 0, "Invalid Campaign");
         require(c.active, "Campaign inactive");
         require(block.timestamp <= c.endDate, "Campaign has ended");
         return true;
     }
 
-    function getUriCampaign(
-        uint256 _idCampaign
-    ) public view returns (string memory) {
+    function getUriCampaign(uint256 _idCampaign) public view returns (string memory) {
         require(isValidCampaign(_idCampaign), "Invalid campaign");
         return s_uriCampaign[_idCampaign];
     }

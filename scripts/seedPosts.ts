@@ -9,23 +9,24 @@ async function main() {
      * */
 
     // Direcciones de los contratos desplegados
-    const brandContractAddress = "0x61f1A83641BE8D38B64d6Dd8A9Ce27A790910AdB";
-    const campaignContractAddress = "0xAF8f574dFa31eAf30471C89b46e6a64993FAb5eF";
-    const kolContractAddress = "0xfECf01499487A8A4eC2A1fc5c0e7870ab09DE579";
-    const sherryContractAddress = "0xBcf74ca91C7af172ed1A2c973108C6bC086B4d63";
+    const brandContractAddress = "";
+    const campaignContractAddress = "";
+    const kolContractAddress = "";
+    const sherryContractAddress = "";
     // Obtener instancias de los contratos
     const brandContract = await hre.ethers.getContractAt("Brand", brandContractAddress);
     const campaignContract = await hre.ethers.getContractAt("Campaign", campaignContractAddress);
     const kolContract = await hre.ethers.getContractAt("KOL", kolContractAddress);
     const sherryContract = await hre.ethers.getContractAt("Sherry", sherryContractAddress);
 
+    /*
     const tx1 = await sherryContract.createPost(1, "https://ipfs.io/ipfs/bafkreid2lcublbqwekeerawqa5llh5jnthq4u34q4kdya5wdeo6a6ycohy");
     tx1.wait();
     console.log(`TX1 HASH : `, tx1.hash)
     const tx2 = await sherryContract.createPost(1, "https://ipfs.io/ipfs/bafkreihek5udso3upicyilyk3cq4e4ublthbktutcmswcuy2qrbjskk35y");
     tx2.wait();
     console.log(`TX2 HASH : `, tx2.hash)
-    /*
+    
     const tx3 = await sherryContract.createPost(1, "https://ipfs.io/ipfs/bafkreibmtmc76422p3zidu4pze5obejaemaes2sy5kshysw6x6rjb4nfl4");
     tx3.wait();
     console.log(`TX3 HASH : `, tx3.hash)

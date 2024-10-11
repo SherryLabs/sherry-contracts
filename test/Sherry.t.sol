@@ -41,7 +41,6 @@ contract SherryTest is Test {
     }
 
     function testVote() external {
-
         uint256 idKolCampaign = 1;
         address kolAddress = address(1337);
         string memory url = "https://";

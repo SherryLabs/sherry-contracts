@@ -141,10 +141,10 @@ npx hardhat ignition deploy ignition/modules/SherryProtocol.ts --network baseSep
 
 | **Contrato** | **Dirección** |
 |----------|-----------|
-| `Brand`    | 0x106267b9D291622325D76B64a22aB370E9f1C691 |
-| `Campaign` | 0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4 |
-| `KOL`      | 0xB8c3340221c9aE4B3Cad007846b54353c698D339 |
-| `Sherry`   | 0x4E83392C32a616e7393ECf620dc68314637E8C29 |
+| `Brand`    | 0x4c4E7Ccb6f12dEFd9bab322696f98870d48C9671 |
+| `Campaign` | 0x5B2FE538d2B2aEE2c5cC8404c3182c362E385Ed0 |
+| `KOL`      | 0x4E030A143F5Db8c8011a88382DbDcAEb274e8F64 |
+| `Sherry`   | 0xFE87967E46A7037Ad707B8b9C9cbd7014b51dAB8 |
 
 ## Seed Contract
 
