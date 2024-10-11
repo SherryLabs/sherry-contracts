@@ -54,9 +54,9 @@ contract Sherry is Ownable {
         uint256 idCampaign = s_posts[_idPost].idCampaign;
         require(!s_votesByCampaign[idCampaign][_voter], "Already voted for this campaign");
         s_votesByCampaign[idCampaign][_voter] = true;
-        s_votesFollowers[idPost][_voter] = true;
+        s_votesFollowers[_idPost][_voter] = true;
         s_votes[_idPost]++;
-        emit Voted(idPost, _voter);
+        emit Voted(_idPost, _voter);
         return true;
     }
 

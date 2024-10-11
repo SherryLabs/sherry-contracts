@@ -26,14 +26,20 @@ contract KOLTest is Test {
 
     function testAddKolToCampaign() public {
         brand.createBrand("First Name", address(this));
+        brand.createBrand("Second Name", address(this));
         address kolAddress = address(1337);
+        address kolAddress2 = address(1338);
         vm.warp(0);
         uint256 startDate = block.timestamp;
         uint256 endDate = block.timestamp + 1 days;
         campaign.createCampaign(1, "First Campaign", 100, startDate, endDate, uri);
+        campaign.createCampaign(2, "Second Campaign", 100, startDate, endDate, uri);
         //kol.joinAsKol(kolAddress);
         uint256 idCampaign = campaign.idCampaign();
         //vm.prank(kolAddress);
         kol.addKolToCampaign(idCampaign, kolAddress);
+        kol.addKolToCampaign(idCampaign, kolAddress2);
+        kol.addKolToCampaign(2, kolAddress2);
+
     }
 }
