@@ -13,6 +13,8 @@ contract SherryTest is Test {
     Campaign campaign;
     KOL kol;
 
+    string public uri = "https://";
+
     function setUp() public {
         brand = new Brand();
         campaign = new Campaign(address(brand));
@@ -27,7 +29,7 @@ contract SherryTest is Test {
         brand.createBrand("First Brand", msg.sender);
         uint256 startDate = block.timestamp;
         uint256 endDate = block.timestamp + 1 days;
-        campaign.createCampaign(1, "Nike", 100, startDate, endDate);
+        campaign.createCampaign(1, "Nike", 100, startDate, endDate, uri);
         kol.joinAsKol(kolAddress);
         // Se setea el KOL como el caller
         vm.startPrank(kolAddress);
@@ -39,13 +41,14 @@ contract SherryTest is Test {
     }
 
     function testVote() external {
+
         uint256 idKolCampaign = 1;
         address kolAddress = address(1337);
         string memory url = "https://";
         brand.createBrand("First Brand", msg.sender);
         uint256 startDate = block.timestamp;
         uint256 endDate = block.timestamp + 1 days;
-        campaign.createCampaign(1, "Nike", 100, startDate, endDate);
+        campaign.createCampaign(1, "Nike", 100, startDate, endDate, uri);
         kol.joinAsKol(kolAddress);
         // Se setea el KOL como el caller
         vm.startPrank(kolAddress);

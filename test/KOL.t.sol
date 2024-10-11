@@ -10,6 +10,8 @@ contract KOLTest is Test {
     Campaign campaign;
     KOL kol;
 
+    string public uri = "https://";
+
     function setUp() public {
         brand = new Brand();
         campaign = new Campaign(address(brand));
@@ -28,7 +30,7 @@ contract KOLTest is Test {
         vm.warp(0);
         uint256 startDate = block.timestamp;
         uint256 endDate = block.timestamp + 1 days;
-        campaign.createCampaign(1, "First Campaign", 100, startDate, endDate);
+        campaign.createCampaign(1, "First Campaign", 100, startDate, endDate, uri);
         kol.joinAsKol(kolAddress);
         uint256 idCampaign = campaign.idCampaign();
         vm.prank(kolAddress);

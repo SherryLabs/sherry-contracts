@@ -10,10 +10,10 @@ async function main() {
     const accounts = await hre.ethers.getSigners();
 
     // Direcciones de los contratos desplegados
-    const brandContractAddress = "0x106267b9D291622325D76B64a22aB370E9f1C691";
-    const campaignContractAddress = "0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4";
-    const kolContractAddress = "0xB8c3340221c9aE4B3Cad007846b54353c698D339";
-    const sherryContractAddress = "0x4E83392C32a616e7393ECf620dc68314637E8C29";
+    const brandContractAddress = "0x61f1A83641BE8D38B64d6Dd8A9Ce27A790910AdB";
+    const campaignContractAddress = "0xAF8f574dFa31eAf30471C89b46e6a64993FAb5eF";
+    const kolContractAddress = "0xfECf01499487A8A4eC2A1fc5c0e7870ab09DE579";
+    const sherryContractAddress = "0xBcf74ca91C7af172ed1A2c973108C6bC086B4d63";
 
     // Obtener instancias de los contratos
     const brandContract = await hre.ethers.getContractAt("Brand", brandContractAddress);
@@ -26,30 +26,43 @@ async function main() {
     const thirtyDaysInSeconds = 30 * 24 * 60 * 60 + (timestamp);
 
     // Crear Nueva Brand
-    const nikeBrandTx = await brandContract.createBrand("Adidas", accounts[0])
-    nikeBrandTx.wait();
-    console.log(`Nike brand tx hash : ${nikeBrandTx.hash}`);
+    const adidasTx = await brandContract.createBrand("Adidas", accounts[0])
+    adidasTx.wait();
+    console.log(`Adidas brand tx hash : ${adidasTx.hash}`);
 
-    const adidasBrandTx = await brandContract.createBrand("Adidas", accounts[0])
-    adidasBrandTx.wait();
-    console.log(`Adidas brand tx hash : ${adidasBrandTx.hash}`);
+    const baseTx = await brandContract.createBrand("Base", accounts[0])
+    baseTx.wait();
+    console.log(`Base brand tx hash : ${baseTx.hash}`);
 
-    const sonyBrandTx = await brandContract.createBrand("SONY", accounts[0])
-    sonyBrandTx.wait();
-    console.log(`Sony brand tx hash : ${sonyBrandTx.hash}`);
+    const zaraTx = await brandContract.createBrand("Zara", accounts[0])
+    zaraTx.wait();
+    console.log(`Zara brand tx hash : ${zaraTx.hash}`);
+
+    const nikeTx = await brandContract.createBrand("Nike", accounts[0])
+    nikeTx.wait();
+    console.log(`Nike brand tx hash : ${nikeTx.hash}`);
 
     // Crear una nueva campaña
-    const newJordantx = await campaignContract.createCampaign(1, "Nike Jordan", 100, timestamp, thirtyDaysInSeconds);
-    await newJordantx.wait();
-    console.log(`Nike Jordan campaign tx hash : ${newJordantx.hash}`);
-    
-    const newMessiTx = await campaignContract.createCampaign(2, "Messi Campaign", 1000, timestamp, thirtyDaysInSeconds);
-    await newMessiTx.wait();
-    console.log(`Messi campaign tx hash : ${newMessiTx.hash}`);
+    const adidasUri= "https://ipfs.io/ipfs/QmdVeogsHnrtCS7ekFUYwR9ChzYeT62BxE21u2z3x7NqqY/adidas.jpg"
+    const baseUri = "https://ipfs.io/ipfs/QmdVeogsHnrtCS7ekFUYwR9ChzYeT62BxE21u2z3x7NqqY/base.jpg"
+    const zaraUri = "https://ipfs.io/ipfs/QmdVeogsHnrtCS7ekFUYwR9ChzYeT62BxE21u2z3x7NqqY/zara.jpg"
+    const nikeUri = "https://ipfs.io/ipfs/QmdVeogsHnrtCS7ekFUYwR9ChzYeT62BxE21u2z3x7NqqY/nike.jpg"
 
-    const newGalaxyTx = await campaignContract.createCampaign(3, "Galaxy S20", 10000, timestamp, thirtyDaysInSeconds);
-    await newGalaxyTx.wait();
-    console.log(`Galaxy campaign tx hash : ${newGalaxyTx.hash}`);
+    const adidasCampaignTx = await campaignContract.createCampaign(1, "Adidas Originals", 100, timestamp, thirtyDaysInSeconds, adidasUri);
+    await adidasCampaignTx.wait();
+    console.log(`Nike Jordan campaign tx hash : ${adidasCampaignTx.hash}`);
+    
+    const baseCampaignTx = await campaignContract.createCampaign(2, "Base Summer Hackathon", 1000, timestamp, thirtyDaysInSeconds, baseUri);
+    await baseCampaignTx.wait();
+    console.log(`Messi campaign tx hash : ${baseCampaignTx.hash}`);
+
+    const zaraCampaignTx = await campaignContract.createCampaign(3, "Zara Spring Collection", 10000, timestamp, thirtyDaysInSeconds, zaraUri);
+    await zaraCampaignTx.wait();
+    console.log(`Galaxy campaign tx hash : ${zaraCampaignTx.hash}`);
+
+    const nikeCampaignTx = await campaignContract.createCampaign(4, "Nike Jordan 90's", 10000, timestamp, thirtyDaysInSeconds, nikeUri);
+    await nikeCampaignTx.wait();
+    console.log(`Galaxy campaign tx hash : ${nikeCampaignTx.hash}`);
 }
 
 main().catch((error) => {

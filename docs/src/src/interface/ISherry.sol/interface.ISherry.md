@@ -1,5 +1,5 @@
 # ISherry
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/4825c77c24e2a3747feff5968c1175f48f09a0aa/src/interface/ISherry.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/9d26903f83c0635ecf45d14ba507282d6c274a85/src/interface/ISherry.sol)
 
 This interface defines the structure and events for the Sherry contract.
 

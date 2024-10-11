@@ -33,7 +33,7 @@ contract KOL is Ownable {
     }
 
     function addKolToCampaign(uint256 _idCampaign, address _kol) external {
-        require(s_kols[_kol], "Invalid KOL");
+        //require(s_kols[_kol], "Invalid KOL");
         bool isValidCampaign = s_campaignContract.isValidCampaign(_idCampaign);
         require(isValidCampaign, "Invalid campaign");
 

@@ -1,5 +1,5 @@
 # Campaign
-[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/4825c77c24e2a3747feff5968c1175f48f09a0aa/src/Campaign.sol)
+[Git Source](https://github.com/SherryLabs/sherry-contracts/blob/9d26903f83c0635ecf45d14ba507282d6c274a85/src/Campaign.sol)
 
 **Inherits:**
 Ownable
@@ -27,6 +27,13 @@ mapping(uint256 => CampaignStruct) public s_campaigns;
 ```
 
 
+### s_uriCampaign
+
+```solidity
+mapping(uint256 => string) public s_uriCampaign;
+```
+
+
 ## Functions
 ### constructor
 
@@ -39,9 +46,14 @@ constructor(address _brandContract) Ownable(msg.sender);
 
 
 ```solidity
-function createCampaign(uint256 _idBrand, string memory _name, uint256 _amount, uint256 _startDate, uint256 _endDate)
-    external
-    onlyOwner;
+function createCampaign(
+    uint256 _idBrand,
+    string memory _name,
+    uint256 _amount,
+    uint256 _startDate,
+    uint256 _endDate,
+    string memory _uri
+) external onlyOwner;
 ```
 
 ### updateCampaign
@@ -69,11 +81,26 @@ function getCampaignById(uint256 _idCampaign)
 function isValidCampaign(uint256 _idCampaign) public view returns (bool);
 ```
 
+### getUriCampaign
+
+
+```solidity
+function getUriCampaign(uint256 _idCampaign) public view returns (string memory);
+```
+
 ## Events
 ### CampaignCreated
 
 ```solidity
-event CampaignCreated(uint256 indexed idCampaign, uint256 indexed idBrand, string name, uint256 amount);
+event CampaignCreated(
+    uint256 indexed idCampaign,
+    uint256 indexed idBrand,
+    string name,
+    uint256 amount,
+    uint256 startDate,
+    uint256 endDate,
+    string uri
+);
 ```
 
 ### CampaignUpdated
