@@ -51,8 +51,8 @@ Este enfoque permite una comunicación flexible y dinámica entre contratos en d
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
-| SL1Sender     | 0x76ceB8017741c7fEAcae7D1179b0d3eB4151dcc4   | sL1    |
-| SL1AnyChainReceiver     | 0x6329dDC217c67718F850657dF9E50025aC0c8dba   | Dispatch L1    |
+| `SL1Sender`     | 0x76ceB8017741c7fEAcae7D1179b0d3eB4151dcc4   | `sL1`    |
+| `SL1AnyChainReceiver`     | 0x6329dDC217c67718F850657dF9E50025aC0c8dba   | `Dispatch L1`    |
 
 
 
