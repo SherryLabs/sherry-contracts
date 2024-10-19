@@ -26,6 +26,7 @@ async function main() {
     const thirtyDaysInSeconds = 30 * 24 * 60 * 60 + (timestamp);
 
     // Crear Nueva Brand
+    /*
     const adidasTx = await brandContract.createBrand("Adidas", accounts[0])
     adidasTx.wait();
     console.log(`Adidas brand tx hash : ${adidasTx.hash}`);
@@ -41,6 +42,7 @@ async function main() {
     const nikeTx = await brandContract.createBrand("Nike", accounts[0])
     nikeTx.wait();
     console.log(`Nike brand tx hash : ${nikeTx.hash}`);
+    */
 
     // Crear una nueva campaña
     const adidasUri= "https://ipfs.io/ipfs/QmbuLMFweibrZRbyJtFcCnf8oUEkgXfxHdQPamemkZc4uR/1.json"
@@ -48,6 +50,18 @@ async function main() {
     const zaraUri = "https://ipfs.io/ipfs/QmbuLMFweibrZRbyJtFcCnf8oUEkgXfxHdQPamemkZc4uR/2.json"
     const nikeUri = "https://ipfs.io/ipfs/QmbuLMFweibrZRbyJtFcCnf8oUEkgXfxHdQPamemkZc4uR/4.json"
 
+    const baseCreator = "https://ipfs.io/ipfs/QmXk2YwMXpg5zTGQ75saXbZyHsYo4TKy2TYxSQUtRw8Zuo"
+    const baseWallet = "https://ipfs.io/ipfs/QmQYLkZ3dz6i6BGFY9xWQDaKe38L4Nsig8Hwp7B32X2Yek"
+
+    const baseCreatorTx = await await campaignContract.createCampaign(1, "Coinbase Creator Challenge - Master the Ecosystem", 100, timestamp, thirtyDaysInSeconds, baseCreator);
+    await baseCreatorTx.wait();
+    console.log(`Base Creator campaign tx hash : ${baseCreatorTx.hash}`);
+
+    const baseWalletTx = await await campaignContract.createCampaign(1, "Empower Your Business with Coinbase Wallet", 100, timestamp, thirtyDaysInSeconds, baseWallet);
+    await baseWalletTx.wait();
+    console.log(`Base Wallet campaign tx hash : ${baseWalletTx.hash}`);
+
+    /*
     const adidasCampaignTx = await campaignContract.createCampaign(1, "Adidas Originals", 100, timestamp, thirtyDaysInSeconds, adidasUri);
     await adidasCampaignTx.wait();
     console.log(`Nike Jordan campaign tx hash : ${adidasCampaignTx.hash}`);
@@ -63,6 +77,7 @@ async function main() {
     const nikeCampaignTx = await campaignContract.createCampaign(4, "Nike Jordan 90's", 10000, timestamp, thirtyDaysInSeconds, nikeUri);
     await nikeCampaignTx.wait();
     console.log(`Galaxy campaign tx hash : ${nikeCampaignTx.hash}`);
+    */
 }
 
 main().catch((error) => {
