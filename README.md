@@ -44,4 +44,16 @@ En este ejemplo, se envía un mensaje para ejecutar la función `someFunction` e
 
 Este enfoque permite una comunicación flexible y dinámica entre contratos en diferentes blockchains, facilitando la interoperabilidad cross-chain.
 
+# Contract Addresses
+
+
+## Contract Addresses
+
+| Contract Name | Address                                      | Chain  |
+|---------------|----------------------------------------------|--------|
+| SL1Sender     | 0x76ceB8017741c7fEAcae7D1179b0d3eB4151dcc4   | sL1    |
+
+
+
+
 

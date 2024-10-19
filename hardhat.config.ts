@@ -12,10 +12,14 @@ if (!deployer) {
 
 const config: HardhatUserConfig = {
   solidity: "0.8.25",
+  ignition: { 
+    requiredConfirmations: 1,
+  },
   networks: { 
     sl1Testnet: { 
-      url: ``,
+      url: `https://subnets.avax.network/sl1/testnet/rpc`,
       accounts: [deployer],
+      chainId: 3030
     },
     avalancheFuji: { 
       url: "https://api.avax-test.network/ext/bc/C/rpc",
@@ -29,6 +33,7 @@ const config: HardhatUserConfig = {
       url: "https://subnets.avax.network/dispatch/testnet/rpc",
       accounts: [deployer],
     },
+
   },
 };
 
