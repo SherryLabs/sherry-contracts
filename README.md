@@ -59,7 +59,6 @@ Examples
 | `Greeting`     | 0x2f4462dab28A090B4BEF9906CCd6bBd803D3E21c   | `Dispatch L1`    |
 
 
-
 ## Chains Data
 
 | L1 Name | ID | type |
