@@ -48,11 +48,16 @@ Este enfoque permite una comunicación flexible y dinámica entre contratos en d
 ## Contract Addresses
 
 
-
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1Sender`     | 0x76ceB8017741c7fEAcae7D1179b0d3eB4151dcc4   | `sL1`    |
 | `SL1AnyChainReceiver`     | 0x6329dDC217c67718F850657dF9E50025aC0c8dba   | `Dispatch L1`    |
+
+## Chains Data
+
+| L1 Name | ID | type |
+|---------|----|------|
+|Dispatch | 0xdb76a6c20fd0af4851417c79c479ebb1e91b3d4e7e57116036d203e3692a0856| hex
 
 
 
