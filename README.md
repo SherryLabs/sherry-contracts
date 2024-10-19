@@ -7,14 +7,13 @@ Este contrato se utiliza para enviar cualquier mensaje a cualquier L1. Permite e
 ### Main Function - `sendMessage`
 
 ```solidity
-
-function sendMessage(
+    function sendMessage(
         address _destinationContract,
-        bytes4 _functionSig,
-        bytes memory _params,
+        bytes calldata _encodedFunctionCall,
+        address _destinationAdress,
         bytes32 _destinationChain,
         uint256 _gasLimit
-    ) public { }
+    ) public {}
 ```
 
 #### Descripción de la función
@@ -24,27 +23,24 @@ La función `sendMessage` permite enviar un mensaje codificado a través de un p
 #### Parámetros
 
 - `address _destinationContract`: La dirección del contrato en la blockchain de destino donde se ejecutará la función.
-- `bytes4 _functionSig`: La firma de la función que se desea ejecutar en el contrato de destino. Esta firma se obtiene utilizando abi.encodeWithSignature.
-
-- `bytes memory _params`: Los parámetros codificados que se pasarán a la función del contrato de destino. Estos parámetros deben estar codificados utilizando abi.encode.
-
+- `bytes calldata _encodedFunctionCall`: La llamada de función codificada que incluye la firma de la función y los parámetros. Esta llamada debe estar codificada utilizando abi.encodeWithSignature o abi.encodePacked.
+- `address _destinationAddress`: La dirección del contrato en la blockchain de destino que recibirá el mensaje.
 - `bytes32 _destinationChain`: El identificador de la blockchain de destino. Este identificador es específico del protocolo cross-chain que se esté utilizando.
-
 - `uint256 _gasLimit`: El límite de gas que se asignará para la ejecución de la función en la blockchain de destino. Este valor debe ser suficiente para cubrir el costo de la ejecución de la función.
 
 #### Ejemplo de Uso
 
 ```solidity
 address destinationContract = 0x1234567890abcdef1234567890abcdef12345678;
-bytes4 functionSig = bytes4(keccak256("someFunction(uint256,address)"));
-bytes memory params = abi.encode(42, 0xabcdefabcdefabcdefabcdefabcdefabcdef);
+bytes memory encodedFunctionCall = abi.encodeWithSignature("someFunction(uint256,address)", 42, 0xabcdefabcdefabcdefabcdefabcdefabcdef);
+address destinationAddress = 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdef;
 bytes32 destinationChain = 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef;
 uint256 gasLimit = 200000;
 
-SL1Sender.sendMessage(destinationContract, functionSig, params, destinationChain, gasLimit);
+SL1Sender.sendMessage(destinationContract, encodedFunctionCall, destinationAddress, destinationChain, gasLimit);
 ```
 
-En este ejemplo, se envía un mensaje para ejecutar la función `someFunction` en el contrato de destino con los parámetros `42` y `0xabcdefabcdefabcdefabcdefabcdefabcdef`. El mensaje se envía a la blockchain de destino especificada por `destinationChain` con un límite de gas de `200000`.
+En este ejemplo, se envía un mensaje para ejecutar la función `someFunction` en el contrato de destino con los parámetros `42` y `0xabcdefabcdefabcdefabcdefabcdefabcdef`. El mensaje se envía a la dirección del contrato de destino especificada por `destinationAddress` en la blockchain de destino especificada por `destinationChain` con un límite de gas de `200000`.
 
 Este enfoque permite una comunicación flexible y dinámica entre contratos en diferentes blockchains, facilitando la interoperabilidad cross-chain.
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
-import {ITeleporterMessenger} from "../teleporter/contracts/teleporter/ITeleporterMessenger.sol";
+import "../teleporter/contracts/teleporter/ITeleporterMessenger.sol";
 
 contract SL1Sender {
     //ITeleporterMessenger public immutable messenger =
@@ -13,49 +13,43 @@ contract SL1Sender {
     // Dispatch Blockcchain: 0x9f3be606497285d0ffbb5ac9ba24aa60346a9b1812479ed66cb329f394a4b1c7
     function sendMessage(
         address _destinationContract,
-        bytes4 _functionSig,
-        bytes memory _params,
+        bytes calldata _encodedFunctionCall,
+        address _destinationAdress,
         bytes32 _destinationChain,
         uint256 _gasLimit
     ) public {
-        bytes memory encodedFunctionCall = createArbitraryMessage(
+        bytes memory functionCall = createArbitraryMessage(
             _destinationContract,
-            _functionSig,
-            _params,
-            _destinationChain,
-            _gasLimit
+            _encodedFunctionCall
         );
 
         messenger.sendCrossChainMessage(
             TeleporterMessageInput({
                 destinationBlockchainID: _destinationChain, //0x9f3be606497285d0ffbb5ac9ba24aa60346a9b1812479ed66cb329f394a4b1c7, //bytes32
-                destinationAddress: _receiver,
+                destinationAddress: _destinationAdress,
                 feeInfo: TeleporterFeeInfo({
                     feeTokenAddress: address(0),
                     amount: 0
                 }),
                 requiredGasLimit: _gasLimit,
-                allowedRelayerAddresses: [],
-                message: encodedFunctionCall
+                allowedRelayerAddresses: new address[](0),
+                message: functionCall
             })
         );
     }
 
     function createArbitraryMessage(
         address _destinationContract,
-        bytes4 _functionSig,
-        bytes memory _params,
-        bytes32 _destinationChain,
-        uint256 _gasLimit
+        bytes memory _encodedFunctionCall
     ) public returns (bytes memory) {
-        bytes memory encodedFunctionCall = abi.encodePacked(
-            _functionSig,
-            _params
-        );
         bytes memory message = abi.encode(
             _destinationContract,
-            encodedFunctionCall
+            _encodedFunctionCall
         );
         return message;
+    }
+
+    function updateMessenger(address _newMessenger) public {
+        messenger = ITeleporterMessenger(_newMessenger);
     }
 }
