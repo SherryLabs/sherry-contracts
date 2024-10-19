@@ -2,13 +2,14 @@
 pragma solidity ^0.8.25;
 
 contract Greeting {
-    string public greeting;
-
-    constructor(string memory _greeting) {
-        greeting = _greeting;
-    }
+    string public s_greeting;
+    uint256 public s_counter;
 
     function setGreeting(string memory _greeting) public {
-        greeting = _greeting;
+        s_greeting = _greeting;
+    }
+
+    function setCounter(uint256 _counter) public {
+        s_counter = _counter;
     }
 }
