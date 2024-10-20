@@ -66,6 +66,7 @@ Examples
 | `Greeting`     | `0x2b9c3919846d45aec67aEc9e59616a23fdb53f96`   | `Fuji`    |
 
 | Contract Name | Address                                      | Chain  |
+|---------------|----------------------------------------------|--------|
 | `NFTGunzilla`     | `0x4A38545e805e62532282b0f04B200019A79a790d`   | `Dispatch L1`    |
 
 | Contract Name | Address                                      | Chain  |
