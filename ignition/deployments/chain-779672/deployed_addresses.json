@@ -1,3 +1,5 @@
 {
-  "SL1AnyChainReceiverModule#SL1AnyChainReceiver": "0x76c3cF8521b5B1cfddF6c17E7bBe1d3f4dC9Ee14"
+  "SL1AnyChainReceiverModule#SL1AnyChainReceiver": "0x76c3cF8521b5B1cfddF6c17E7bBe1d3f4dC9Ee14",
+  "SL1SenderModule#SL1Sender": "0xC88845285454F59849537e5f911738ccD05f9681",
+  "NFTGunzillaModule#NFTGunzilla": "0x4A38545e805e62532282b0f04B200019A79a790d"
 }

@@ -49,21 +49,31 @@ Este enfoque permite una comunicación flexible y dinámica entre contratos en d
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1Sender`     | `0x76ceB8017741c7fEAcae7D1179b0d3eB4151dcc4`   | `sL1`    |
-| `SL1Sender`     | ``   | `Dispatch L1`    | XX
+| `SL1Sender`     | `0x4f34C7119c1C918c606792D8a481D915D845DD2E`   | `sL1`    |
+| `SL1Sender`     | `0xC88845285454F59849537e5f911738ccD05f9681`   | `Dispatch L1`    | 
 | `SL1Sender`     | `0x59c80C541F6c065fb56EF25F87b1Fa8b58BEFaC1`   | `Fuji`    |
-| `SL1AnyChainReceiver`     | `0x76c3cF8521b5B1cfddF6c17E7bBe1d3f4dC9Ee14`   | `Dispatch L1`    | XX
-| `SL1AnyChainReceiver`     | ``   | `Fuji`    |
+
+| Contract Name | Address                                      | Chain  |
+|---------------|----------------------------------------------|--------|
+| `SL1AnyChainReceiver`     | `0x76c3cF8521b5B1cfddF6c17E7bBe1d3f4dC9Ee14`   | `Dispatch L1`    | 
+| `SL1AnyChainReceiver`     | `0x0fD3820e2255AA876797BBACE02c519f9B0A824f`   | `Fuji`    |
 
 Examples
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
 | `Greeting`     | `0x212b6dAC5cB691Bc4AD5228627BC3A1Ab4C7A5b6`   | `Dispatch L1`    |
-| `Greeting`     | ``   | `Fuji`    |
+| `Greeting`     | `0x2b9c3919846d45aec67aEc9e59616a23fdb53f96`   | `Fuji`    |
+
+| Contract Name | Address                                      | Chain  |
+| `NFTGunzilla`     | `0x4A38545e805e62532282b0f04B200019A79a790d`   | `Dispatch L1`    |
+
+| Contract Name | Address                                      | Chain  |
+|---------------|----------------------------------------------|--------|
+| `CCIPSender`     | ``   | `Fuji`    |
 
 
-## Chains Data
+## Chain Data
 
 | L1 Name | ID | type |
 |---------|----|------|
