@@ -78,7 +78,7 @@ NFTGunzilla to mint an NFT representing a weapon in the Gunzilla Game.
 |---------------|----------------------------------------------|--------|
 | `NFTGunzilla`     | `0x4A38545e805e62532282b0f04B200019A79a790d`   | `Dispatch L1`    |
 
-CCIP sender to send USDC using our SDK.
+CCIP sender to send USDC using our SDK and Chainlink CCIP.
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
