@@ -16,14 +16,17 @@ contract CCIPSenderMiniApp  {
     IERC20 private s_linkToken;
     IRouterClient private s_router;
 
+    // Values hardcoded for the hackathon
+    // Only Allowing transfers to Polygon Amoy
+    uint64 public constant s_destinationChainSelector = 16281711391670634445;
+
     // This contract will be deployed on Avax Fuji
     constructor(address _router, address _link)  {
         s_linkToken = IERC20(_link);
         s_router = IRouterClient(_router);
     }
 
-    function sendMessagePayLINK(
-        uint64 _destinationChainSelector,
+    function transferUSDC(
         address _receiver,
         address _token,
         uint256 _amount
@@ -38,7 +41,7 @@ contract CCIPSenderMiniApp  {
             address(s_linkToken)
         );
 
-        uint256 fees = s_router.getFee(_destinationChainSelector, evm2AnyMessage);
+        uint256 fees = s_router.getFee(s_destinationChainSelector, evm2AnyMessage);
        
         if (fees > s_linkToken.balanceOf(address(this)))
             revert NotEnoughBalance(s_linkToken.balanceOf(address(this)), fees);
@@ -49,7 +52,7 @@ contract CCIPSenderMiniApp  {
         s_linkToken.approve(address(s_router), fees);                    
         IERC20(_token).approve(address(s_router), _amount); 
        
-        messageId = s_router.ccipSend(_destinationChainSelector, evm2AnyMessage);        
+        messageId = s_router.ccipSend(s_destinationChainSelector, evm2AnyMessage);        
         return messageId;
     }
 
