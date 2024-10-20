@@ -82,7 +82,7 @@ CCIP sender to send USDC using our SDK and Chainlink CCIP.
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
-| `CCIPSender`     | ``   | `Fuji`    |
+| `CCIPSender`     | `0x06775Ad5D4a02ab67413c864A0A013A738cD493F`   | `Fuji`    |
 
 ## Chain Data
 
