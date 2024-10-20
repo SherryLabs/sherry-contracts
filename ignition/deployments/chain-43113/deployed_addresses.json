@@ -1,5 +1,3 @@
 {
-  "SL1SenderModule#SL1Sender": "0x7204bdd163A7ACBc6125Bab0a4EA87ebb168ea12",
-  "GreetingModule#Greeting": "0x043135e9dF9f74B9C4580273C418B44fA8896726",
-  "SL1AnyChainReceiverModule#SL1AnyChainReceiver": "0x06028Dc2256Cd3b15Be5c600fB3996E59839bE0B"
+  "SL1SenderModule#SL1Sender": "0x972A78103af2647f38AA4D7d67bF06FF79bc63C0"
 }
