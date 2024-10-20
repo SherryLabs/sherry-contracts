@@ -8,6 +8,8 @@ contract SL1AnyChainReceiver is ITeleporterReceiver {
     event ErrorMessage(string message);
 
     function receiveTeleporterMessage(
+        bytes32,
+        address,
         bytes calldata message
     ) external {
         (address targetContract, bytes memory encodedFunctionCall) = abi.decode(
@@ -15,7 +17,9 @@ contract SL1AnyChainReceiver is ITeleporterReceiver {
             (address, bytes)
         );
 
-        (bool success, bytes memory returnData) = targetContract.call(encodedFunctionCall);
+        (bool success, bytes memory returnData) = targetContract.call(
+            encodedFunctionCall
+        );
 
         if (!success) {
             emit ErrorMessage(_getRevertMsg(returnData));

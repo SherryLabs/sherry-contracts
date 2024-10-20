@@ -50,9 +50,9 @@ Este enfoque permite una comunicación flexible y dinámica entre contratos en d
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1Sender`     | `0x76ceB8017741c7fEAcae7D1179b0d3eB4151dcc4`   | `sL1`    |
-| `SL1Sender`     | `0x972A78103af2647f38AA4D7d67bF06FF79bc63C0`   | `Dispatch L1`    | XX
-| `SL1Sender`     | `0x972A78103af2647f38AA4D7d67bF06FF79bc63C0`   | `Fuji`    |
-| `SL1AnyChainReceiver`     | `0x06028Dc2256Cd3b15Be5c600fB3996E59839bE0B`   | `Dispatch L1`    | XX
+| `SL1Sender`     | ``   | `Dispatch L1`    | XX
+| `SL1Sender`     | `0x59c80C541F6c065fb56EF25F87b1Fa8b58BEFaC1`   | `Fuji`    |
+| `SL1AnyChainReceiver`     | `0x76c3cF8521b5B1cfddF6c17E7bBe1d3f4dC9Ee14`   | `Dispatch L1`    | XX
 | `SL1AnyChainReceiver`     | ``   | `Fuji`    |
 
 Examples
@@ -67,7 +67,7 @@ Examples
 
 | L1 Name | ID | type |
 |---------|----|------|
-| `Dispatch` | `0xdb76a6c20fd0af4851417c79c479ebb1e91b3d4e7e57116036d203e3692a0856` | hex
+| `Dispatch` | `0x9f3be606497285d0ffbb5ac9ba24aa60346a9b1812479ed66cb329f394a4b1c7` | hex
 | `C-chain` | `0xdb76a6c20fd0af4851417c79c479ebb1e91b3d4e7e57116036d203e3692a0856` | hex
 
 
