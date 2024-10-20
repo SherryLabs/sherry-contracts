@@ -1,6 +1,3 @@
 {
-  "SL1SenderModule#SL1Sender": "0x59c80C541F6c065fb56EF25F87b1Fa8b58BEFaC1",
-  "GreetingModule#Greeting": "0x2b9c3919846d45aec67aEc9e59616a23fdb53f96",
-  "SL1AnyChainReceiverModule#SL1AnyChainReceiver": "0x0fD3820e2255AA876797BBACE02c519f9B0A824f",
-  "CCIPSenderModule#CCIPSenderMiniApp": "0x06775Ad5D4a02ab67413c864A0A013A738cD493F"
+  "CCIPSenderModule#CCIPSenderMiniApp": "0xc88636a35047cF10E74036DB8BD444Fe3eA276BD"
 }
