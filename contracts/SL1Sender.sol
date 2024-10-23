@@ -53,7 +53,7 @@ contract SL1Sender {
     function createArbitraryMessage(
         address _contractToBeCalled,
         bytes memory _encodedFunctionCall
-    ) public returns (bytes memory) {
+    ) public pure returns (bytes memory) {
         // Encode the destination contract address and the function call into a single message
         bytes memory message = abi.encode(
             _contractToBeCalled,
