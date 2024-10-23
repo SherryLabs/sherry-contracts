@@ -6,10 +6,8 @@ import {Client} from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.s
 import {IERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol";
 
-
 error NotEnoughBalance(uint256 currentBalance, uint256 calculatedFees);
-// 6 decimal places
-// 1 USDC = 100000
+
 contract CCIPSenderMiniApp  {
     using SafeERC20 for IERC20;
 
