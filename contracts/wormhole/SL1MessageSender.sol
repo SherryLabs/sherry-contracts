@@ -1,7 +1,7 @@
 // SPDX-license-Identifier: MIT
 pragma solidity ^0.8.25;
 
-import "wormhole-solidity-sdk/interfaces/IWormholeRelayer.sol";
+import "../../lib/wormhole-solidity-sdk/src/interfaces/IWormholeRelayer.sol";
 
 contract SL1MessageSender {
     IWormholeRelayer public s_wormholeRelayer;
@@ -11,30 +11,18 @@ contract SL1MessageSender {
         s_wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
     }
 
-    function quoteCrossChainCost(
-        uint16 _targetChain
-    ) public view returns (uint256 cost) {
-        (cost, ) = s_wormholeRelayer.quoteEVMDeliveryPrice(
-            _targetChain,
-            0,
-            GAS_LIMIT
-        );
+    function quoteCrossChainCost(uint16 _targetChain) public view returns (uint256 cost) {
+        (cost,) = s_wormholeRelayer.quoteEVMDeliveryPrice(_targetChain, 0, GAS_LIMIT);
     }
 
-    function sendMessage(
-        uint16 _targetChain,
-        address _targetAddress,
-        string calldata _message
-        //bytes memory _payload,
-        //uint256 _gasLimit
-    ) external payable {
+    function sendMessage(uint16 _targetChain, address _targetAddress, string calldata _message)
+        external
+        payable //bytes memory _payload,
+    //uint256 _gasLimit
+    {
         uint256 cost = quoteCrossChainCost(_targetChain);
         s_wormholeRelayer.sendPayloadToEvm{value: cost}(
-            _targetChain,
-            _targetAddress,
-            abi.encode(_message, msg.sender),
-            0,
-            GAS_LIMIT
+            _targetChain, _targetAddress, abi.encode(_message, msg.sender), 0, GAS_LIMIT
         );
     }
 }

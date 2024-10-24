@@ -7,17 +7,14 @@ contract NFTGunzilla is ERC721 {
     uint256 private _nextTokenId;
     string private uri = "https://ipfs.io/ipfs/QmVtJ2HkKNeJaxpZtmnNuH7DeLzTYkkRjRym2dMk4Z74Wm";
 
-    constructor()
-        ERC721("NFTGunzilla", "GUN")
-        
-    {}
+    constructor() ERC721("NFTGunzilla", "GUN") {}
 
-    function safeMint(address to) public  {
+    function safeMint(address to) public {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
     }
 
-    function tokenURI(uint256 _tokenId) public view override returns(string memory){
+    function tokenURI(uint256 _tokenId) public view override returns (string memory) {
         return uri;
-    } 
+    }
 }

@@ -1,10 +1,10 @@
 // SPDX-license-Identifier: MIT
 pragma solidity ^0.8.25;
 
-import "wormhole-solidity-sdk/interfaces/IWormholeRelayer.sol";
-import "wormhole-solidity-sdk/interfaces/IWormholeReceiver.sol";
+import "../../lib/wormhole-solidity-sdk/src/interfaces/IWormholeRelayer.sol";
+import "../../lib/wormhole-solidity-sdk/src/interfaces/IWormholeReceiver.sol";
 
-contract SL1AnyReceiver is IWormholeReceiver {
+contract SL1MessageAnyReceiver is IWormholeReceiver {
     IWormholeRelayer public s_wormholeRelayer;
     address public s_registrationOwner;
 
@@ -19,21 +19,12 @@ contract SL1AnyReceiver is IWormholeReceiver {
     }
 
     modifier isRegisteredSender(uint16 sourceChain, bytes32 sourceAddress) {
-        require(
-            s_registeredSenders[sourceChain] == sourceAddress,
-            "Sender not registered"
-        );
+        require(s_registeredSenders[sourceChain] == sourceAddress, "Sender not registered");
         _;
     }
 
-    function setRegisteredSender(
-        uint16 sourceChain,
-        bytes32 sourceAddress
-    ) external {
-        require(
-            msg.sender == s_registrationOwner,
-            "Only the registration owner can set the sender"
-        );
+    function setRegisteredSender(uint16 sourceChain, bytes32 sourceAddress) external {
+        require(msg.sender == s_registrationOwner, "Only the registration owner can set the sender");
         s_registeredSenders[sourceChain] = sourceAddress;
     }
 
@@ -44,15 +35,9 @@ contract SL1AnyReceiver is IWormholeReceiver {
         uint16 sourceChain,
         bytes32
     ) public payable override isRegisteredSender(sourceChain, sourceAddress) {
-        require(
-            msg.sender == address(s_wormholeRelayer),
-            "Only the Wormhole Relayer can call this function"
-        );
+        require(msg.sender == address(s_wormholeRelayer), "Only the Wormhole Relayer can call this function");
 
-        (string memory message, address sender) = abi.decode(
-            payload,
-            (string, address)
-        );
+        (string memory message, address sender) = abi.decode(payload, (string, address));
 
         if (sourceChain != 0) {
             emit SourceChainLogged(sourceChain, sender);

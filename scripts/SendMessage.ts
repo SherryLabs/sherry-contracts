@@ -17,19 +17,19 @@ async function main() {
 
     try {
         const tx = await senderContract.sendMessage(
-            '0x043135e9dF9f74B9C4580273C418B44fA8896726', 
+            '0x043135e9dF9f74B9C4580273C418B44fA8896726',
             '0xa4136862000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000013100000000000000000000000000000000000000000000000000000000000000',
             '0x06028Dc2256Cd3b15Be5c600fB3996E59839bE0B',
             '0x7fc93d85c6d62c5b2ac0b519c87010ea5294012d1e407030d6acd0021cac10d5',
             BigInt(200000)
         );
-    
+
         await tx.wait();
 
         console.log("Transaction sent : ", tx);
     } catch (error) {
         console.log("Error : ", error);
-        
+
     }
 
 }

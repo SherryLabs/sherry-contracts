@@ -12,9 +12,11 @@ if (!deployer) {
 
 const config: HardhatUserConfig = {
   solidity: "0.8.25",
+  /*
   ignition: { 
     requiredConfirmations: 1,
   },
+  */
   networks: { 
     sl1Testnet: { 
       url: `https://subnets.avax.network/sl1/testnet/rpc`,
@@ -33,7 +35,10 @@ const config: HardhatUserConfig = {
       url: "https://subnets.avax.network/dispatch/testnet/rpc",
       accounts: [deployer],
     },
-
+    celoAlfajores: { 
+      url: "https://alfajores-forno.celo-testnet.org",
+      accounts: [deployer],
+    }
   },
 };
 
