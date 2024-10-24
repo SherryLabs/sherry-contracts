@@ -6,10 +6,8 @@ import "../teleporter/contracts/teleporter/ITeleporterMessenger.sol";
 /// @title SL1Sender
 /// @notice This contract allows sending arbitrary messages to any contract on any blockchain using the Teleporter protocol.
 contract SL1Sender {
- 
     /// @notice The Teleporter messenger contract used to send cross-chain messages.
-    ITeleporterMessenger public messenger =
-        ITeleporterMessenger(0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf);
+    ITeleporterMessenger public messenger = ITeleporterMessenger(0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf);
 
     /// @notice Sends a cross-chain message to a specified contract on a specified blockchain.
     /// @param _contractToBeCalled The address of the contract on the destination blockchain.
@@ -25,10 +23,7 @@ contract SL1Sender {
         uint256 _gasLimit
     ) public {
         // Create the arbitrary message to be sent
-        bytes memory functionCall = createArbitraryMessage(
-            _contractToBeCalled,
-            _encodedFunctionCall
-        );
+        bytes memory functionCall = createArbitraryMessage(_contractToBeCalled, _encodedFunctionCall);
 
         // Send the cross-chain message using the Teleporter messenger
         messenger.sendCrossChainMessage(
@@ -50,15 +45,13 @@ contract SL1Sender {
     /// @param _contractToBeCalled The address of the contract on the destination blockchain.
     /// @param _encodedFunctionCall The encoded function call to be executed on the destination contract.
     /// @return The encoded arbitrary message.
-    function createArbitraryMessage(
-        address _contractToBeCalled,
-        bytes memory _encodedFunctionCall
-    ) public pure returns (bytes memory) {
+    function createArbitraryMessage(address _contractToBeCalled, bytes memory _encodedFunctionCall)
+        public
+        pure
+        returns (bytes memory)
+    {
         // Encode the destination contract address and the function call into a single message
-        bytes memory message = abi.encode(
-            _contractToBeCalled,
-            _encodedFunctionCall
-        );
+        bytes memory message = abi.encode(_contractToBeCalled, _encodedFunctionCall);
         return message;
     }
 }

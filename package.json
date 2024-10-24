@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "whreceiver:deploy": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageAnyReceiver.ts",
+    "whsender:deploy": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageSender.ts"
+  },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "hardhat": "^2.22.13"
