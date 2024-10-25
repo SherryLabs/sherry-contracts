@@ -1,8 +1,8 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 const SL1MessageSenderModule = buildModule("SL1MessageSenderModule", (m) => {
-    // Destination-Chain Wormhole Relayer Address
-    const whRelayerAddress = "0x306B68267Deb7c5DfCDa3619E22E9Ca39C374f84";
+    // Origin-Chain Wormhole Relayer Address
+    const whRelayerAddress = "0xA3cF45939bD6260bcFe3D66bc73d60f19e49a8BB";
 
     const sender = m.contract("SL1MessageSender", [whRelayerAddress], {});
     return { sender };

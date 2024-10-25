@@ -26,7 +26,7 @@ async function main() {
 
         await tx.wait();
 
-        console.log("Transaction sent : ", tx);
+        console.log("Transaction Hash : ", tx.hash);
     } catch (error) {
         console.log("Error : ", error);
 

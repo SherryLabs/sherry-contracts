@@ -3,22 +3,29 @@ const hre = require("hardhat");
 async function main() {
     const accounts = await hre.ethers.getSigners();
     //console.log("Account : ", accounts[0].address);
-    
-    const senderContract = await hre.ethers.getContractAt("SL1MessageSender", "0x44288B524008c8C6260f7C79A4CA55f44a84cD9c")
+
+    const senderContract = await hre.ethers.getContractAt("SL1MessageSender",
+        "0x502885C7765B01232df8aE985A265E3FBe8e742A")
 
     try {
-        const targetChain = 44787
-        const targetAddress = "0x7d74463Fd71ff65155EAeddb46783Def55D20d97"
-        const message = "hola mundo!"
+        const targetChain = 14
+        const targetAddress = "0x06028Dc2256Cd3b15Be5c600fB3996E59839bE0B"
+        const message = "probando sender!"
 
+        const value = await senderContract.quoteCrossChainCost(targetChain);
+        console.log("Cost : ", value.toString());
+
+        
         const tx = await senderContract.sendMessage(
-            BigInt(targetChain),
+            targetChain,
             targetAddress,
-            message
+            message,
+            { value: value }
         )
 
         await tx.wait();
-        console.log("Transaction sent : ", tx);
+        console.log("Transaction sent : ", tx.hash)
+        
     } catch (error) {
         console.log("Error : ", error);
         throw error
