@@ -1,4 +1,12 @@
-# SL1 Smart Contracts - Avalanche Summit Hackathon
+# SL1 Smart Contracts 
+
+## SL1MessageSender.sol
+
+## SL1.sol
+
+Under dev: Contract to call functions in Avalanche. This contract is deployed in Avalanche in order to interact with contracts deployed in Avalanche. ICM is not needed.
+
+
 
 ## SL1Sender.sol
 
