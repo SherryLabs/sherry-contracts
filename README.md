@@ -46,6 +46,8 @@ This approach allows flexible and dynamic communication between contracts on dif
 
 ## Contract Addresses
 
+### Configuration for Avalanche Summit Hackathon
+
 The sender contract is used to send cross-chain messages using Teleporter/ICM.
 
 | Contract Name | Address                                      | Chain  |
@@ -61,7 +63,7 @@ The receiver contract is used to receive cross-chain messages and trigger execut
 | `SL1AnyChainReceiver`     | `0x76c3cF8521b5B1cfddF6c17E7bBe1d3f4dC9Ee14`   | `Dispatch L1`    | 
 | `SL1AnyChainReceiver`     | `0x0fD3820e2255AA876797BBACE02c519f9B0A824f`   | `Fuji`    |
 
-#### Contract - Examples
+### Contract - Examples
 
 These contracts are used to showcase what you can build with our SDK.
 
@@ -85,6 +87,8 @@ CCIP sender to send USDC using our SDK and Chainlink CCIP.
 | `CCIPSender`     | `0xc88636a35047cF10E74036DB8BD444Fe3eA276BD`   | `Fuji`    |
 
 ## Chain Data
+
+Information related to L1s used in Sherry.
 
 | L1 Name | ID | Type |
 |---------|----|------|
