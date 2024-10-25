@@ -11,12 +11,17 @@ contract SL1MessageReceiver is IWormholeReceiver {
     address public s_lastSender;
     bytes public s_lastEncodedFunctionCall;
     address public s_lastContractToBeCalled;
+    bytes32 public s_sourceAddress;
 
     mapping(uint16 => bytes32) public s_registeredSenders;
 
-    event MessageReceived(string message);
     event MessageInfoReceived(bytes32 sourceAddress, bytes payload);
     event SourceChainLogged(uint16 sourceChain, address sender);
+    event FunctionExecuted(
+        address contractToBeCalled,
+        bytes encodedFunctionCall
+    );
+    event FunctionCallError(string message);
 
     constructor(address _wormholeRelayer) {
         s_wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
@@ -48,16 +53,16 @@ contract SL1MessageReceiver is IWormholeReceiver {
         bytes32 sourceAddress,
         uint16 sourceChain,
         bytes32
-    )
-        public
-        payable
-        override
-    //) public payable override isRegisteredSender(sourceChain, sourceAddress) {
-    {
-        //require(msg.sender == address(s_wormholeRelayer), "Only the Wormhole Relayer can call this function");
+    ) public payable override isRegisteredSender(sourceChain, sourceAddress) {
+        require(
+            msg.sender == address(s_wormholeRelayer),
+            "Only the Wormhole Relayer can call this function"
+        );
+
         s_payload = payload;
-        //emit MessageInfoReceived(sourceAddress, payload);
-        //(string memory message, address sender) = abi.decode(payload, (string, address));
+
+        emit MessageInfoReceived(sourceAddress, payload);
+
         (
             address contractToBeCalled,
             address sender,
@@ -67,11 +72,14 @@ contract SL1MessageReceiver is IWormholeReceiver {
         s_lastSender = sender;
         s_lastEncodedFunctionCall = encodedFunctionCall;
         s_lastContractToBeCalled = contractToBeCalled;
+        s_sourceAddress = sourceAddress;
 
-        if (sourceChain != 0) {
-            //emit SourceChainLogged(sourceChain, msg.sender);
+        (bool success, ) = contractToBeCalled.call(encodedFunctionCall);
+
+        if (!success) {
+            emit FunctionCallError("Error executing function call");
+        } else {
+            emit FunctionExecuted(contractToBeCalled, encodedFunctionCall);
         }
-
-        //emit MessageReceived(message);
     }
 }

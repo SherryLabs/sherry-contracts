@@ -22,23 +22,6 @@ async function main() {
     }
 
     const receiverContract = await hre.ethers.getContractAt("SL1MessageReceiver", receiverAddress);
-    //const payloadOrigin = hre.ethers.AbiCoder.defaultAbiCoder().encode(["string", "address"], ["Hello from Fuji", receiverAddress]);
-
-    //console.log("Payload Origin : ", payloadOrigin);
-
-    /*
-    const receiveMsg = await receiverContract.receiveWormholeMessages(
-        payloadOrigin,
-        [],
-        '0x00000000000000000000000060a86b97a7596ebfd25fb769053894ed0d9a8366',
-        5,
-        payloadOrigin
-    )
-
-    await receiveMsg.wait();
-    
-    console.log("Message Received " , receiveMsg.hash);
-    */
 
     const payload = await receiverContract.s_payload();
 
@@ -46,20 +29,17 @@ async function main() {
         throw new Error("Message has not been received yet");
     }
 
-    //const decoded = hre.ethers.AbiCoder.defaultAbiCoder().decode(["string", "address"], payload);
-
-    //console.log("Decoded : ", decoded);
-
     const lastPayload = await receiverContract.s_payload();
     const lastSender = await receiverContract.s_lastSender();
-    const  lastEncoded =  await receiverContract.s_lastEncodedFunctionCall()
-    const lastContractToBeCalled = await  receiverContract.s_lastContractToBeCalled()
+    const lastEncoded = await receiverContract.s_lastEncodedFunctionCall()
+    const lastContractToBeCalled = await receiverContract.s_lastContractToBeCalled()
+    const sourceAddress = await receiverContract.s_sourceAddress()
 
     console.log("Last payload : ", lastPayload);
     console.log("Last Sender : ", lastSender);
     console.log("Last Encoded function call : ", lastEncoded);
     console.log("Last Contract to be called : ", lastContractToBeCalled);
-    
+    console.log("Source Address : ", sourceAddress);
 }
 
 main().catch((error) => {
