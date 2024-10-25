@@ -22,6 +22,7 @@ contract SL1MessageReceiver is IWormholeReceiver {
         bytes encodedFunctionCall
     );
     event FunctionCallError(string message);
+    event SenderRegistered(uint16 sourceChain, bytes32 sourceAddress);
 
     constructor(address _wormholeRelayer) {
         s_wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
@@ -45,6 +46,7 @@ contract SL1MessageReceiver is IWormholeReceiver {
             "Only the registration owner can set the sender"
         );
         s_registeredSenders[sourceChain] = sourceAddress;
+        emit SenderRegistered(sourceChain, sourceAddress);
     }
 
     function receiveWormholeMessages(
