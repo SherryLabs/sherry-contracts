@@ -1,9 +1,19 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
+import { chains } from "../../../utils/chains";
 
 const SL1MessageSenderModule = buildModule("SL1MessageSenderModule", (m) => {
-    // Origin-Chain Wormhole Relayer Address
-    const whRelayerAddress = "0xA3cF45939bD6260bcFe3D66bc73d60f19e49a8BB";
 
+    const fujiChain = chains.find((chain) => chain.name === "avalancheFuji");
+    const celoChain = chains.find((chain) => chain.name === "celoAlfajores");
+
+    // Origin-Chain Wormhole Relayer Address
+    const whRelayerAddress = fujiChain?.wormholeRelayer;
+
+    if (!whRelayerAddress) {
+        throw new Error("WH_RELAYER_ADDRESS is required");
+    }
+
+    // Deploy SL1MessageSender contract in Fuji
     const sender = m.contract("SL1MessageSender", [whRelayerAddress], {});
     return { sender };
 });
