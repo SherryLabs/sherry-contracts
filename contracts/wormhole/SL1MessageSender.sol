@@ -6,7 +6,7 @@ import "../../lib/wormhole-solidity-sdk/src/interfaces/IWormholeRelayer.sol";
 contract SL1MessageSender {
     IWormholeRelayer public s_wormholeRelayer;
     address public owner;
-    uint256 public GAS_LIMIT = 300_000;
+    uint256 public GAS_LIMIT = 800_000;
 
     constructor(address _wormholeRelayer) {
         s_wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
@@ -36,14 +36,16 @@ contract SL1MessageSender {
         uint16 _targetChain,
         address _targetAddress,
         address _contractToBeCalled,
-        bytes memory _encodedFunctionCall, 
+        bytes memory _encodedFunctionCall,
         uint256 _gasLimit
     ) external payable {
+        require(_gasLimit <= GAS_LIMIT, "Gas limit exceeds the maximum limit");
         bytes memory encodedData = encodeMessage(
             _contractToBeCalled,
             _encodedFunctionCall
         );
         uint256 cost = quoteCrossChainCost(_targetChain, _gasLimit);
+        
         s_wormholeRelayer.sendPayloadToEvm{value: cost}(
             _targetChain,
             _targetAddress,
