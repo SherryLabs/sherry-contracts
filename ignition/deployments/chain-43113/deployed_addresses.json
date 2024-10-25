@@ -1,5 +1,3 @@
 {
-  "CCIPSenderModule#CCIPSenderMiniApp": "0xc88636a35047cF10E74036DB8BD444Fe3eA276BD",
-  "SL1MessageAnyReceiverModule#SL1MessageAnyReceiver": "0x89b1a692A61Ad02519E49c85462a35CDa1987EF4",
-  "SL1MessageSenderModule#SL1MessageSender": "0x44288B524008c8C6260f7C79A4CA55f44a84cD9c"
+  "SL1MessageSenderModule#SL1MessageSender": "0x502885C7765B01232df8aE985A265E3FBe8e742A"
 }

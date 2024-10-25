@@ -1,8 +1,9 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 const SL1MessageAnyReceiverModule = buildModule("SL1MessageAnyReceiverModule", (m) => {
-    // Origin-Chain Wormhole Relayer Address
-    const whRelayerAddress = "0xA3cF45939bD6260bcFe3D66bc73d60f19e49a8BB"
+    // Destination-Chain Wormhole Relayer Address
+    // Example: Celo Alfajores
+    const whRelayerAddress = "0x306B68267Deb7c5DfCDa3619E22E9Ca39C374f84"
 
     if (!whRelayerAddress) {
         throw new Error("WH_RELAYER_ADDRESS is required");

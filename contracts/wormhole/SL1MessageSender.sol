@@ -5,7 +5,7 @@ import "../../lib/wormhole-solidity-sdk/src/interfaces/IWormholeRelayer.sol";
 
 contract SL1MessageSender {
     IWormholeRelayer public s_wormholeRelayer;
-    uint256 constant GAS_LIMIT = 50_000;
+    uint256 constant GAS_LIMIT = 200_000;
 
     constructor(address _wormholeRelayer) {
         s_wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
