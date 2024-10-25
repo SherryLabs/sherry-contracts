@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "whreceiver:deploy": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageAnyReceiver.ts",
+    "whreceiver:deploy": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageReceiver.ts",
     "whsender:deploy": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageSender.ts"
   },
   "devDependencies": {
@@ -12,6 +12,7 @@
     "@chainlink/contracts-ccip": "^1.5.0",
     "@openzeppelin/contracts": "^5.1.0",
     "dotenv": "^16.4.5",
+    "fs": "^0.0.1-security",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   }
