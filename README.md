@@ -71,7 +71,7 @@ This approach allows flexible and dynamic communication between contracts on dif
 
 ### Configuration for Wormhole SIGMA SPRINT
 
-Sherry ERC-20 Token following the `Peer` model. 
+Sherry ERC-20 Token following the `Peer` model. Contracts used for this example come from the wormhole example (repo)[https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md].
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
