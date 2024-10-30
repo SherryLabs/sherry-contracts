@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
-import "../../lib/wormhole-solidity-sdk/src/interfaces/IWormholeRelayer.sol";
-import "../../lib/wormhole-solidity-sdk/src/interfaces/IWormholeReceiver.sol";
+import "lib/wormhole-solidity-sdk/src/interfaces/IWormholeRelayer.sol";
+import "lib/wormhole-solidity-sdk/src/interfaces/IWormholeReceiver.sol";
 
 contract SL1MessageReceiver is IWormholeReceiver {
     IWormholeRelayer public s_wormholeRelayer;
