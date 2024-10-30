@@ -4,12 +4,25 @@
     "whsender:deploy": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageSender.ts"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.7",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "hardhat": "^2.22.13"
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.9",
+    "ethers": "^6.13.4",
+    "hardhat": "^2.22.13",
+    "hardhat-gas-reporter": "^1.0.10",
+    "solidity-coverage": "^0.8.13",
+    "typechain": "^8.3.2"
   },
   "dependencies": {
     "@chainlink/contracts": "^1.2.0",
     "@chainlink/contracts-ccip": "^1.5.0",
+    "@nomiclabs/hardhat-etherscan": "^3.1.8",
     "@openzeppelin/contracts": "^5.1.0",
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",

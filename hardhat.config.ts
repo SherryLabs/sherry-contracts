@@ -17,29 +17,62 @@ const config: HardhatUserConfig = {
     requiredConfirmations: 1,
   },
   */
-  networks: { 
-    sl1Testnet: { 
+
+  networks: {
+    sl1Testnet: {
       url: `https://subnets.avax.network/sl1/testnet/rpc`,
       accounts: [deployer],
       chainId: 3030
     },
-    avalancheFuji: { 
+    avalancheFuji: {
       url: "https://api.avax-test.network/ext/bc/C/rpc",
       accounts: [deployer],
     },
-    echoTestnet: { 
+    echoTestnet: {
       url: "https://subnets.avax.network/echo/testnet/rpc",
       accounts: [deployer],
     },
-    dispatchTestnet: { 
+    dispatchTestnet: {
       url: "https://subnets.avax.network/dispatch/testnet/rpc",
       accounts: [deployer],
     },
-    celoAlfajores: { 
+    celoAlfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
       accounts: [deployer],
     }
   },
+  /*
+  sourcify: {
+    enabled: true
+  },
+ */
+  etherscan: {
+    apiKey: {
+      celoAlfajores: process.env.CELO_ALFAJORES_ETHERSCAN_API_KEY || "",
+      avalancheFuji: process.env.AVALANCHE_FUJI_ETHERSCAN_API_KEY || "",
+    },
+    customChains: [
+      {
+        network: "avalancheFuji",
+        chainId: 43113,
+        urls: {
+          apiURL: "https://api.avascan.info/v2/network/testnet/evm/43113/etherscan",
+          browserURL: "https://cchain.explorer.avax-test.network"
+        }
+      },
+
+      {
+        network: "celoAlfajores",
+        chainId: 44787,
+        urls: {
+          apiURL: "https://api-alfajores.celoscan.io/api",
+          browserURL: "https://alfajores.celoscan.io",
+        }
+      }
+    ]
+  }
+
+
 };
 
 export default config;
