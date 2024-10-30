@@ -71,7 +71,7 @@ This approach allows flexible and dynamic communication between contracts on dif
 
 ### Configuration for Wormhole SIGMA SPRINT
 
-Sherry ERC-20 Token following the `Peer` model. Contracts used for this example come from the wormhole example (repo)[https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md].
+Sherry ERC-20 Token following the `PeerToken` (model)[https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md]. Contracts used for this example come from the wormhole example (repo)[https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md].
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
@@ -82,7 +82,7 @@ Sherry ERC-20 Token following the `Peer` model. Contracts used for this example 
 
 The sender contract is used to send cross-chain messages using Teleporter/ICM.
 
-| Contract Name | Address                                      | Chain  |
+| ✅ Contract Name | :spiral_notepad: Address                                      | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1Sender`     | `0x4f34C7119c1C918c606792D8a481D915D845DD2E`   | `sL1`    |
 | `SL1Sender`     | `0xC88845285454F59849537e5f911738ccD05f9681`   | `Dispatch L1`    | 
