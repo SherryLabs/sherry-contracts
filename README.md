@@ -1,12 +1,12 @@
 # SL1 Smart Contracts 
 
+The following addres has been used to deploy the smart contracts `0xf970be6543cd20ff1f7570959949e31fa16fba7b`
+
 ## SL1MessageSender.sol
 
 ## SL1.sol
 
 Under dev: Contract to call functions in Avalanche. This contract is deployed in Avalanche in order to interact with contracts deployed in Avalanche. ICM is not needed.
-
-
 
 ## SL1Sender.sol
 
@@ -53,6 +53,15 @@ In this example, a message is sent to execute the `someFunction` function on the
 This approach allows flexible and dynamic communication between contracts on different blockchains, facilitating cross-chain interoperability.
 
 ## Contract Addresses
+
+### Configuration for Wormhole SIGMA SPRINT
+
+Sherry ERC-20 Token following the `Peer` model. 
+
+| Contract Name | Address                                      | Chain  |
+|---------------|----------------------------------------------|--------|
+| `SherryPeerToken`     | `0x528B3020621d0Bff4627483d34bF4dE21afaF08E`   | `Avalanche Fuji`    |
+| `SherryPeerToken`     | `0x075f8Af6c27a570b4c8A94BaE72f878fc98721a5`   | `Celo Alfajores`    | 
 
 ### Configuration for Avalanche Summit Hackathon
 
