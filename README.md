@@ -84,7 +84,7 @@ The sender contract is used to send cross-chain messages using Teleporter/ICM.
 
 | ✅ Contract Name | :spiral_notepad: Address                                      | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1Sender`     | `0x4f34C7119c1C918c606792D8a481D915D845DD2E`   | `sL1`    |
+| `SL1Sender`     | **`0x4f34C7119c1C918c606792D8a481D915D845DD2E`**   | `sL1`    |
 | `SL1Sender`     | `0xC88845285454F59849537e5f911738ccD05f9681`   | `Dispatch L1`    | 
 | `SL1Sender`     | `0x59c80C541F6c065fb56EF25F87b1Fa8b58BEFaC1`   | `Fuji`    |
 
