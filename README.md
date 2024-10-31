@@ -71,18 +71,29 @@ This approach allows flexible and dynamic communication between contracts on dif
 
 ### Configuration for Wormhole SIGMA SPRINT
 
-Sherry ERC-20 Token following the `Peer` model. 
+Sherry ERC-20 Token following the `PeerToken` [model](https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md). Contracts used for this example come from the wormhole example [repo](https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md).
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
 | `SherryPeerToken`     | `0x528B3020621d0Bff4627483d34bF4dE21afaF08E`   | `Avalanche Fuji`    |
 | `SherryPeerToken`     | `0x075f8Af6c27a570b4c8A94BaE72f878fc98721a5`   | `Celo Alfajores`    | 
 
+### Native Token Transfers (NTT) Configuration
+
+In order to perform `Sherry Token` transfers using `NTT`, the `Ntt Manager` and `Transceiver` contracts must be deployed. To achieve this, the `Wormhole CLI` has been used following the steps in the [documentation](https://wormhole.com/docs/build/contract-integrations/native-token-transfers/deployment-process/deploy-to-evm/#deploy-ntt).
+
+The repository with detailed information and configuration of the following contracts can be found in the [corresponding repository](https://github.com/SherryLabs/sherry-ntt-config).
+
+| Contract Name | Address | Chain | Chain ID |
+|---------------|---------|-------|-------------|
+| `Ntt Manager`|`0xeBa6f576e5c2F772F0EBF48fC788375846B64531`|`Avalanche Fuji`| 6 |
+|`Transceiver`|`0x70a22a7567105B76CB8Eb29d4E9bb8d10510E2cD`|`Avalanche Fuji`| 6 |
+
 ### Configuration for Avalanche Summit Hackathon
 
 The sender contract is used to send cross-chain messages using Teleporter/ICM.
 
-| Contract Name | Address                                      | Chain  |
+| ✅ Contract Name | :spiral_notepad: Address                                      | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1Sender`     | `0x4f34C7119c1C918c606792D8a481D915D845DD2E`   | `sL1`    |
 | `SL1Sender`     | `0xC88845285454F59849537e5f911738ccD05f9681`   | `Dispatch L1`    | 
