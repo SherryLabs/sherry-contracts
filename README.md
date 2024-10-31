@@ -80,7 +80,11 @@ Sherry ERC-20 Token following the `PeerToken` [model](https://github.com/wormhol
 
 ### Native Token Transfers (NTT) Configuration
 
-| Contract Name | Address | Chain | WH Chain ID |
+In order to perform `Sherry Token` transfers using `NTT`, the `Ntt Manager` and `Transceiver` contracts must be deployed. To achieve this, the `Wormhole CLI` has been used following the steps in the [documentation](https://wormhole.com/docs/build/contract-integrations/native-token-transfers/deployment-process/deploy-to-evm/#deploy-ntt).
+
+The repository with detailed information and configuration of the following contracts can be found in the corresponding repository.
+
+| Contract Name | Address | Chain | Chain ID |
 |---------------|---------|-------|-------------|
 | `Ntt Manager`|`0xeBa6f576e5c2F772F0EBF48fC788375846B64531`|`Avalanche Fuji`| 6 |
 |`Transceiver`|`0x70a22a7567105B76CB8Eb29d4E9bb8d10510E2cD`|`Avalanche Fuji`| 6 |
