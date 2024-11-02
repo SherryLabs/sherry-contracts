@@ -1,32 +1,30 @@
 # Sherry Links Smart Contracts 
 
-The following addres has been used to deploy the smart contracts `0xf970be6543cd20ff1f7570959949e31fa16fba7b`
+The following address has been used to deploy the smart contracts `0xf970be6543cd20ff1f7570959949e31fa16fba7b` 🏦
 
-## Index
+## 📑 Index
 
-
-## SL1MessageSender.sol
+## 🚀 SL1MessageSender.sol
 
 This contract is used to send any message to any chain supported by wormhole. It allows executing any function on any of these chains.
 
-### Main Function - `sendMessage`
+### 🔧 Main Function - `sendMessage`
 
 ```solidity
-    function sendMessage(
-        uint16 _targetChain,
-        address _targetAddress,
-        address _contractToBeCalled,
-        bytes memory _encodedFunctionCall,
-        uint256 _gasLimitgit
-    ) external payable {}
+  function sendMessage(
+    uint16 _targetChain,
+    address _targetAddress,
+    address _contractToBeCalled,
+    bytes memory _encodedFunctionCall,
+    uint256 _gasLimitgit
+  ) external payable {}
 ```
 
-
-#### Function Description
+#### 📜 Function Description
 
 The `sendMessage` function allows sending an encoded message through a cross-chain protocol to execute a specific function on a destination contract on another blockchain.
 
-#### Parameters
+#### 📊 Parameters
 
 - `uint16 _targetChain`: The identifier of the target blockchain. This identifier is specific to the cross-chain protocol being used.
 - `address _targetAddress`: The address of the contract on the destination blockchain where the function will be executed.
@@ -34,7 +32,7 @@ The `sendMessage` function allows sending an encoded message through a cross-cha
 - `bytes memory _encodedFunctionCall`: The encoded function call that includes the function signature and parameters. This call should be encoded using `abi.encodeWithSignature` or `abi.encodePacked`.
 - `uint256 _gasLimit`: The gas limit allocated for the function execution on the destination blockchain. This value should be sufficient to cover the execution cost of the function.
 
-#### Usage Example
+#### 🛠️ Usage Example
 
 ```solidity
 uint16 targetChain = 1; // Example chain ID
@@ -50,9 +48,9 @@ In this example, a message is sent to execute the someFunction function on the d
 
 This approach allows flexible and dynamic communication between contracts on different blockchains, facilitating cross-chain interoperability.
 
-## Contract Addresses
+## 📜 Contract Addresses
 
-### Configuration for Wormhole SIGMA SPRINT
+### ⚙️ Configuration for Wormhole SIGMA SPRINT
 
 Sherry ERC-20 Token following the `PeerToken` [model](https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md). Contracts used for this example come from the wormhole example [repo](https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md).
 
@@ -61,7 +59,7 @@ Sherry ERC-20 Token following the `PeerToken` [model](https://github.com/wormhol
 | `SherryPeerToken`     | `0x528B3020621d0Bff4627483d34bF4dE21afaF08E`   | `Avalanche Fuji`    |
 | `SherryPeerToken`     | `0x075f8Af6c27a570b4c8A94BaE72f878fc98721a5`   | `Celo Alfajores`    | 
 
-### Native Token Transfers (NTT) Configuration
+### 💸 Native Token Transfers (NTT) Configuration
 
 In order to perform `Sherry Token` transfers using `NTT`, the `Ntt Manager` and `Transceiver` contracts must be deployed. To achieve this, the `Wormhole CLI` has been used following the steps in the [documentation](https://wormhole.com/docs/build/contract-integrations/native-token-transfers/deployment-process/deploy-to-evm/#deploy-ntt).
 
@@ -77,7 +75,7 @@ The repository with detailed information and configuration of the following cont
 | `Ntt Manager`|`0x89b1a692A61Ad02519E49c85462a35CDa1987EF4`|`Celo Alfajores`| 14 |
 |`Transceiver`|`0xe731274C25B51B1217093D5Cf7bc1C36cADeF508`|`Celo Alfajores`| 14 |
 
-### Message Sender and Receiver Contracts
+### 📡 Message Sender and Receiver Contracts
 
 The sender contract is used to send cross-chain messages using Wormhole.
 
@@ -85,15 +83,13 @@ The sender contract is used to send cross-chain messages using Wormhole.
 |---------------|----------------------------------------------|--------|
 | `SL1MessageSender`     | `0x4f34C7119c1C918c606792D8a481D915D845DD2E`   | `Avalanche Fuji`    |
 
-
 The receiver contract is used to receive cross-chain messages and trigger execution using the SDK.
 
 | ✅ Contract Name | :spiral_notepad: Address    | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1AnyChainReceiver`     | `0x76c3cF8521b5B1cfddF6c17E7bBe1d3f4dC9Ee14`   | `Celo Alfajores`    | 
 
-
-### Contract - Examples
+### 🛠️ Contract - Examples
 
 These contracts are used to showcase what you can build with our SDK.
 
@@ -115,10 +111,9 @@ NFTGunzilla to mint an NFT representing a weapon in the Gunzilla Game.
 |---------------|----------------------------------------------|--------|
 | `NFTGunzilla`     | ``   | `Celo Alfajores`    |
 
+## 📝 Addresses in WH HEX format
 
-## Addresses in WH HEX format
-
-Information related to addreses in Wormhole HEX Format in order to receive messages in destination chain succesfully
+Information related to addresses in Wormhole HEX Format in order to receive messages in destination chain successfully
 
 | Contract Name | Data | Type |
 |---------|----|------|
