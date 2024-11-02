@@ -3,7 +3,6 @@ pragma solidity 0.8.25;
 
 contract CaptureFlagWH {
     address public owner;
-    uint256 public gameFee = 0.01 ether;
     address public flagHolder;
     uint256 public flagCaptureTime;
 
@@ -36,10 +35,6 @@ contract CaptureFlagWH {
         lastParticipationTime[_participant] = block.timestamp;
 
         emit FlagCaptured(_participant, block.timestamp);
-    }
-
-    function updateGameFee(uint256 _gameFee) external onlyOwner {
-        gameFee = _gameFee;
     }
 
     function withdraw() external onlyOwner {

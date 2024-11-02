@@ -1,3 +1,4 @@
 {
-  "SherryPeerTokenModule#SherryPeerToken": "0x528B3020621d0Bff4627483d34bF4dE21afaF08E"
+  "SL1MessageReceiverModule#SL1MessageReceiver": "0x66cdaF108debA56F6EbB5381FBc91f8de40B6988",
+  "SL1MessageSenderModule#SL1MessageSender": "0x42E610784cf9fB37Ea0D33919100Cf7b54D87500"
 }

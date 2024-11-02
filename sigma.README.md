@@ -82,12 +82,15 @@ The sender contract is used to send cross-chain messages using Wormhole.
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1MessageSender`     | `0x4f34C7119c1C918c606792D8a481D915D845DD2E`   | `Avalanche Fuji`    |
+| `SL1MessageSender`     | `0x42E610784cf9fB37Ea0D33919100Cf7b54D87500`   | `Avalanche Fuji`    |
+
 
 The receiver contract is used to receive cross-chain messages and trigger execution using the SDK.
 
 | ✅ Contract Name | :spiral_notepad: Address    | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1AnyChainReceiver`     | `0x76c3cF8521b5B1cfddF6c17E7bBe1d3f4dC9Ee14`   | `Celo Alfajores`    | 
+| `SL1AnyChainReceiver`     | `0xDb257bd12AfC445785f6685257187a977C8905F9`   | `Celo Alfajores`    | 
 
 ### 🛠️ Contract - Examples
 
@@ -97,19 +100,19 @@ Greeting contract to simply set a new greeting and counter.
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
-| `Greeting`     | ``   | `Celo Alfajores`    |
+| `Greeting`     | `0x5aDDD36200C7Df43Ee655c872f40B460f7056f8d`   | `Celo Alfajores`    |
 
 Capture the Flag to showcase a simple cross-chain game
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
-| `CaptureFlag`     | ``   | `Celo Alfajores`    |
+| `CaptureFlag`     | `0xE46b6b941BbBf93be4D422C96aaf4749CAf9a386`   | `Celo Alfajores`    |
 
 NFTGunzilla to mint an NFT representing a weapon in the Gunzilla Game.
 
 | Contract Name | Address                                      | Chain  |
 |---------------|----------------------------------------------|--------|
-| `NFTGunzilla`     | ``   | `Celo Alfajores`    |
+| `NFTGunzilla`     | `0x22bf4Be375941853e42ce559258362819b7ee637`   | `Celo Alfajores`    |
 
 ## 📝 Addresses in WH HEX format
 

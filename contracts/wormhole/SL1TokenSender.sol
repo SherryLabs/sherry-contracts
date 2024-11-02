@@ -66,7 +66,7 @@ contract CrossChainSender is TokenSender {
     function createArbitraryMessage(
         address _contractToBeCalled,
         bytes memory _encodedFunctionCall
-    ) public returns (bytes memory){
+    ) public pure returns (bytes memory){
         bytes memory message = abi.encode(
             _contractToBeCalled,
             _encodedFunctionCall
