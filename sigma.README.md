@@ -16,7 +16,7 @@ This contract is used to send any message to any chain supported by wormhole. It
     address _targetAddress,
     address _contractToBeCalled,
     bytes memory _encodedFunctionCall,
-    uint256 _gasLimitgit
+    uint256 _gasLimit
   ) external payable {}
 ```
 
