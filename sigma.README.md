@@ -65,12 +65,12 @@ In order to perform `Sherry Token` transfers using `NTT`, the `Ntt Manager` and 
 
 The repository with detailed information and configuration of the following contracts can be found in the [corresponding repository](https://github.com/SherryLabs/sherry-ntt-config).
 
-| Contract Name | Address | Chain | Chain ID |
+| ✅ Contract Name | :spiral_notepad: Address | :chains: Chain | 1️⃣ Chain ID |
 |---------------|---------|-------|-------------|
 | `Ntt Manager`|`0xeBa6f576e5c2F772F0EBF48fC788375846B64531`|`Avalanche Fuji`| 6 |
 |`Transceiver`|`0x70a22a7567105B76CB8Eb29d4E9bb8d10510E2cD`|`Avalanche Fuji`| 6 |
 
-| Contract Name | Address | Chain | Chain ID |
+| ✅ Contract Name | :spiral_notepad: Address | :chains: Chain | 1️⃣ Chain ID |
 |---------------|---------|-------|-------------|
 | `Ntt Manager`|`0x89b1a692A61Ad02519E49c85462a35CDa1987EF4`|`Celo Alfajores`| 14 |
 |`Transceiver`|`0xe731274C25B51B1217093D5Cf7bc1C36cADeF508`|`Celo Alfajores`| 14 |
@@ -96,21 +96,25 @@ The receiver contract is used to receive cross-chain messages and trigger execut
 
 These contracts are used to showcase what you can build with our SDK.
 
-Greeting contract to simply set a new greeting and counter.
+### 👋 Greeting Contract
 
-| Contract Name | Address                                      | Chain  |
+This contract is used to simply set a new greeting and counter.
+
+| ✅ Contract Name | :spiral_notepad: Address                                      | :chains: Chain  |
+|---------------|----------------------------------------------|--------|
+| `Greeting`     | `0x5aDDD36200C7Df43Ee655c872f40B460f7056f8d`   | `Celo Alfajores`    |
 |---------------|----------------------------------------------|--------|
 | `Greeting`     | `0x5aDDD36200C7Df43Ee655c872f40B460f7056f8d`   | `Celo Alfajores`    |
 
 Capture the Flag to showcase a simple cross-chain game
 
-| Contract Name | Address                                      | Chain  |
+| ✅ Contract Name | :spiral_notepad: Address    | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `CaptureFlag`     | `0xE46b6b941BbBf93be4D422C96aaf4749CAf9a386`   | `Celo Alfajores`    |
 
 NFTGunzilla to mint an NFT representing a weapon in the Gunzilla Game.
 
-| Contract Name | Address                                      | Chain  |
+| ✅ Contract Name | :spiral_notepad: Address      | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `NFTGunzilla`     | `0x22bf4Be375941853e42ce559258362819b7ee637`   | `Celo Alfajores`    |
 
