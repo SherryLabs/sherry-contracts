@@ -122,7 +122,7 @@ Information related to addresses in Wormhole HEX Format in order to receive mess
 
 | Contract Name | Data | Type |
 |---------|----|------|
-| `SL1MessageSender` | `` | hex
+| `SL1MessageSender` | `0x00000000000000000000000042e610784cf9fb37ea0d33919100cf7b54d87500` | hex
 
 ## 🛠️ Custom Scripts for Wormhole Configuration
 
@@ -150,4 +150,4 @@ This script is used to send a test message from the Avalanche Fuji network. It d
 
 To verify the transactions and messages sent through Wormhole, you can use the Wormhole Explorer. This tool provides a user-friendly interface to track and inspect cross-chain messages and transactions.
 
-[Wormhole Explorer](https://wormhole.com/explorer)
+[Wormhole Transaction Scanner](https://wormholescan.io/)

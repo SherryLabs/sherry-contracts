@@ -6,7 +6,7 @@ async function main() {
 
     const receiverData = JSON.parse(
         fs.readFileSync(
-            path.resolve(__dirname, '../ignition/deployments/chain-44787/deployed_addresses.json'),
+            path.resolve(__dirname, '../../ignition/deployments/chain-44787/deployed_addresses.json'),
             'utf8'
         )
     );

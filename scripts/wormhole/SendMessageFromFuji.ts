@@ -5,14 +5,14 @@ import path from 'path';
 async function main() {
     const senderData = JSON.parse(
         fs.readFileSync(
-            path.resolve(__dirname, '../ignition/deployments/chain-43113/deployed_addresses.json'),
+            path.resolve(__dirname, '../../ignition/deployments/chain-43113/deployed_addresses.json'),
             'utf8'
         )
     );
 
     const receiverData = JSON.parse(
         fs.readFileSync(
-            path.resolve(__dirname, '../ignition/deployments/chain-44787/deployed_addresses.json'),
+            path.resolve(__dirname, '../../ignition/deployments/chain-44787/deployed_addresses.json'),
             'utf8'
         )
     );
