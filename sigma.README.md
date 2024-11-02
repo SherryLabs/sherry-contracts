@@ -138,7 +138,7 @@ NFTGunzilla to mint an NFT representing a weapon in the Gunzilla Game.
 ## 📝 Addresses in WH HEX format
 
 
-Information related to addresses in Wormhole HEX Format in order to receive messages in destination chain successfully. This contract must be allowed in 
+Information related to addresses in Wormhole HEX Format in order to receive messages in destination chain successfully. This contract must be allowed in the `SL1MessageReceiver` contract
 
 
 | Contract Name | Data | Type |
