@@ -103,8 +103,6 @@ This contract is used to simply set a new greeting and counter.
 | ✅ Contract Name | :spiral_notepad: Address                                      | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `Greeting`     | `0x5aDDD36200C7Df43Ee655c872f40B460f7056f8d`   | `Celo Alfajores`    |
-|---------------|----------------------------------------------|--------|
-| `Greeting`     | `0x5aDDD36200C7Df43Ee655c872f40B460f7056f8d`   | `Celo Alfajores`    |
 
 Capture the Flag to showcase a simple cross-chain game
 
