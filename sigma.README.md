@@ -19,13 +19,7 @@ The following addres has been used to deploy the smart contracts `0xf970be6543cd
 
 ## SL1MessageSender.sol
 
-## SL1.sol
-
-Under dev: Contract to call functions in Avalanche. This contract is deployed in Avalanche in order to interact with contracts deployed in Avalanche. ICM is not needed.
-
-## SL1Sender.sol
-
-This contract is used to send any message to any L1. It allows executing any function on any of these L1s.
+This contract is used to send any message to any chain supported by wormhole. It allows executing any function on any of these chains.
 
 ### Main Function - `sendMessage`
 
@@ -38,6 +32,12 @@ This contract is used to send any message to any L1. It allows executing any fun
         uint256 _gasLimit
     ) public {}
 ```
+
+## SL1.sol
+
+Under dev: Contract to call functions in Avalanche. This contract is deployed in Avalanche in order to interact with contracts deployed in Avalanche. ICM is not needed.
+
+
 
 #### Function Description
 
