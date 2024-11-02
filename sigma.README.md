@@ -118,10 +118,36 @@ NFTGunzilla to mint an NFT representing a weapon in the Gunzilla Game.
 
 ## 📝 Addresses in WH HEX format
 
-Information related to addresses in Wormhole HEX Format in order to receive messages in destination chain successfully
+Information related to addresses in Wormhole HEX Format in order to receive messages in destination chain successfully. This contract must be allowed in 
 
 | Contract Name | Data | Type |
 |---------|----|------|
 | `SL1MessageSender` | `` | hex
-| `` | `` | hex
 
+## 🛠️ Custom Scripts for Wormhole Configuration
+
+We have created custom scripts to facilitate the configuration, sending, and verification of messages using Wormhole. These scripts are located in the `scripts/wormhole` directory.
+
+In order to execute any of this scripts you must run
+
+```shell
+npx hardhat run scripts/ReceiveMessage.ts --network celoAlfajores
+```
+
+### 📜 Script - `ReceiveMessage.ts`
+
+This script is used to print the payload and the latest messages received. It helps in debugging and verifying the messages that have been sent across chains.
+
+### 📜 Script - `RegisterSenderInReceiver.ts`
+
+This script registers the sender contract in the receiver contract on the destination blockchain. It ensures that the receiver contract is aware of the sender and can process incoming messages correctly.
+
+### 📜 Script - `SendMessageFromFuji.ts`
+
+This script is used to send a test message from the Avalanche Fuji network. It demonstrates how to send a message using the `SL1MessageSender` contract and can be used to verify the cross-chain messaging setup.
+
+## 🔍 Wormhole Explorer
+
+To verify the transactions and messages sent through Wormhole, you can use the Wormhole Explorer. This tool provides a user-friendly interface to track and inspect cross-chain messages and transactions.
+
+[Wormhole Explorer](https://wormhole.com/explorer)
