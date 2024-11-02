@@ -81,7 +81,6 @@ The sender contract is used to send cross-chain messages using Wormhole.
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1MessageSender`     | `0x4f34C7119c1C918c606792D8a481D915D845DD2E`   | `Avalanche Fuji`    |
 | `SL1MessageSender`     | `0x42E610784cf9fB37Ea0D33919100Cf7b54D87500`   | `Avalanche Fuji`    |
 
 
@@ -89,7 +88,6 @@ The receiver contract is used to receive cross-chain messages and trigger execut
 
 | ✅ Contract Name | :spiral_notepad: Address    | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1AnyChainReceiver`     | `0x76c3cF8521b5B1cfddF6c17E7bBe1d3f4dC9Ee14`   | `Celo Alfajores`    | 
 | `SL1AnyChainReceiver`     | `0xDb257bd12AfC445785f6685257187a977C8905F9`   | `Celo Alfajores`    | 
 
 ### 🛠️ Contract - Examples
