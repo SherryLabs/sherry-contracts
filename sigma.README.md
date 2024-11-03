@@ -1,5 +1,16 @@
-# Sherry Links Smart Contracts 
-This repo is used for Sherry Smart Contract
+# About Sherry x Wormhole
+
+At Sherry, we are committed to simplifying and making blockchain interactions more accessible, and have developed an SDK that allows developers to create highly versatile mini-apps. These mini-apps can execute any function of any smart contract using a simple metadata definition, opening up new possibilities for creating personalized and enriching experiences for users.
+
+Our main contract, deployed in Avalanche, functions as Sherry's base of operations, facilitating the management and execution of our core functions. However, by integrating Wormhole, a leading cross-chain protocol in the ecosystem, we significantly expand the opportunities for interaction. With Wormhole, developers can build mini-apps capable of interacting not only with contracts on Avalanche, but also with contracts on other connected blockchains, multiplying the possibilities for use and collaboration across multiple ecosystems.
+
+This integration allows users to access cross-chain functions and services without the need for advanced technical knowledge, eliminating friction. Developers can deliver experiences that span multiple chains, generating a rich ecosystem that brings value to both users and projects looking to adopt a cross-chain strategy.
+
+Sherry not only facilitates interactions, but also redefines the blockchain experience through mini-apps that are accessible, practical and ready to power interactions on any blockchain, thanks to Wormhole's robustness and flexibility.
+
+# Flow Diagram Simplified
+
+![Sherry Wormhole](images/sherry-wormhole.png)
 
 ## 📑 Index
 
