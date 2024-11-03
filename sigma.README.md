@@ -24,6 +24,7 @@ This repo is used for Sherry Smart Contract
   - [Script - `SendMessageWithRefundFromFuji.ts`](#-script---sendmessagewithrefundfromfujits)
 - [Wormhole Explorer](#-wormhole-explorer)
 
+
 ## 🚀 SL1MessageSender.sol
 
 This contract is used to send any message to any chain supported by wormhole. It allows executing any function on any of these chains.
@@ -71,6 +72,8 @@ This approach allows flexible and dynamic communication between contracts on dif
 ## 📜 Contract Addresses
 
 ### ⚙️ Configuration for Wormhole SIGMA SPRINT
+
+> **Note:** All the configuration was done but token transfer was not implemented due to lack of time. Sending men sages in order to execute any function of any smart contract on the target blockchain was implemented without problems.
 
 Sherry ERC-20 Token following the `PeerToken` [model](https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md). Contracts used for this example come from the wormhole example [repo](https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md).
 
