@@ -92,7 +92,7 @@ The sender contract is used to send cross-chain messages using Wormhole.
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1MessageSender`     | `0x42E610784cf9fB37Ea0D33919100Cf7b54D87500`   | `Avalanche Fuji`    |
+| `SL1MessageSender`     | `0xB8c3340221c9aE4B3Cad007846b54353c698D339`   | `Avalanche Fuji`    |
 
 
 The receiver contract is used to receive cross-chain messages and trigger execution using the SDK.
@@ -143,7 +143,7 @@ Information related to addresses in Wormhole HEX Format in order to receive mess
 
 | Contract Name | Data | Type |
 |---------|----|------|
-| `SL1MessageSender` | `0x00000000000000000000000042e610784cf9fb37ea0d33919100cf7b54d87500` | hex |
+| `SL1MessageSender` | `0x000000000000000000000000B8c3340221c9aE4B3Cad007846b54353c698D339` | hex |
 
 
 ## 🛠️ Custom Scripts for Wormhole Configuration
@@ -175,6 +175,12 @@ This script registers the sender contract in the receiver contract on the destin
 
 
 This script is used to send a test message from the Avalanche Fuji network. It demonstrates how to send a message using the `SL1MessageSender` contract and can be used to verify the cross-chain messaging setup.
+
+
+### 📜 Script - `SendMessageWithRefundFromFuji.ts`
+
+
+This script is used to send a test message from the Avalanche Fuji network with refund included, `msg.sender` will receive in the destination chain. It demonstrates how to send a message using the `SL1MessageSender` contract and can be used to verify the cross-chain messaging setup.
 
 
 ## 🔍 Wormhole Explorer
