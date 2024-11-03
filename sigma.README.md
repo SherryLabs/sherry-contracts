@@ -8,12 +8,8 @@ This integration allows users to access cross-chain functions and services witho
 
 Sherry not only facilitates interactions, but also redefines the blockchain experience through mini-apps that are accessible, practical and ready to power interactions on any blockchain, thanks to Wormhole's robustness and flexibility.
 
-# Flow Diagram Simplified
-
-![Sherry Wormhole](images/sherry-wormhole.png)
-
 ## 📑 Index
-
+- [Flow Diagram](#flow-diagram-simplified)
 - [SL1MessageSender.sol](#-sl1messagesendersol)
   - [Main Function - `sendMessage`](#-main-function---sendmessage)
     - [Function Description](#-function-description)
@@ -34,6 +30,10 @@ Sherry not only facilitates interactions, but also redefines the blockchain expe
   - [Script - `SendMessageFromFuji.ts`](#-script---sendmessagefromfujits)
   - [Script - `SendMessageWithRefundFromFuji.ts`](#-script---sendmessagewithrefundfromfujits)
 - [Wormhole Explorer](#-wormhole-explorer)
+
+# Flow Diagram Simplified
+
+![Sherry Wormhole](images/sherry-wormhole.png)
 
 
 ## 🚀 SL1MessageSender.sol
