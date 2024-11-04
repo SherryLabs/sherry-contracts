@@ -84,7 +84,7 @@ This approach allows flexible and dynamic communication between contracts on dif
 
 ### ⚙️ Configuration for Wormhole SIGMA SPRINT
 
-> **Note:** All the configuration was done but token transfer was not implemented due to lack of time. Sending men sages in order to execute any function of any smart contract on the target blockchain was implemented without problems.
+> **Note:** All the configuration was done but token transfer was not implemented due to lack of time. Sending messages in order to execute any function of any smart contract on the target blockchain was implemented without problems.
 
 Sherry ERC-20 Token following the `PeerToken` [model](https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md). Contracts used for this example come from the wormhole example [repo](https://github.com/wormhole-foundation/example-ntt-token/blob/main/README.md).
 
@@ -121,7 +121,7 @@ The receiver contract is used to receive cross-chain messages and trigger execut
 
 | ✅ Contract Name | :spiral_notepad: Address    | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1AnyChainReceiver`     | `0xDb257bd12AfC445785f6685257187a977C8905F9`   | `Celo Alfajores`    | 
+| `SL1MessageReceiver`     | `0xDb257bd12AfC445785f6685257187a977C8905F9`   | `Celo Alfajores`    | 
 
 ### 🛠️ Contract - Examples
 
