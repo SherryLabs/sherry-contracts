@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /// @title Swap Contract
 /// @notice This contract allows users to swap tokens using a simple AMM.
-contract Swap is Ownable {
+contract SherrySwap is Ownable {
     IERC20 public tokenA;
     IERC20 public tokenB;
     uint256 public reserveA;

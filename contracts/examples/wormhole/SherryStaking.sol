@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /// @title Staking Contract
 /// @notice This contract allows users to stake tokens and earn rewards.
-contract Staking is Ownable {
+contract SherryStaking is Ownable {
     IERC20 public stakingToken;
     IERC20 public rewardToken;
     uint256 public rewardRate; // Reward tokens per block

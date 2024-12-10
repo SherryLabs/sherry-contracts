@@ -12,7 +12,6 @@ const SherryPeerTokenModule = buildModule("SherryPeerTokenModule", (m) => {
     ], {});
 
     const txMint = m.call(sherryPeerToken, "mint", [owner, BigInt(tokenAmount)]);
-    //console.log("txMint", txMint);
 
     return { sherryPeerToken };
 }

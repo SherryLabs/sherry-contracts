@@ -27,7 +27,53 @@ contract CrossChainSender is TokenSender {
         cost = deliveryCost + wormhole.messageFee();
     }
 
-    // Function to send tokens and payload across chains
+    function sendCrossChainTokenAndCall(
+        uint16 _targetChain,
+        address _targetReceiver,
+        uint256 _amount,
+        address _token,
+        address _contractToBeCalled,
+        bytes memory _encodedFunctionCall
+    ) public payable {
+        uint256 cost = quoteCrossChainDeposit(_targetChain);
+        require(
+            msg.value == cost,
+            "msg.value must equal quoteCrossChainDeposit(targetChain)"
+        );
+
+        IERC20(_token).transferFrom(msg.sender, address(this), _amount);
+
+        bytes memory payload = createArbitraryMessage(
+            _contractToBeCalled,
+            _encodedFunctionCall
+        );
+
+        sendTokenWithPayloadToEvm(
+            _targetChain,
+            _targetReceiver,
+            payload,
+            0,
+            GAS_LIMIT,
+            _token,
+            _amount
+        );
+    }
+
+    /// @notice Creates an arbitrary message to be sent to a specified contract.
+    /// @param _contractToBeCalled The address of the contract on the destination blockchain.
+    /// @param _encodedFunctionCall The encoded function call to be executed on the destination contract.
+    /// @return The encoded arbitrary message.
+    function createArbitraryMessage(
+        address _contractToBeCalled,
+        bytes memory _encodedFunctionCall
+    ) public pure returns (bytes memory){
+        bytes memory message = abi.encode(
+            _contractToBeCalled,
+            _encodedFunctionCall
+        );
+        return message;
+    }
+
     function sendCrossChainDeposit(
         uint16 _targetChain,
         address _targetReceiver,
@@ -56,8 +102,3 @@ contract CrossChainSender is TokenSender {
         );
     }
 }
-
-
-
-
-
