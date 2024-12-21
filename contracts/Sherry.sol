@@ -33,7 +33,7 @@ contract Sherry is Ownable(msg.sender), Pausable {
     /// @dev Requires a minimum transaction fee to be paid
     /// @param _contractToBeCalled The address of the contract to call
     /// @param _encodedFunctionCall The encoded function call data to execute
-    function execFunction(
+    function sendMessage(
         address _contractToBeCalled,
         bytes memory _encodedFunctionCall
     ) public payable whenNotPaused {
