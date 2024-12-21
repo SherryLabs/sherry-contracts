@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
-import "../teleporter/contracts/teleporter/ITeleporterReceiver.sol";
+import "../../teleporter/contracts/teleporter/ITeleporterReceiver.sol";
 
 /// @title SL1AnyChainReceiver
 /// @notice This contract receives cross-chain messages and executes the encoded function calls on the target contract.

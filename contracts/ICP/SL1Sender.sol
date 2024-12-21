@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
-import "../teleporter/contracts/teleporter/ITeleporterMessenger.sol";
+import "../../teleporter/contracts/teleporter/ITeleporterMessenger.sol";
 
 /// @title SL1Sender
 /// @notice This contract allows sending arbitrary messages to any contract on any blockchain using the Teleporter protocol.
