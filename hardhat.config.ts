@@ -12,13 +12,11 @@ if (!deployer) {
 
 const config: HardhatUserConfig = {
   solidity: "0.8.25",
-  /*
-  ignition: { 
-    requiredConfirmations: 1,
-  },
-  */
-
   networks: {
+    avalanche: {
+      url: "https://api.avax.network/ext/bc/C/rpc",
+      accounts: [deployer],
+     },
     sl1Testnet: {
       url: `https://subnets.avax.network/sl1/testnet/rpc`,
       accounts: [deployer],
@@ -41,11 +39,6 @@ const config: HardhatUserConfig = {
       accounts: [deployer],
     }
   },
-  /*
-  sourcify: {
-    enabled: true
-  },
- */
   etherscan: {
     apiKey: {
       celoAlfajores: process.env.CELO_ALFAJORES_ETHERSCAN_API_KEY || "",
