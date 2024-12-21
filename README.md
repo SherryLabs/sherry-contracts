@@ -4,12 +4,12 @@ At Sherry, we are committed to simplifying and making blockchain interactions mo
 
 ## 📑 Index
 - [About Sherry](#about-sherry)
-- [Maint Function](#-main-function---execfunction)
-- [Contract Addresses - `sendMessage`](#-contract-addresses)
+- [Maint Function](#-main-function---sendMessage)
+- [Contract Addresses](#-contract-addresses)
   - [Main Contract](#-main-contract---sherry)
 
 
-### 🔧 Main Function - `execFunction`
+### 🔧 Main Function - `sendMessage`
 
 
 ## 📜 Contract Addresses
@@ -29,7 +29,7 @@ In Avalanche Fuji Testnet
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | `0x3D3fb38D3fc19e94c27437C48b1fcAc47d01f1b3`   | `Avalanche Fuji`    |
+| `Sherry`     | `0x51dcA441e260564463d3Bc3027d8A48fB2C4Aed5`   | `Avalanche Fuji`    |
 
 # Docs
 

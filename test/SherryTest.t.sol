@@ -26,12 +26,12 @@ contract SherryTest is Test {
         bytes memory data = abi.encodeWithSignature("setValue(uint256)", 123);
         vm.expectRevert(0xd93c0665);
 
-        sherry.execFunction(address(mockContract), data);
+        sherry.sendMessage(address(mockContract), data);
 
         sherry.unpause();
         assertFalse(sherry.paused());
 
-        sherry.execFunction(address(mockContract), data);
+        sherry.sendMessage(address(mockContract), data);
         assertEq(mockContract.value(), 123);
     }
 
@@ -44,21 +44,21 @@ contract SherryTest is Test {
     function testMinDataLength() public {
         bytes memory invalidData = new bytes(3);
         vm.expectRevert("Invalid function call data");
-        sherry.execFunction(address(mockContract), invalidData);
+        sherry.sendMessage(address(mockContract), invalidData);
     }
 
     function testZeroAddress() public {
         bytes memory data = abi.encodeWithSignature("setValue(uint256)", 123);
         vm.expectRevert("Invalid contract address");
-        sherry.execFunction(address(0), data);
+        sherry.sendMessage(address(0), data);
     }
 
-    function testExecFunction() public {
+    function testsendMessage() public {
         bytes memory encodedFunctionCall = abi.encodeWithSignature(
             "setValue(uint256)",
             42
         );
-        sherry.execFunction(address(mockContract), encodedFunctionCall);
+        sherry.sendMessage(address(mockContract), encodedFunctionCall);
         assertEq(mockContract.value(), 42);
     }
 
@@ -72,7 +72,7 @@ contract SherryTest is Test {
             data,
             "Function reverted"
         );
-        sherry.execFunction(address(mockContract), data);
+        sherry.sendMessage(address(mockContract), data);
     }
 
     function testDirectEthTransfer() public {
@@ -85,13 +85,13 @@ contract SherryTest is Test {
         sherry.pause();
         bytes memory data = abi.encodeWithSignature("setValue(uint256)", 123);
         vm.expectRevert();
-        sherry.execFunction(address(mockContract), data);
+        sherry.sendMessage(address(mockContract), data);
     }
 
     function testComplexRevertMessage() public {
         bytes memory data = abi.encodeWithSignature("complexRevert()");
         vm.expectRevert("Transaction reverted silently");
-        sherry.execFunction(address(mockContract), data);
+        sherry.sendMessage(address(mockContract), data);
     }
 
     function testEventEmission() public {
@@ -102,14 +102,14 @@ contract SherryTest is Test {
         emit Sherry.FunctionExecuted(address(mockContract), data);
 
         // Execute function
-        sherry.execFunction(address(mockContract), data);
+        sherry.sendMessage(address(mockContract), data);
     }
 
-    function testExecFunctionRevert() public {
+    function testsendMessageRevert() public {
         bytes memory encodedFunctionCall = abi.encodeWithSignature(
             "revertFunction()"
         );
         vm.expectRevert("Function reverted");
-        sherry.execFunction(address(mockContract), encodedFunctionCall);
+        sherry.sendMessage(address(mockContract), encodedFunctionCall);
     }
 }
