@@ -23,7 +23,7 @@ In Avalanche C-Chain
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | ``   | `Avalanche C-Chain`    |
+| `Sherry`     | `0xa3CA6021b432a88EEFb5b53B31833e19195b4ecB`   | `Avalanche C-Chain`    |
 
 In Avalanche Fuji Testnet
 
