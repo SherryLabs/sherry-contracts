@@ -43,7 +43,7 @@ contract Sherry is Ownable(msg.sender), Pausable {
             "Invalid function call data"
         );
 
-        (bool success, bytes memory returnData) = _contractToBeCalled.delegatecall(
+        (bool success, bytes memory returnData) = _contractToBeCalled.call(
             _encodedFunctionCall
         );
 
@@ -57,14 +57,16 @@ contract Sherry is Ownable(msg.sender), Pausable {
                 _encodedFunctionCall,
                 reason
             );
-            //revert(reason);
+            revert(reason);
         }
     }
 
     /// @notice Extracts the revert message from return data
     /// @dev Internal function to parse revert messages
     /// @param _returnData The return data from a failed call
-    function _getRevertMsg(bytes memory _returnData) internal pure returns (string memory) {
+    function _getRevertMsg(
+        bytes memory _returnData
+    ) internal pure returns (string memory) {
         if (_returnData.length < 68) return "Transaction reverted silently";
         assembly {
             _returnData := add(_returnData, 0x04)

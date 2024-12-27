@@ -29,7 +29,7 @@ In Avalanche Fuji Testnet
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | `0x51dcA441e260564463d3Bc3027d8A48fB2C4Aed5`   | `Avalanche Fuji`    |
+| `Sherry`     | `0xd877995ddc19a8076D7bAb8BC15F625607070497`   | `Avalanche Fuji`    |
 
 # Docs
 
