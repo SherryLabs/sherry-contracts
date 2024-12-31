@@ -36,7 +36,7 @@ async function main() {
         const gasLimit = 800000
         const encodedParams = hre.ethers.AbiCoder.defaultAbiCoder().encode(["string", "address"], ["Hello from Fuji", receiverAddress]);
 
-        const txCost = await senderContract.quoteCrossChainCost(targetChain, gasLimit);
+        const txCost = await senderContract.quoteCrossChainCost(targetChain, 1, gasLimit);
         console.log("Cost : ", txCost.toString());
 
         const encodedFunctionCall = await senderContract.encodeMessage(receiverAddress, encodedParams)
@@ -49,6 +49,7 @@ async function main() {
             receiverAddress,
             encodedParams,
             gasLimit,
+            1,
             { value: txCost }
         )
 

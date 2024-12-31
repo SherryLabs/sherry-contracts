@@ -15,7 +15,7 @@ contract SL1MessagesenderTest is Test {
         vm.deal(user, 1 ether);
     }
 
-    function testSendMessageWithRefundNegativeValue() public {
+    function testSendMessageNegativeValue() public {
         uint16 _targetChain = 14;
         address _receiverAddress = address(0x3);
         address _contractToBeCalled = address(0x2);
@@ -25,14 +25,15 @@ contract SL1MessagesenderTest is Test {
         );
         uint256 _gasLimit = 800_000;
         uint256 _receiverValue = 0;
-        uint256 _cost = s_sender.quoteCrossChainCost(_targetChain, _gasLimit);
+        uint256 _cost = s_sender.quoteCrossChainCost(_targetChain, _receiverValue, _gasLimit);
 
-        s_sender.sendMessageWithRefund{value: _cost + 0.01 ether}(
+        s_sender.sendMessage{value: _cost}(
             _targetChain,
             _receiverAddress,
             _contractToBeCalled,
             _encodedFunctionCall,
-            _gasLimit
+            _gasLimit,
+            _receiverValue
         );
     }
 }

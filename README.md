@@ -37,7 +37,7 @@ In Avalanche Fuji Testnet
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | `0x`   | `Avalanche C-Chain`    |
+| `Sherry`     | `0xDa6219A3814CcF623483F2A2D393B321c55652ff`   | `Avalanche C-Chain`    |
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
@@ -47,11 +47,11 @@ In Avalanche Fuji Testnet
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | `0x`   | `Avalanche C-Chain`    |
+| `Sherry`     | `0x0914b8a17412F59f7240Fbd8bE753586fceA48a0`   | `Celo Alfajores`    |
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | `0x`   | `Avalanche C-Chain`    |
+| `Sherry`     | `0x`   | `Celo`    |
 
 
 # Docs

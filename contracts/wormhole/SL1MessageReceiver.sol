@@ -23,6 +23,7 @@ contract SL1MessageReceiver is IWormholeReceiver {
     );
     event FunctionCallError(string message);
     event SenderRegistered(uint16 sourceChain, bytes32 sourceAddress);
+    event Withdraw(address indexed owner, uint256 amount);
 
     constructor(address _wormholeRelayer) {
         s_wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
@@ -40,11 +41,7 @@ contract SL1MessageReceiver is IWormholeReceiver {
     function setRegisteredSender(
         uint16 sourceChain,
         bytes32 sourceAddress
-    ) external {
-        require(
-            msg.sender == s_registrationOwner,
-            "Only the registration owner can set the sender"
-        );
+    ) external onlyOwner {
         s_registeredSenders[sourceChain] = sourceAddress;
         emit SenderRegistered(sourceChain, sourceAddress);
     }
@@ -76,12 +73,26 @@ contract SL1MessageReceiver is IWormholeReceiver {
         s_lastContractToBeCalled = contractToBeCalled;
         s_sourceAddress = sourceAddress;
 
-        (bool success, ) = contractToBeCalled.call(encodedFunctionCall);
+        (bool success, ) = contractToBeCalled.call{value: msg.value}(
+            encodedFunctionCall
+        );
 
         if (!success) {
             emit FunctionCallError("Error executing function call");
         } else {
             emit FunctionExecuted(contractToBeCalled, encodedFunctionCall);
         }
+    }
+
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        require(balance > 0, "No balance to withdraw");
+        payable(msg.sender).transfer(balance);
+        emit Withdraw(msg.sender, balance);
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == s_registrationOwner, "Only the owner can call this function");
+        _;
     }
 }
