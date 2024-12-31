@@ -11,6 +11,14 @@ contract SL1MessageSender {
     IWormholeRelayer public s_wormholeRelayer;
     address public owner;
     uint256 public GAS_LIMIT = 800_000;
+    uint16 public constant ORIGIN_CHAIN = 6; // Avalanche WH chain ID
+
+    event MessageSent(
+        address indexed contractToBeCalled,
+        bytes encodedFunctionCall,
+        address destinationAddress,
+        bytes32 destinationChain
+    );
 
     /**
      * @dev Sets the Wormhole Relayer address and initializes the contract owner.
@@ -73,14 +81,15 @@ contract SL1MessageSender {
             _encodedFunctionCall
         );
         uint256 cost = quoteCrossChainCost(_targetChain, _gasLimit);
+        uint256 nativeValue = msg.value - cost;
 
         s_wormholeRelayer.sendPayloadToEvm{value: cost}(
             _targetChain,
             _targetAddress,
             encodedData,
-            0,
+            nativeValue,
             _gasLimit,
-            _targetChain,
+            ORIGIN_CHAIN,
             msg.sender
         );
     }
