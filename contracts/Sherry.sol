@@ -15,7 +15,7 @@ contract Sherry is Ownable(msg.sender), Pausable {
     /// @param contractToBeCalled The address of the contract that was called
     /// @param encodedFunctionCall The encoded function call data that was executed
     event FunctionExecuted(
-        address contractToBeCalled,
+        address indexed contractToBeCalled,
         bytes encodedFunctionCall
     );
 
@@ -42,7 +42,6 @@ contract Sherry is Ownable(msg.sender), Pausable {
             _encodedFunctionCall.length >= MIN_DATA_LENGTH,
             "Invalid function call data"
         );
-
 
         (bool success, bytes memory returnData) = _contractToBeCalled.call(
             _encodedFunctionCall
@@ -85,8 +84,8 @@ contract Sherry is Ownable(msg.sender), Pausable {
         _unpause();
     }
 
-    /// @notice Prevents direct payments to the contract
+    /// @notice Prevents ETH from being stuck in the contract
     receive() external payable {
-        revert("Direct payments not accepted");
+        revert("Direct ETH transfers not allowed");
     }
 }
