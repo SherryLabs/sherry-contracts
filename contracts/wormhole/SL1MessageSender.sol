@@ -37,11 +37,12 @@ contract SL1MessageSender {
      */
     function quoteCrossChainCost(
         uint16 _targetChain,
+        uint256 _receiverValue,
         uint256 _gasLimit
     ) public view returns (uint256 cost) {
         (cost, ) = s_wormholeRelayer.quoteEVMDeliveryPrice(
             _targetChain,
-            0,
+            _receiverValue,
             _gasLimit
         );
     }
@@ -63,65 +64,40 @@ contract SL1MessageSender {
     /**
      * @notice Sends a cross-chain message with a refund option.
      * @param _targetChain The target chain ID.
-     * @param _targetAddress The address on the target chain to send the message to.
-     * @param _contractToBeCalled The address of the contract to be called on the target chain.
-     * @param _encodedFunctionCall The encoded function call data.
-     * @param _gasLimit The gas limit for the cross-chain message.
-     */
-    function sendMessageWithRefund(
-        uint16 _targetChain,
-        address _targetAddress,
-        address _contractToBeCalled,
-        bytes memory _encodedFunctionCall,
-        uint256 _gasLimit
-    ) external payable {
-        require(_gasLimit <= GAS_LIMIT, "Gas limit exceeds the maximum limit");
-        bytes memory encodedData = encodeMessage(
-            _contractToBeCalled,
-            _encodedFunctionCall
-        );
-        uint256 cost = quoteCrossChainCost(_targetChain, _gasLimit);
-        uint256 nativeValue = msg.value - cost;
-
-        s_wormholeRelayer.sendPayloadToEvm{value: cost}(
-            _targetChain,
-            _targetAddress,
-            encodedData,
-            nativeValue,
-            _gasLimit,
-            ORIGIN_CHAIN,
-            msg.sender
-        );
-    }
-
-    /**
-     * @notice Sends a cross-chain message.
-     * @param _targetChain The target chain ID.
-     * @param _targetAddress The address on the target chain to send the message to.
+     * @param _receiverAddress The address on the target chain - WH SL1 Message Receiver.
      * @param _contractToBeCalled The address of the contract to be called on the target chain.
      * @param _encodedFunctionCall The encoded function call data.
      * @param _gasLimit The gas limit for the cross-chain message.
      */
     function sendMessage(
         uint16 _targetChain,
-        address _targetAddress,
+        address _receiverAddress,
         address _contractToBeCalled,
         bytes memory _encodedFunctionCall,
-        uint256 _gasLimit
+        uint256 _gasLimit,
+        uint256 _receiverValue
     ) external payable {
         require(_gasLimit <= GAS_LIMIT, "Gas limit exceeds the maximum limit");
         bytes memory encodedData = encodeMessage(
             _contractToBeCalled,
             _encodedFunctionCall
         );
-        uint256 cost = quoteCrossChainCost(_targetChain, _gasLimit);
+
+        uint256 cost = quoteCrossChainCost(
+            _targetChain,
+            _receiverValue,
+            _gasLimit
+        );
+        require(msg.value >= cost, "Insufficient funds to send the message");
 
         s_wormholeRelayer.sendPayloadToEvm{value: cost}(
             _targetChain,
-            _targetAddress,
+            _receiverAddress,
             encodedData,
-            0,
-            _gasLimit
+            _receiverValue,
+            _gasLimit,
+            ORIGIN_CHAIN,
+            msg.sender
         );
     }
 

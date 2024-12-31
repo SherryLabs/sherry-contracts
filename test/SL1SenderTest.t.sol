@@ -14,4 +14,25 @@ contract SL1MessagesenderTest is Test {
         user = address(0x123);
         vm.deal(user, 1 ether);
     }
+
+    function testSendMessageWithRefundNegativeValue() public {
+        uint16 _targetChain = 14;
+        address _receiverAddress = address(0x3);
+        address _contractToBeCalled = address(0x2);
+        bytes memory _encodedFunctionCall = abi.encodeWithSignature(
+            "setValue(uint256)",
+            42
+        );
+        uint256 _gasLimit = 800_000;
+        uint256 _receiverValue = 0;
+        uint256 _cost = s_sender.quoteCrossChainCost(_targetChain, _gasLimit);
+
+        s_sender.sendMessageWithRefund{value: _cost + 0.01 ether}(
+            _targetChain,
+            _receiverAddress,
+            _contractToBeCalled,
+            _encodedFunctionCall,
+            _gasLimit
+        );
+    }
 }
