@@ -37,11 +37,16 @@ const config: HardhatUserConfig = {
     celoAlfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
       accounts: [deployer],
-    }
+    },
+    celo: {
+      url: "https://forno.celo.org",
+      accounts: [deployer],
+    },
   },
   etherscan: {
     apiKey: {
       celoAlfajores: process.env.CELO_ALFAJORES_ETHERSCAN_API_KEY || "",
+      celo: process.env.CELO_ALFAJORES_ETHERSCAN_API_KEY || "",
       avalancheFuji: process.env.AVALANCHE_FUJI_ETHERSCAN_API_KEY || "",
       avalanche: process.env.AVALANCHE_FUJI_ETHERSCAN_API_KEY || "",
     },
@@ -69,7 +74,15 @@ const config: HardhatUserConfig = {
           apiURL: "https://api-alfajores.celoscan.io/api",
           browserURL: "https://alfajores.celoscan.io",
         }
-      }
+      },
+      {
+        network: "celo",
+        chainId: 42220,
+        urls: {
+          apiURL: "https://api.celoscan.io/api",
+          browserURL: "https://celoscan.io",
+        }
+      },
     ]
   }
 
