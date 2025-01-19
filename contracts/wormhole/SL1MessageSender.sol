@@ -11,7 +11,7 @@ contract SL1MessageSender {
     IWormholeRelayer public s_wormholeRelayer;
     address public owner;
     uint256 public GAS_LIMIT = 800_000;
-    uint16 public constant ORIGIN_CHAIN = 6; // Avalanche WH chain ID
+    uint16 public constant ORIGIN_CHAIN = 14; // Avalanche WH chain ID
 
     event MessageSent(
         address indexed contractToBeCalled,
@@ -58,7 +58,7 @@ contract SL1MessageSender {
         bytes memory _encodedFunctionCall
     ) public view returns (bytes memory) {
         return
-            abi.encode(_contractToBeCalled, msg.sender, _encodedFunctionCall);
+            abi.encode(msg.sender, _contractToBeCalled, _encodedFunctionCall);
     }
 
     /**

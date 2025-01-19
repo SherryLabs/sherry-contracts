@@ -7,11 +7,6 @@ import "lib/wormhole-solidity-sdk/src/interfaces/IWormholeReceiver.sol";
 contract SL1MessageReceiver is IWormholeReceiver {
     IWormholeRelayer public s_wormholeRelayer;
     address public s_registrationOwner;
-    bytes public s_payload;
-    address public s_lastSender;
-    bytes public s_lastEncodedFunctionCall;
-    address public s_lastContractToBeCalled;
-    bytes32 public s_sourceAddress;
 
     mapping(uint16 => bytes32) public s_registeredSenders;
 
@@ -58,26 +53,20 @@ contract SL1MessageReceiver is IWormholeReceiver {
             "Only the Wormhole Relayer can call this function"
         );
 
-        s_payload = payload;
-
         emit MessageInfoReceived(sourceAddress, payload);
 
         (
-            address contractToBeCalled,
             address sender,
+            address contractToBeCalled,
             bytes memory encodedFunctionCall
         ) = abi.decode(payload, (address, address, bytes));
-
-        s_lastSender = sender;
-        s_lastEncodedFunctionCall = encodedFunctionCall;
-        s_lastContractToBeCalled = contractToBeCalled;
-        s_sourceAddress = sourceAddress;
 
         (bool success, ) = contractToBeCalled.call{value: msg.value}(
             encodedFunctionCall
         );
 
         if (!success) {
+            payable(sender).transfer(msg.value);
             emit FunctionCallError("Error executing function call");
         } else {
             emit FunctionExecuted(contractToBeCalled, encodedFunctionCall);
