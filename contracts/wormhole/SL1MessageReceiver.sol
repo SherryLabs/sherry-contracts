@@ -66,8 +66,8 @@ contract SL1MessageReceiver is IWormholeReceiver {
         );
 
         if (!success) {
-            payable(sender).transfer(msg.value);
             emit FunctionCallError("Error executing function call");
+            payable(sender).transfer(msg.value);
         } else {
             emit FunctionExecuted(contractToBeCalled, encodedFunctionCall);
         }

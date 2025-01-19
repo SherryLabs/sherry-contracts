@@ -37,21 +37,21 @@ In Avalanche Fuji Testnet
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | `0xDa6219A3814CcF623483F2A2D393B321c55652ff`   | `Avalanche C-Chain`    |
+| `SL1MessageSender`     | ``   | `Avalanche C-Chain`    |
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | `0x`   | `Avalanche C-Chain`    |
+| `SL1MessageSender`     | `0x1b412E757bc8359b401BcF7B0b82215c33a9B71f`   | `Avalanche Fuji`    |
 
 ### SL1MessageReceiver.sol
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | `0x0914b8a17412F59f7240Fbd8bE753586fceA48a0`   | `Celo Alfajores`    |
+| `SL1MessageReceiver`     | `0x4DC7CdD6d7062add8bB3e4512E987aC111388335`   | `Celo Alfajores`    |
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `Sherry`     | `0x`   | `Celo`    |
+| `SL1MessageReceiver`     | `0x`   | `Celo`    |
 
 
 # Docs

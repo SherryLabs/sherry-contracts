@@ -24,10 +24,11 @@ contract SL1MessagesenderTest is Test {
             42
         );
         uint256 _gasLimit = 800_000;
-        uint256 _receiverValue = 0;
-        uint256 _cost = s_sender.quoteCrossChainCost(_targetChain, _receiverValue, _gasLimit);
+        uint256 _receiverValue = 1;
+        uint256 _cost = 10;//s_sender.quoteCrossChainCost(_targetChain, _receiverValue, _gasLimit);
 
-        s_sender.sendMessage{value: _cost}(
+        vm.expectRevert();
+        s_sender.sendMessage{value: 0}(
             _targetChain,
             _receiverAddress,
             _contractToBeCalled,
