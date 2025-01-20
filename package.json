@@ -2,7 +2,8 @@
   "scripts": {
     "deploy:whreceiver": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageReceiver.ts",
     "deploy:whsender": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageSender.ts",
-    "register:whreceiver": "npx hardhat run scripts/wormhole/RegisterSenderInReceiver.ts"
+    "register:whreceiver": "npx hardhat run scripts/wormhole/RegisterSenderInReceiver.ts",
+    "deploy:capture": "npx hardhat ignition deploy ignition/modules/wormhole/CaptureFlag.ts"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
