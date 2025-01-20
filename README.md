@@ -53,6 +53,14 @@ In Avalanche Fuji Testnet
 |---------------|----------------------------------------------|--------|
 | `SL1MessageReceiver`     | `0x`   | `Celo`    |
 
+## Example
+
+### Capture the Flag
+
+
+| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
+|---------------|----------------------------------------------|--------|
+| `CaptureFlag`     | `0xFdC44664A0CcFa8Ed1a63ae6Be9Fb078297C0589`   | `Avalanche Fuji`    |
 
 # Docs
 
