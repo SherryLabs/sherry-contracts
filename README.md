@@ -61,6 +61,7 @@ In Avalanche Fuji Testnet
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `CaptureFlag`     | `0xFdC44664A0CcFa8Ed1a63ae6Be9Fb078297C0589`   | `Avalanche Fuji`    |
+| `CaptureFlag`     | `0x812810512193d623a68e467cc314511a581E4546`   | `Celo Alfajores`    |
 
 # Docs
 
