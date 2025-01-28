@@ -1,7 +1,8 @@
 export const chains = [
     {
         name: "avalanche",
-        chainId: 6,
+        chainIdWh: 6,
+        chainId: 43114,
         rpc: "https://api.avax.network/ext/bc/C/rpc",
         tokenBridge: "0x0e082F06FF657D94310cB8cE8B0D9a04541d8052",
         wormholeRelayer: "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
@@ -9,7 +10,8 @@ export const chains = [
     },
     {
         name: "avalancheFuji",
-        chainId: 6,
+        chainIdWh: 6,
+        chainId: 43113,
         rpc: "https://api.avax-test.network/ext/bc/C/rpc",
         tokenBridge: "0x61E44E506Ca5659E6c0bba9b678586fA2d729756",
         wormholeRelayer: "0xA3cF45939bD6260bcFe3D66bc73d60f19e49a8BB",
@@ -17,7 +19,8 @@ export const chains = [
     },
     {
         name: "celoAlfajores",
-        chainId: 14,
+        chainIdWh: 14,
+        chainId: 44787,
         rpc: "https://alfajores-forno.celo-testnet.org",
         tokenBridge: "0x05ca6037eC51F8b712eD2E6Fa72219FEaE74E153",
         wormholeRelayer: "0x306B68267Deb7c5DfCDa3619E22E9Ca39C374f84",
@@ -25,7 +28,8 @@ export const chains = [
     },
     {
         name: "celo",
-        chainId: 14,
+        chainIdWh: 14,
+        chainId: 42220,
         rpc: "https://alfajores-forno.celo.org",
         tokenBridge: "0x796Dff6D74F3E27060B71255Fe517BFb23C93eed",
         wormholeRelayer: "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",

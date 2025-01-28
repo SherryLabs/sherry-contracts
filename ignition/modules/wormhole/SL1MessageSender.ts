@@ -18,6 +18,9 @@ const SL1MessageSenderModule = buildModule("SL1MessageSenderModule", (m) => {
         case "celoAlfajores":
             chain = chains.find((chain) => chain.name === network);
             break;
+        case "celo":
+            chain = chains.find((chain) => chain.name === network);
+            break
         default:
             throw new Error(`Network ${network} is not supported`);
     }
