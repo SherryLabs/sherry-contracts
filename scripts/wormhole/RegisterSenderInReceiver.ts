@@ -4,16 +4,29 @@ import * as fs from 'fs';
 import path from 'path';
 
 async function main() {
+    const receiverName = hre.network.name;
+    let chainSender;
+
+    const chainReceiver = chains.find((chain) => chain.name === receiverName);
+
+    if (!chainReceiver) throw new Error("Chain ID is required");
+
+    if (chainReceiver.chainId === 43114) chainSender = 42220; // avalanche -> celo
+    else if (chainReceiver.chainId === 42220) chainSender = 43114; // celo -> avalanche
+    else if (chainReceiver.chainId === 44787) chainSender = 43113; // alfajores -> fuji
+    else if (chainReceiver.chainId === 43113) chainSender = 44787; // fuji -> alfajores
+    else throw new Error(`Chain ID ${chainReceiver} for ${hre.network.name} is not supported`);
+
     const senderData = JSON.parse(
         fs.readFileSync(
-            path.resolve(__dirname, '../../ignition/deployments/chain-43113/deployed_addresses.json'),
+            path.resolve(__dirname, `../../ignition/deployments/chain-${chainSender}/deployed_addresses.json`),
             'utf8'
         )
     );
 
     const receiverData = JSON.parse(
         fs.readFileSync(
-            path.resolve(__dirname, '../../ignition/deployments/chain-44787/deployed_addresses.json'),
+            path.resolve(__dirname, `../../ignition/deployments/chain-${chainReceiver.chainId}/deployed_addresses.json`),
             'utf8'
         )
     );
@@ -26,18 +39,11 @@ async function main() {
     const receiverAddress = receiverData["SL1MessageReceiverModule#SL1MessageReceiver"]
     const receiver = await hre.ethers.getContractAt("SL1MessageReceiver", receiverAddress);
 
-    const fujiChain = chains.find((chain) => chain.name === "avalancheFuji");
-
-    const sourceChainId = fujiChain?.chainId;
-    
+    const sourceChain = chains.find((chain) => chain.chainId === chainSender);
     const senderFormattedAddress = hre.ethers.zeroPadValue(senderAddress, 32);
 
-    console.log("sender address : ", senderAddress)
-    console.log("Sender formatted address : ", senderFormattedAddress);
-
-
     const tx = await receiver.setRegisteredSender(
-        sourceChainId,
+        sourceChain?.chainIdWh,
         senderFormattedAddress
     )
 

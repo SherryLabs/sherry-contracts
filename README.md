@@ -37,7 +37,7 @@ In Avalanche Fuji Testnet
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1MessageSender`     | ``   | `Avalanche C-Chain`    |
+| `SL1MessageSender`     | `0xe0e07c70b7fB31d58AFf69C1750520baebaa632D`   | `Avalanche C-Chain`    |
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
@@ -51,7 +51,7 @@ In Avalanche Fuji Testnet
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1MessageReceiver`     | `0x`   | `Celo`    |
+| `SL1MessageReceiver`     | `0x21fb3E1D7a7a218fdd9C28b0b18D8b9Cb49Fe259`   | `Celo`    |
 
 ## Example
 
