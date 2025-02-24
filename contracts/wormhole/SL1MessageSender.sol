@@ -11,7 +11,7 @@ contract SL1MessageSender {
     IWormholeRelayer public s_wormholeRelayer;
     address public owner;
     uint256 public GAS_LIMIT = 800_000;
-    uint16 public constant ORIGIN_CHAIN = 14; // Avalanche WH chain ID
+    uint16 public immutable ORIGIN_CHAIN; // 14 - Avalanche WH chain ID
 
     event MessageSent(
         address indexed contractToBeCalled,
@@ -24,8 +24,9 @@ contract SL1MessageSender {
      * @dev Sets the Wormhole Relayer address and initializes the contract owner.
      * @param _wormholeRelayer The address of the Wormhole Relayer contract.
      */
-    constructor(address _wormholeRelayer) {
+    constructor(address _wormholeRelayer, uint16 _originChain) {
         s_wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
+        ORIGIN_CHAIN = _originChain;
         owner = msg.sender;
     }
 

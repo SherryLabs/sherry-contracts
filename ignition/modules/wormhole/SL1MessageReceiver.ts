@@ -22,6 +22,9 @@ const SL1MessageReceiverModule = buildModule("SL1MessageReceiverModule", (m) => 
         case "celo":
             chain = chains.find((chain) => chain.name === network);
             break;
+        case "monadTestnet":
+            chain = chains.find((chain) => chain.name === network);
+            break;
         default:
             throw new Error(`Network ${network} is not supported`);
     }
