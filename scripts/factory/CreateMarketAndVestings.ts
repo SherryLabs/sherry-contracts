@@ -1,135 +1,64 @@
-import { parseEther, formatEther, parseAbi, encodeAbiParameters } from "viem";
-import hre from "hardhat";
+import { parseAbi, encodeAbiParameters } from 'viem';
+import { hardhat } from 'viem/chains';
+import hre from 'hardhat';
+import dotenv from 'dotenv';
 
-const factoryAbi = parseAbi([
-    'function createMarketAndToken((uint8 tokenType, string name, string symbol, address quoteToken, uint256 totalSupply, uint16 creatorShare, uint16 stakingShare, uint256[] bidPrices, uint256[] askPrices, bytes args)) returns (address token, address market)'
+dotenv.config();
+
+//const TMFactoryAddress = '0x86B19AE67DD6EAcA8df0302Da7711e4Cc031F6B2'; // AVAX FUJI
+//const TMFactoryAddress = '0xbaA2D7D2c903AfDcA72Ce8Ead3D99071964364E5'// Avax Mainnet
+const TMFactoryAddress = '0x501ee2D4AA611C906F785e10cC868e145183FCE4' // Monad Testnet
+const WMONAD = "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701"
+//const PRIVATE_KEY = process.env.DEPLOYER_KEY as string;
+//const RPC_URL = 'http://127.0.0.1:8545'; // Asegúrate de que Hardhat esté corriendo
+
+const abi = parseAbi([
+    'function createMarketAndToken((uint96 tokenType, string name, string symbol, address quoteToken, uint256 totalSupply, uint16 creatorShare, uint16 stakingShare, uint256[] bidPrices, uint256[] askPrices, bytes args) parameters) external returns (address baseToken, address market)'
 ]);
 
-type MarketCreation = {
-    tokenType: bigint;
-    name: string;
-    symbol: string;
-    quoteToken: `0x${string}`;
-    totalSupply: bigint;
-    creatorShare: bigint;
-    stakingShare: bigint;
-    bidPrices: bigint[];
-    askPrices: bigint[];
-    args: `0x${string}`;
-};
-
 async function main() {
-    const factoryAddress = "0x5fEE6e1B5DDF4CBd7538b975CA48eE0c5d4F1142";
-
-    const [walletClient] = await hre.viem.getWalletClients();
-    const publicClient = await hre.viem.getPublicClient();
-
-    // Check balance
-    const balance = await publicClient.getBalance({
-        address: walletClient.account.address,
-    });
-
-    console.log(
-        `Balance of ${walletClient.account.address}: ${formatEther(balance)} AVAX`
-    );
-
     try {
-        // Match exactly the Solidity values
-        const bidPrices = [
-            0n,
-            BigInt("1000000000000000000") // 100e14 = 0.01 ETH
-        ];
 
-        const askPrices = [
-            0n,
-            BigInt("990000000000000000") // 99e14 = 0.0099 ETH
-        ];
+        const [walletClient] = await hre.viem.getWalletClients();
+        const publicClient = await hre.viem.getPublicClient();
 
-        // Encode decimals exactly as Solidity's abi.encode(18)
-        const encodedDecimals = "0x0000000000000000000000000000000000000000000000000000000000000012";
-
-        const marketCreation = {
-            tokenType: Number(1n), // Convert bigint to number
-            name: "Test Token2",
-            symbol: "TST2",
-            quoteToken: "0xd00ae08403B9bbb9124bB305C09058E32C39A48c" as `0x${string}`, // WETH
-            totalSupply: BigInt("10000000000000000000000000"), // 1e25
-            creatorShare: Number(4000n), // Convert bigint to number
-            stakingShare: Number(4000n), // Convert bigint to number
-            bidPrices: [
-                0n,
-                BigInt("1000000000000000000") // 100e14 = 0.01 ETH
-            ],
-            askPrices: [
-                0n,
-                BigInt("990000000000000000") // 99e14 = 0.0099 ETH
-            ],
-            args: encodedDecimals as `0x${string}` // Use the raw hex string that matches Solidity's abi.encode
+        const parameters = {
+            tokenType: 1n, // BigInt porque es un uint96
+            name: 'MyToken',
+            symbol: 'MTK',
+            quoteToken: WMONAD as `0x${string}`, // Dirección del token de cotización (WMONAD)
+            totalSupply: 10000000000000000000000000n, // 1e25 en BigInt
+            creatorShare: 4000, // 40% en BPS (4000 / 10000 = 40%)
+            stakingShare: 4000, // 40% en BPS (4000 / 10000 = 40%)
+            bidPrices: [0n, 9800000000000000n, 9900000000000000n], // Precios de oferta iniciales (BigInt)
+            askPrices: [0n, 9900000000000000n, 10000000000000000n], // Precios de venta iniciales (BigInt)
+            args: encodeAbiParameters([{ type: 'uint256' }], [18n]), // Decimales del token codificados
         };
 
-        // Manually encode the MarketCreation struct using encodeAbiParameters
-        const encodedMarketCreation = encodeAbiParameters(
-            [
-                { type: 'uint8' },
-                { type: 'string' },
-                { type: 'string' },
-                { type: 'address' },
-                { type: 'uint256' },
-                { type: 'uint16' },
-                { type: 'uint16' },
-                { type: 'uint256[]' },
-                { type: 'uint256[]' },
-                { type: 'bytes' }
-            ],
-            [
-                marketCreation.tokenType,
-                marketCreation.name,
-                marketCreation.symbol,
-                marketCreation.quoteToken,
-                marketCreation.totalSupply,
-                marketCreation.creatorShare,
-                marketCreation.stakingShare,
-                marketCreation.bidPrices,
-                marketCreation.askPrices,
-                marketCreation.args
-            ]
-        );
+        if (parameters.bidPrices.length !== parameters.askPrices.length || parameters.bidPrices.length < 2 || parameters.bidPrices.length > 101) {
+            throw new Error('Los arrays de precios tienen una longitud inválida.');
+        }
 
-        // Estimate gas
-        console.log("Estimating gas...");
-        const gasEstimate = await publicClient.estimateContractGas({
-            address: factoryAddress,
-            abi: factoryAbi,
-            functionName: "createMarketAndToken",
-            args: [marketCreation], // Pass the encoded data
-            account: walletClient.account.address,
+        console.log('Ejecutando createMarketAndToken...');
+
+        const tx = await walletClient.writeContract({
+            address: TMFactoryAddress,
+            abi,
+            functionName: 'createMarketAndToken',
+            args: [parameters],
         });
 
-        console.log("Estimated gas:", gasEstimate.toString());
-
-        // Send transaction
-        console.log("Sending transaction...");
-        const hash = await walletClient.writeContract({
-            address: factoryAddress,
-            abi: factoryAbi,
-            functionName: "createMarketAndToken",
-            args: [marketCreation], // Pass the encoded data
-            gas: (gasEstimate * 120n) / 100n, // 20% buffer
-        });
-
-        console.log("Transaction sent:", hash);
-
-        // Wait for receipt
-        const receipt = await publicClient.waitForTransactionReceipt({ hash });
-        console.log("Transaction mined:", receipt.transactionHash);
-
-    } catch (error) {
-        console.error("Detailed error:", error);
-        throw error;
+        console.log('Transacción enviada:', tx);
+        const receipt = await publicClient.waitForTransactionReceipt({ hash: tx });
+        console.log('Transacción confirmada:', receipt);
+    } catch (error: any) {
+        if (error.cause) {
+            console.error('Detalles del error:', error.cause);
+        }
+        console.error('Error al ejecutar la transacción:', error.message || error);
     }
 }
 
 main().catch((error) => {
-    console.error(error);
-    process.exit(1);
+    console.error('Error en el script:', error);
 });
