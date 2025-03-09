@@ -45,7 +45,6 @@ const config: HardhatUserConfig = {
     },
     monadTestnet: {
       url: "https://testnet-rpc.monad.xyz/",
-      //chainId: 10143,
       accounts: [deployer],
     }
   },
