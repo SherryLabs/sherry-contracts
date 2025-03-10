@@ -6,7 +6,6 @@ dotenv.config();
 
 // Contract addresses
 const ROUTER_ADDRESS = '0x1b1f2Bfc5e551b955F2a3F973876cEE917FB4d05' as `0x${string}`;
-const TOKEN_FACTORY_ADDRESS = '0x501ee2D4AA611C906F785e10cC868e145183FCE4' as `0x${string}`;
 
 // The token address you want to swap to
 const TARGET_TOKEN = '0x83828B09e730aea59A83De8CB84B963a9Fc604a6' as `0x${string}`; // Example token, replace with actual token address
