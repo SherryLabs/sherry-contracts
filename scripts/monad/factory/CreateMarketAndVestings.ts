@@ -61,14 +61,6 @@ async function main() {
         const amountIn = 2000000000000000000n; // 2 ether in wei
         const minAmountOut = 0n; // do not use 0 in production environment
 
-        /*
-        console.log('Executing createMarketAndVestings...');
-        console.log('Market creation params:', JSON.stringify(marketCreationParams, (_, v) => 
-            typeof v === 'bigint' ? v.toString() : v, 2));
-        console.log('Vesting params:', JSON.stringify(vestingParams, (_, v) => 
-            typeof v === 'bigint' ? v.toString() : v, 2));
-        */
-
         const tx = await walletClient.writeContract({
             address: TMFactoryAddress,
             abi,
