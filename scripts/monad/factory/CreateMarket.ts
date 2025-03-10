@@ -10,14 +10,13 @@ const abi = parseAbi([
 
 async function main() {
     try {
-
         const [walletClient] = await hre.viem.getWalletClients();
         const publicClient = await hre.viem.getPublicClient();
 
         const parameters = {
             tokenType: 1n, // 🔢 BigInt because it's a uint96
-            name: 'MyToken',
-            symbol: 'MTK',
+            name: 'Sherry v1',
+            symbol: 'SHERRY',
             quoteToken: WMONAD as `0x${string}`, // 💱 Quote token address (WMONAD)
             totalSupply: 10000000000000000000000000n, // 💰 1e25 in BigInt
             creatorShare: 4000, // 💸 40% in BPS (4000 / 10000 = 40%)
@@ -31,18 +30,37 @@ async function main() {
             throw new Error('Price arrays have invalid length.');
         }
 
-        console.log('🚀 Executing createMarketAndToken...');
+        console.log('🚀 Simulating createMarketAndToken to get return values...');
 
-        const tx = await walletClient.writeContract({
+        // First simulate the contract call to get the return values
+        const { result, request } = await publicClient.simulateContract({
             address: TMFactoryAddress,
             abi,
             functionName: 'createMarketAndToken',
             args: [parameters],
+            account: walletClient.account,
         });
 
+        // Extract the return values from the simulation
+        const baseToken = result[0];
+        const market = result[1];
+        
+        console.log('⏳ Expected Token Address:', baseToken);
+        console.log('⏳ Expected Market Address:', market);
+
+        console.log('🚀 Executing actual transaction...');
+        
+        // Execute the actual transaction
+        const tx = await walletClient.writeContract(request);
+        
         console.log('📤 Transaction sent:', tx);
         const receipt = await publicClient.waitForTransactionReceipt({ hash: tx });
         console.log('✅ Transaction confirmed:', receipt);
+
+        console.log('🪙 Created Token Address:', baseToken);
+        console.log('🏛️ Created Market Address:', market);
+        
+        return { tx, baseToken, market };
     } catch (error: any) {
         if (error.cause) {
             console.error('❌ Error details:', error.cause);
@@ -51,6 +69,12 @@ async function main() {
     }
 }
 
-main().catch((error) => {
-    console.error('💥 Script error:', error);
-});
+main()
+    .then((result) => {
+        if (result) {
+            console.log('✨ Script completed successfully');
+        }
+    })
+    .catch((error) => {
+        console.error('💥 Script error:', error);
+    });
