@@ -21,6 +21,9 @@ const SL1MessageSenderModule = buildModule("SL1MessageSenderModule", (m) => {
         case "celo":
             chain = chains.find((chain) => chain.name === network);
             break
+        case "monadTestnet":
+            chain = chains.find((chain) => chain.name === network);
+            break;
         default:
             throw new Error(`Network ${network} is not supported`);
     }
@@ -30,13 +33,14 @@ const SL1MessageSenderModule = buildModule("SL1MessageSenderModule", (m) => {
     }
     // Origin-Chain Wormhole Relayer Address
     const whRelayerAddress = chain.wormholeRelayer;
+    const whChainId = chain.chainIdWh;
 
     if (!whRelayerAddress) {
         throw new Error("WH_RELAYER_ADDRESS is required");
     }
 
     // Deploy SL1MessageSender contract in Fuji
-    const sender = m.contract("SL1MessageSender", [whRelayerAddress], {});
+    const sender = m.contract("SL1MessageSender", [whRelayerAddress, whChainId], {});
     return { sender };
 });
 

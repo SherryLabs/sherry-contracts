@@ -34,5 +34,14 @@ export const chains = [
         tokenBridge: "0x796Dff6D74F3E27060B71255Fe517BFb23C93eed",
         wormholeRelayer: "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
         wormhole: "0x796Dff6D74F3E27060B71255Fe517BFb23C93eed"
+    },
+    {
+        name: "monadTestnet",
+        chainIdWh: 48,
+        chainId: 10143,
+        rpc: "https://testnet-rpc.monad.xyz/",
+        tokenBridge: "0xF323dcDe4d33efe83cf455F78F9F6cc656e6B659",
+        wormholeRelayer: "0x362fca37E45fe1096b42021b543f462D49a5C8df",
+        wormhole: "0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd"
     }
 ]

@@ -1,5 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "@nomicfoundation/hardhat-viem";
 import * as dotenv from "dotenv"
 
 dotenv.config();
@@ -16,7 +17,7 @@ const config: HardhatUserConfig = {
     avalanche: {
       url: "https://api.avax.network/ext/bc/C/rpc",
       accounts: [deployer],
-     },
+    },
     sl1Testnet: {
       url: `https://subnets.avax.network/sl1/testnet/rpc`,
       accounts: [deployer],
@@ -42,6 +43,15 @@ const config: HardhatUserConfig = {
       url: "https://forno.celo.org",
       accounts: [deployer],
     },
+    monadTestnet: {
+      url: "https://testnet-rpc.monad.xyz/",
+      accounts: [deployer],
+    }
+  },
+  sourcify: {
+    enabled: true,
+    apiUrl: "https://sourcify-api-monad.blockvision.org",
+    browserUrl: "https://testnet.monadexplorer.com/"
   },
   etherscan: {
     apiKey: {

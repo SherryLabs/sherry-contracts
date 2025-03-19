@@ -38,6 +38,7 @@ In Avalanche Fuji Testnet
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1MessageSender`     | `0xe0e07c70b7fB31d58AFf69C1750520baebaa632D`   | `Avalanche C-Chain`    |
+| `SL1MessageSender`     | `0xa3CA6021b432a88EEFb5b53B31833e19195b4ecB`   | `Monad Testnet`    |
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
@@ -47,11 +48,12 @@ In Avalanche Fuji Testnet
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1MessageReceiver`     | `0x4DC7CdD6d7062add8bB3e4512E987aC111388335`   | `Celo Alfajores`    |
+| `SL1MessageReceiver`     | `0x21fb3E1D7a7a218fdd9C28b0b18D8b9Cb49Fe259`   | `Celo`    |
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1MessageReceiver`     | `0x21fb3E1D7a7a218fdd9C28b0b18D8b9Cb49Fe259`   | `Celo`    |
+| `SL1MessageReceiver`     | `0x4DC7CdD6d7062add8bB3e4512E987aC111388335`   | `Celo Alfajores`    |
+| `SL1MessageReceiver`     | `0xCfAfb96446C6Bd2a477D327215D358626d944E13`   | `Avalanche Fuji`    |
 
 ## Example
 
