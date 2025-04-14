@@ -1,12 +1,20 @@
-# About Sherry 
+# 🌟 About Sherry 
 
 At Sherry, we are committed to simplifying and making blockchain interactions more accessible, and have developed an SDK that allows developers to create highly versatile mini-apps. These mini-apps can execute any function of any smart contract using a simple metadata definition, opening up new possibilities for creating personalized and enriching experiences for users.
 
+<!-- Consider adding a logo or banner image here -->
+<!-- ![Sherry Logo](./assets/sherry-logo.png) -->
+
 ## 📑 Index
-- [About Sherry](#about-sherry)
-- [Maint Function](#-main-function---sendMessage)
+- [About Sherry](#-about-sherry)
+- [Main Function](#-main-function---sendMessage)
 - [Contract Addresses](#-contract-addresses)
   - [Main Contract](#-main-contract---sherry)
+- [Cross-Chain Interoperability](#-cross-chain-interoperability)
+  - [Wormhole Integration](#-wormhole-integration)
+  - [Avalanche Ecosystem Interoperability](#-avalanche-ecosystem-interoperability)
+- [Example](#-example)
+- [Docs](#-docs)
 
 
 ### 🔧 Main Function - `sendMessage`
@@ -31,9 +39,18 @@ In Avalanche Fuji Testnet
 |---------------|----------------------------------------------|--------|
 | `Sherry`     | `0xd877995ddc19a8076D7bAb8BC15F625607070497`   | `Avalanche Fuji`    |
 
-## Cross-Chain Contracts 
+## 🌉 Cross-Chain Interoperability
 
-### SL1MessageSender.sol
+Our contracts enable seamless cross-chain interactions through multiple interoperability solutions.
+
+<!-- Consider adding a diagram showing cross-chain interactions -->
+<!-- ![Cross-Chain Architecture](./assets/cross-chain-diagram.png) -->
+
+### 🌀 Wormhole Integration
+
+These contracts leverage Wormhole to connect Avalanche with all other chains supported by the Wormhole protocol, enabling bidirectional communication between Avalanche and various blockchain networks.
+
+#### 📤 SL1MessageSender.sol
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
@@ -44,7 +61,7 @@ In Avalanche Fuji Testnet
 |---------------|----------------------------------------------|--------|
 | `SL1MessageSender`     | `0x1b412E757bc8359b401BcF7B0b82215c33a9B71f`   | `Avalanche Fuji`    |
 
-### SL1MessageReceiver.sol
+#### 📥 SL1MessageReceiver.sol
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
@@ -55,18 +72,56 @@ In Avalanche Fuji Testnet
 | `SL1MessageReceiver`     | `0x4DC7CdD6d7062add8bB3e4512E987aC111388335`   | `Celo Alfajores`    |
 | `SL1MessageReceiver`     | `0xCfAfb96446C6Bd2a477D327215D358626d944E13`   | `Avalanche Fuji`    |
 
-## Example
+### 🏔️ Avalanche Ecosystem Interoperability
 
-### Capture the Flag
+Our solution also provides native interoperability within the Avalanche ecosystem, connecting the C-Chain with various L1 subnets in the Avalanche network. This is achieved through our specialized contracts:
 
+<!-- Consider adding a diagram showing Avalanche ecosystem connectivity -->
+<!-- ![Avalanche Ecosystem](./assets/avalanche-ecosystem.png) -->
+
+#### 💫 SL1Sender.sol
+
+This contract enables sending messages from Avalanche C-Chain to any L1 subnet within the Avalanche ecosystem.
+
+| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
+|---------------|----------------------------------------------|--------|
+| `SL1Sender`     | `0xExample1234567890abcdef1234567890abcdef12`   | `Avalanche C-Chain`    |
+| `SL1Sender`     | ``   | `Avalanche Fuji`    |
+
+#### 🔄 SL1AnyChainReceiver.sol
+
+This contract handles the reception of messages from any L1 subnet within the Avalanche ecosystem.
+
+| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
+|---------------|----------------------------------------------|--------|
+| `SL1AnyChainReceiver`     | ``   | `Pulsar`    |
+| `SL1AnyChainReceiver`     | ``   | `Lamina1`    |
+
+## 🎮 Example
+
+### 🚩 Capture the Flag
+
+<!-- Consider adding a screenshot or diagram of the Capture the Flag example -->
+<!-- ![Capture the Flag Example](./assets/ctf-example.png) -->
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `CaptureFlag`     | `0xFdC44664A0CcFa8Ed1a63ae6Be9Fb078297C0589`   | `Avalanche Fuji`    |
 | `CaptureFlag`     | `0x812810512193d623a68e467cc314511a581E4546`   | `Celo Alfajores`    |
 
-# Docs
+# 📚 Docs
 
 In order to learn more about Sherry go to our [docs](https://docs.sherry.social)
+
+---
+
+<div align="center">
+  <!-- Consider adding social media links with icons -->
+  <!-- 
+  [![Twitter](https://img.shields.io/twitter/follow/SherryProtocol?style=social)](https://twitter.com/SherryProtocol)
+  [![Discord](https://img.shields.io/discord/YOUR_DISCORD_ID)](https://discord.gg/sherry)
+  [![GitHub](https://img.shields.io/github/stars/sherry-protocol/sherry-contracts?style=social)](https://github.com/sherry-protocol/sherry-contracts)
+  -->
+</div>
 
 
