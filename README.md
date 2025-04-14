@@ -85,7 +85,7 @@ This contract enables sending messages from Avalanche C-Chain to any L1 subnet w
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `SL1Sender`     | `0xExample1234567890abcdef1234567890abcdef12`   | `Avalanche C-Chain`    |
+| `SL1Sender`     | `0x42E610784cf9fB37Ea0D33919100Cf7b54D87500`   | `Avalanche C-Chain`    |
 | `SL1Sender`     | ``   | `Avalanche Fuji`    |
 
 #### 🔄 SL1AnyChainReceiver.sol
