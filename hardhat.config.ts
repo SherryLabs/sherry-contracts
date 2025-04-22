@@ -12,7 +12,28 @@ if (!deployer) {
 }
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.25",
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.25",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200
+          }
+        }
+      },
+      {
+        version: "0.8.29",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200
+          }
+        }
+      },
+    ]
+  },
   networks: {
     avalanche: {
       url: "https://api.avax.network/ext/bc/C/rpc",

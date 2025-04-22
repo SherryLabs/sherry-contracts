@@ -1,7 +1,9 @@
 {
   "scripts": {
+    "compile": "npx hardhat compile",
     "deploy:whreceiver": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageReceiver.ts",
     "deploy:whsender": "npx hardhat ignition deploy ignition/modules/wormhole/SL1MessageSender.ts",
+    "deploy:kolfactory": "npx hardhat ignition deploy ignition/modules/KOLRouterFactory.ts",
     "register:whreceiver": "npx hardhat run scripts/wormhole/RegisterSenderInReceiver.ts",
     "tokenmill:deploy": "npx hardhat run scripts/factory/CreateMarketAndVestings.ts",
     "deploy:capture": "npx hardhat ignition deploy ignition/modules/wormhole/CaptureFlag.ts"

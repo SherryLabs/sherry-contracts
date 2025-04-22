@@ -1,13 +1,10 @@
-# 🌟 About Sherry 
-
-At Sherry, we are committed to simplifying and making blockchain interactions more accessible, and have developed an SDK that allows developers to create highly versatile mini-apps. These mini-apps can execute any function of any smart contract using a simple metadata definition, opening up new possibilities for creating personalized and enriching experiences for users.
-
 <!-- Consider adding a logo or banner image here -->
 <!-- ![Sherry Logo](./assets/sherry-logo.png) -->
+# Sherry Smart Contracts
 
 ## 📑 Index
 - [About Sherry](#-about-sherry)
-- [Main Function](#-main-function---sendMessage)
+- [Installation](#-installation)
 - [Contract Addresses](#-contract-addresses)
   - [Main Contract](#-main-contract---sherry)
 - [Cross-Chain Interoperability](#-cross-chain-interoperability)
@@ -16,9 +13,37 @@ At Sherry, we are committed to simplifying and making blockchain interactions mo
 - [Example](#-example)
 - [Docs](#-docs)
 
+## 🌟 About Sherry
 
-### 🔧 Main Function - `sendMessage`
+At Sherry, we are committed to simplifying and making blockchain interactions more accessible, and have developed an SDK that allows developers to create highly versatile mini-apps. These mini-apps can execute any function of any smart contract using a simple metadata definition, opening up new possibilities for creating personalized and enriching experiences for users.
 
+## 🔧 Installation
+
+This project uses Git submodules to include external dependencies.
+
+### Option 1: Clone with Submodules (Recommended)
+
+To clone this repository along with all its submodules in one step:
+
+```sh
+git clone --recursive https://github.com/SherryLabs/sherry-contracts.git
+```
+
+### Option 2: Repository already cloned without the `--recursive`
+
+If you've already cloned the repository without using the `--recursive` flag, you can fetch the submodules with:
+
+```sh
+git submodule update --init
+```
+
+### Option 3: Update all submodules to their latest commits
+
+If you want to update all submodules to their latest commits on their respective branches:
+
+```sh
+git submodule update --init --recursive --remote
+```
 
 ## 📜 Contract Addresses
 

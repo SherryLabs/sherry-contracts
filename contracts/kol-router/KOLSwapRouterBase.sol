@@ -3,30 +3,36 @@ pragma solidity ^0.8.29;
 
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
-import "./IKOLSwapRouterBase.sol";
 
 /**
  * @title KOLSwapRouterBase
  * @dev Abstract base contract for KOL routers
  */
-abstract contract KOLSwapRouterBase is IKOLSwapRouterBase, ReentrancyGuard {
+abstract contract KOLSwapRouterBase is ReentrancyGuard {
     using Address for address;
 
-    // Important addresses
-    address public override kolAddress;
+    string public routerVersion;
+    address public kolAddress;
     address public factoryAddress;
-    address public override dexRouter;
-    string public override routerVersion;
+    address public dexRouter;
+    uint256 public fixedFeeAmount;
 
-    // Fixed fee configurable by the KOL (in wei)
-    uint256 public override fixedFeeAmount;
-
-    // Fee accumulator
-    uint256 private accumulatedFees;
+    event  SwapExecuted(address kol, address sender, uint256 fee);
+    event FeeUpdated(uint256 oldFee, uint256 newFee);
+    event FeesWithdrawn(uint256 amount, address recipient);
 
     // Modifier to restrict access to KOL only
     modifier onlyKOL() {
         require(msg.sender == kolAddress, "Only KOL can call this function");
+        _;
+    }
+
+    // Verifies that the required fee was sent
+    modifier verifyFee(uint256 _msgValue)  {
+        require(
+            _msgValue >= fixedFeeAmount,
+            "KOLSwapRouter: INSUFFICIENT_NATIVE_FOR_FEE"
+        );
         _;
     }
 
@@ -51,17 +57,15 @@ abstract contract KOLSwapRouterBase is IKOLSwapRouterBase, ReentrancyGuard {
         dexRouter = _dexRouter;
         routerVersion = _version;
         factoryAddress = _factoryAddress;
-
-        // Initial fixed fee (0.01 AVAX in wei)
-        fixedFeeAmount = 10000000000000000; // 0.01 AVAX
+        fixedFeeAmount = 10000000000000000; // Initial fee 0.01 NATIVE token
     }
 
     /**
      * @dev Allows the KOL to update their fixed fee
      * @param _fixedFeeAmount New fixed fee amount (in wei)
      */
-    function updateFixedFee(uint256 _fixedFeeAmount) external override onlyKOL {
-        require(_fixedFeeAmount <= 1 ether, "Fee cannot exceed 1 AVAX");
+    function updateFixedFee(uint256 _fixedFeeAmount) external onlyKOL {
+        require(_fixedFeeAmount <= 1 ether, "Fee cannot exceed 1 NATIVE token");
 
         uint256 oldFee = fixedFeeAmount;
         fixedFeeAmount = _fixedFeeAmount;
@@ -72,39 +76,13 @@ abstract contract KOLSwapRouterBase is IKOLSwapRouterBase, ReentrancyGuard {
     /**
      * @dev Allows the KOL to withdraw their accumulated fees
      */
-    function withdrawFees() external override onlyKOL nonReentrant {
-        uint256 amount = accumulatedFees;
+    function withdrawFees() external onlyKOL nonReentrant {
+        uint256 amount = address(this).balance;
         require(amount > 0, "No fees to withdraw");
 
-        accumulatedFees = 0;
-
-        (bool success, ) = kolAddress.call{value: amount}("");
+        (bool success, ) = kolAddress.call{value: amount}(new bytes(0));
         require(success, "Fee withdrawal failed");
 
         emit FeesWithdrawn(amount, kolAddress);
-    }
-
-    /**
-     * @dev Gets the accumulated fees balance
-     * @return Accumulated fees balance
-     */
-    function getAccumulatedFees() external view override returns (uint256) {
-        return accumulatedFees;
-    }
-
-    /**
-     * @dev Updates the accumulated fees balance
-     * @param _feeAmount Amount to add
-     */
-    function _addFee(uint256 _feeAmount) internal {
-        accumulatedFees += _feeAmount;
-    }
-
-    /**
-     * @dev Verifies that the required fee was sent
-     * @param _msgValue Value sent with the transaction
-     */
-    function _verifyFee(uint256 _msgValue) internal view {
-        require(_msgValue >= fixedFeeAmount, "Insufficient AVAX for fee");
     }
 }

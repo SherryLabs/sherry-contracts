@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.29;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
@@ -55,7 +55,7 @@ contract KOLRouterFactory is Ownable {
         require(
             keccak256(bytes(version)) == keccak256(bytes("V1")) ||
             keccak256(bytes(version)) == keccak256(bytes("V2")),
-            "Unsupported version"
+            "KOLRouterFactory: Unsupported version"
         );
         require(kolToRouters[kolAddress][version] == address(0), "Router already exists for this KOL and version");
 

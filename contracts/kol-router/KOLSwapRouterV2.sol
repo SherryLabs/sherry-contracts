@@ -2,15 +2,17 @@
 pragma solidity ^0.8.29;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./KOLSwapRouterBase.sol";
-import "./IKOLSwapRouterV2.sol";
-import "./ILBRouter.sol";
+import "./interfaces/ILBRouter.sol";
 
 /**
  * @title KOLSwapRouterV2
- * @dev Router for KOLs that supports Trader Joe V2.x
+ * @dev Router for KOLs that supports Trader Joe V2.x with direct interface calls
  */
-contract KOLSwapRouterV2 is KOLSwapRouterBase, IKOLSwapRouterV2 {
+contract KOLSwapRouterV2 is KOLSwapRouterBase {
+    using SafeERC20 for IERC20;
+
     /**
      * @dev Constructor
      * @param _kolAddress Address of the KOL
@@ -24,78 +26,72 @@ contract KOLSwapRouterV2 is KOLSwapRouterBase, IKOLSwapRouterV2 {
     ) KOLSwapRouterBase(_kolAddress, _dexRouter, "V2", _factoryAddress) {}
 
     /**
-     * @dev Exact AVAX for tokens swap
+     * @dev Exact NATIVE for tokens swap
      */
     function swapExactNATIVEForTokens(
         uint256 amountOutMin,
         ILBRouter.Path calldata path,
         address to,
         uint256 deadline
-    ) external payable override returns (uint256 amountOut) {
-        _verifyFee(msg.value);
-        _addFee(fixedFeeAmount);
-
-        // Value to send to the DEX
+    ) external payable verifyFee(msg.value) returns (uint256 amountOut) {
         uint256 valueToSend = msg.value - fixedFeeAmount;
 
-        // Call the DEX
-        (bool success, bytes memory result) = dexRouter.call{value: valueToSend}(
-            abi.encodeWithSelector(
-                ILBRouter.swapExactNATIVEForTokens.selector,
-                amountOutMin,
-                path,
-                to,
-                deadline
-            )
+        // Call the DEX using direct interface call
+        amountOut = ILBRouter(dexRouter).swapExactNATIVEForTokens{
+            value: valueToSend
+        }(
+            amountOutMin,
+            path,
+            to,
+            deadline
         );
-        require(success, "DEX call failed");
 
-        emit SwapExecuted(msg.sender, msg.value, fixedFeeAmount);
+        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
 
-        return abi.decode(result, (uint256));
+        return amountOut;
     }
 
     /**
-     * @dev AVAX for exact tokens swap
+     * @dev NATIVE for exact tokens swap
      */
     function swapNATIVEForExactTokens(
         uint256 amountOut,
         ILBRouter.Path calldata path,
         address to,
         uint256 deadline
-    ) external payable override returns (uint256 amountIn) {
-        _verifyFee(msg.value);
-        _addFee(fixedFeeAmount);
-
+    )
+        external
+        payable
+        verifyFee(msg.value)
+        nonReentrant
+        returns (uint256[] memory amountsIn)
+    {
         // Value to send to the DEX
         uint256 valueToSend = msg.value - fixedFeeAmount;
 
-        // Call the DEX
-        (bool success, bytes memory result) = dexRouter.call{value: valueToSend}(
-            abi.encodeWithSelector(
-                ILBRouter.swapNATIVEForExactTokens.selector,
-                amountOut,
-                path,
-                to,
-                deadline
-            )
+        // Call the DEX using direct interface call
+        amountsIn = ILBRouter(dexRouter).swapNATIVEForExactTokens{
+            value: valueToSend
+        }(
+            amountOut,
+            path,
+            to,
+            deadline
         );
-        require(success, "DEX call failed");
 
-        // Decode the result
-        uint256 amountUsed = abi.decode(result, (uint256));
-
-        // If less AVAX was used than sent, refund the difference
-        if (valueToSend > amountUsed) {
-            uint256 refundAmount = valueToSend - amountUsed;
-            (bool refundSuccess, ) = msg.sender.call{value: refundAmount}("");
-            require(refundSuccess, "Refund failed");
+        // Refund if necessary
+        if (valueToSend > amountsIn[0]) {
+            (bool success, ) = msg.sender.call{
+                value: valueToSend - amountsIn[0]
+            }(
+                new bytes(0)
+            );
+            require(success, "KOLSwapRouter: REFUND_TRANSFER_FAILED");
         }
 
-        // Emit event
-        emit SwapExecuted(msg.sender, amountUsed, fixedFeeAmount);
+        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
 
-        return amountUsed;
+        return amountsIn;
     }
 
     /**
@@ -105,45 +101,29 @@ contract KOLSwapRouterV2 is KOLSwapRouterBase, IKOLSwapRouterV2 {
         uint256 amountIn,
         uint256 amountOutMinNATIVE,
         ILBRouter.Path calldata path,
-        address to,
+        address payable to,
         uint256 deadline
-    ) external payable override returns (uint256 amountOut) {
-        // Verify that the fee was sent
-        _verifyFee(msg.value);
-
-        // Update accumulated fee
-        _addFee(fixedFeeAmount);
-
+    ) external payable verifyFee(msg.value) returns (uint256 amountOut) {
         // Transfer tokens from user to contract
-        IERC20(address(path.tokenPath[0])).transferFrom(msg.sender, address(this), amountIn);
-
+        IERC20(address(path.tokenPath[0])).safeTransferFrom(
+            msg.sender,
+            address(this), amountIn
+        );
         // Approve tokens to the DEX router
         IERC20(address(path.tokenPath[0])).approve(dexRouter, amountIn);
 
-        // Call the DEX
-        (bool success, bytes memory result) = dexRouter.call(
-            abi.encodeWithSelector(
-                ILBRouter.swapExactTokensForNATIVE.selector,
-                amountIn,
-                amountOutMinNATIVE,
-                path,
-                address(this), // Receive AVAX in this contract first
-                deadline
-            )
+        // Call the DEX using direct interface call
+        amountOut = ILBRouter(dexRouter).swapExactTokensForNATIVE(
+            amountIn,
+            amountOutMinNATIVE,
+            path,
+            to,
+            deadline
         );
-        require(success, "DEX call failed");
 
-        // Decode the result
-        uint256 receivedAmount = abi.decode(result, (uint256));
+        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
 
-        // Transfer AVAX to the original recipient
-        (bool transferSuccess, ) = to.call{value: receivedAmount}("");
-        require(transferSuccess, "AVAX transfer failed");
-
-        // Emit event
-        emit SwapExecuted(msg.sender, amountIn, fixedFeeAmount);
-
-        return receivedAmount;
+        return amountOut;
     }
 
     /**
@@ -153,50 +133,34 @@ contract KOLSwapRouterV2 is KOLSwapRouterBase, IKOLSwapRouterV2 {
         uint256 amountOutNATIVE,
         uint256 amountInMax,
         ILBRouter.Path calldata path,
-        address to,
+        address payable to,
         uint256 deadline
-    ) external payable override returns (uint256 amountIn) {
-        // Verify that the fee was sent
-        _verifyFee(msg.value);
-
-        // Update accumulated fee
-        _addFee(fixedFeeAmount);
-
+    )
+        external
+        payable
+        verifyFee(msg.value)
+        returns (uint256[] memory amountsIn)
+    {
         // Transfer tokens from user to contract
-        IERC20(address(path.tokenPath[0])).transferFrom(msg.sender, address(this), amountInMax);
-
+        IERC20(address(path.tokenPath[0])).safeTransferFrom(
+            msg.sender,
+            address(this), amountInMax
+        );
         // Approve tokens to the DEX router
         IERC20(address(path.tokenPath[0])).approve(dexRouter, amountInMax);
 
-        // Call the DEX
-        (bool success, bytes memory result) = dexRouter.call(
-            abi.encodeWithSelector(
-                ILBRouter.swapTokensForExactNATIVE.selector,
-                amountOutNATIVE,
-                amountInMax,
-                path,
-                address(this), // Receive AVAX in this contract first
-                deadline
-            )
+        // Call the DEX using direct interface call
+        amountsIn = ILBRouter(dexRouter).swapTokensForExactNATIVE(
+            amountOutNATIVE,
+            amountInMax,
+            path,
+            to,
+            deadline
         );
-        require(success, "DEX call failed");
 
-        // Decode the result
-        uint256 amountUsed = abi.decode(result, (uint256));
+        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
 
-        // Return unused tokens if necessary
-        if (amountInMax > amountUsed) {
-            IERC20(address(path.tokenPath[0])).transfer(msg.sender, amountInMax - amountUsed);
-        }
-
-        // Transfer AVAX to the original recipient
-        (bool transferSuccess, ) = to.call{value: amountOutNATIVE}("");
-        require(transferSuccess, "AVAX transfer failed");
-
-        // Emit event
-        emit SwapExecuted(msg.sender, amountUsed, fixedFeeAmount);
-
-        return amountUsed;
+        return amountsIn;
     }
 
     /**
@@ -208,39 +172,27 @@ contract KOLSwapRouterV2 is KOLSwapRouterBase, IKOLSwapRouterV2 {
         ILBRouter.Path calldata path,
         address to,
         uint256 deadline
-    ) external payable override returns (uint256 amountOut) {
-        // Verify that the fee was sent
-        _verifyFee(msg.value);
-
-        // Update accumulated fee
-        _addFee(fixedFeeAmount);
-
+    ) external payable verifyFee(msg.value) returns (uint256 amountOut) {
         // Transfer tokens from user to contract
-        IERC20(address(path.tokenPath[0])).transferFrom(msg.sender, address(this), amountIn);
-
+        IERC20(address(path.tokenPath[0])).safeTransferFrom(
+            msg.sender,
+            address(this), amountIn
+        );
         // Approve tokens to the DEX router
         IERC20(address(path.tokenPath[0])).approve(dexRouter, amountIn);
 
-        // Call the DEX
-        (bool success, bytes memory result) = dexRouter.call(
-            abi.encodeWithSelector(
-                ILBRouter.swapExactTokensForTokens.selector,
-                amountIn,
-                amountOutMin,
-                path,
-                to,
-                deadline
-            )
+        // Call the DEX using direct interface call
+        amountOut = ILBRouter(dexRouter).swapExactTokensForTokens(
+            amountIn,
+            amountOutMin,
+            path,
+            to,
+            deadline
         );
-        require(success, "DEX call failed");
 
-        // Decode the result
-        uint256 receivedAmount = abi.decode(result, (uint256));
+        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
 
-        // Emit event
-        emit SwapExecuted(msg.sender, amountIn, fixedFeeAmount);
-
-        return receivedAmount;
+        return amountOut;
     }
 
     /**
@@ -252,43 +204,36 @@ contract KOLSwapRouterV2 is KOLSwapRouterBase, IKOLSwapRouterV2 {
         ILBRouter.Path calldata path,
         address to,
         uint256 deadline
-    ) external payable override returns (uint256 amountIn) {
-        // Verify that the fee was sent
-        _verifyFee(msg.value);
-
-        // Update accumulated fee
-        _addFee(fixedFeeAmount);
-
+    )
+        external
+        payable
+        verifyFee(msg.value)
+        returns (uint256[] memory amountsIn)
+    {
         // Transfer tokens from user to contract
-        IERC20(address(path.tokenPath[0])).transferFrom(msg.sender, address(this), amountInMax);
-
+        IERC20(address(path.tokenPath[0])).safeTransferFrom(
+            msg.sender,
+            address(this), amountInMax
+        );
         // Approve tokens to the DEX router
         IERC20(address(path.tokenPath[0])).approve(dexRouter, amountInMax);
 
-        // Call the DEX
-        (bool success, bytes memory result) = dexRouter.call(
-            abi.encodeWithSelector(
-                ILBRouter.swapTokensForExactTokens.selector,
-                amountOut,
-                amountInMax,
-                path,
-                to,
-                deadline
-            )
+        // Call the DEX using direct interface call
+        amountsIn = ILBRouter(dexRouter).swapTokensForExactTokens(
+            amountOut,
+            amountInMax,
+            path,
+            to,
+            deadline
         );
-        require(success, "DEX call failed");
 
-        // Decode the result
-        uint256 amountUsed = abi.decode(result, (uint256));
+        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
 
-        // Return unused tokens if necessary
-        if (amountInMax > amountUsed) {
-            IERC20(address(path.tokenPath[0])).transfer(msg.sender, amountInMax - amountUsed);
-        }
-
-        // Emit event
-        emit SwapExecuted(msg.sender, amountUsed, fixedFeeAmount);
-
-        return amountUsed;
+        return amountsIn;
     }
+
+    /**
+    * @dev Receives NATIVE from possible refund dust native, if any
+    */
+    receive() external payable {}
 }
