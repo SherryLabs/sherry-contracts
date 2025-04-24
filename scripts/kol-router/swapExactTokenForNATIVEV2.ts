@@ -1,14 +1,14 @@
-import { execute } from "./functions";
+import { execute, checkAndApproveToken } from "./functions";
 import { createPublicClient, createWalletClient, http } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { avalancheFuji } from "viem/chains";
 
-const INPUT_TOKEN = "WAVAX";
-const OUTPUT_TOKEN = "USDC";
+const INPUT_TOKEN = "USDC";
+const OUTPUT_TOKEN = "WAVAX";
 const IS_EXACT_IN = true;
-const DECIMAL_VALUE_IN = "0.1";
-const NATIVE_IN = true;
-const NATIVE_OUT = false;
+const DECIMAL_VALUE_IN = "2";
+const NATIVE_IN = false;
+const NATIVE_OUT = true;
 
 async function main() {
     try {
@@ -26,16 +26,25 @@ async function main() {
             transport: http(),
         });
 
-        await execute(
+        const success = await checkAndApproveToken(
             INPUT_TOKEN,
-            OUTPUT_TOKEN,
-            IS_EXACT_IN,
             DECIMAL_VALUE_IN,
-            NATIVE_IN,
-            NATIVE_OUT,
             publicClient,
-            walletClient,
-        )
+            walletClient
+        );
+
+        if (success) {
+            await execute(
+                INPUT_TOKEN,
+                OUTPUT_TOKEN,
+                IS_EXACT_IN,
+                DECIMAL_VALUE_IN,
+                NATIVE_IN,
+                NATIVE_OUT,
+                publicClient,
+                walletClient,
+            )
+        }
     } catch (error) {
         throw error;
     }
