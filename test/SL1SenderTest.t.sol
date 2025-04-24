@@ -10,7 +10,7 @@ contract SL1MessagesenderTest is Test {
     address public user;
 
     function setUp() public {
-        s_sender = new SL1MessageSender(address(this));
+        s_sender = new SL1MessageSender(address(this), 13);
         user = address(0x123);
         vm.deal(user, 1 ether);
     }
