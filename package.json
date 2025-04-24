@@ -9,7 +9,8 @@
     "kolrouter:swap-native-to-token": "npx hardhat run scripts/kol-router/swapExactNATIVEForTokens.ts",
     "kolrouter:swap-token-to-native": "npx hardhat run scripts/kol-router/swapExactTokenForNATIVE.ts",
     "kolrouter:swap-token-to-token": "npx hardhat run scripts/kol-router/swapExactTokenForToken.ts",
-    "deploy:capture": "npx hardhat ignition deploy ignition/modules/wormhole/CaptureFlag.ts"
+    "deploy:capture": "npx hardhat ignition deploy ignition/modules/wormhole/CaptureFlag.ts",
+    "test": "~/.foundry/bin/forge test -v"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",

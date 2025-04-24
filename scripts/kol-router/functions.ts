@@ -5,25 +5,8 @@ import {
     TokenAmount,
     Percent,
 } from "@traderjoe-xyz/sdk-core";
-import {
-    PairV2,
-    RouteV2,
-    TradeV2,
-    TradeOptions,
-    LB_ROUTER_V22_ADDRESS,
-    jsonAbis,
-} from "@traderjoe-xyz/sdk-v2";
-import {
-    createPublicClient,
-    createWalletClient,
-    http,
-    parseUnits,
-    BaseError,
-    ContractFunctionRevertedError,
-    WalletClient,
-    PublicClient,
-} from "viem";
-import { privateKeyToAccount } from "viem/accounts";
+import { PairV2, RouteV2, TradeV2, TradeOptions } from "@traderjoe-xyz/sdk-v2";
+import { parseUnits, WalletClient, PublicClient } from "viem";
 import { avalancheFuji } from "viem/chains";
 import { config } from "dotenv";
 import path from 'path';
@@ -31,7 +14,7 @@ import * as fs from 'fs';
 config();
 
 // initialize tokens
-const ROUTER = "0x431850c483cAb3E2e497B05c3C9430daf0B6c3A6";
+const ROUTER = "0x431850c483cAb3E2e497B05c3C9430daf0B6c3A6"; // TODO: take this from .env
 const CHAIN_ID = ChainId.FUJI;
 const TOKENS = {
     "WAVAX": WNATIVE[CHAIN_ID],
