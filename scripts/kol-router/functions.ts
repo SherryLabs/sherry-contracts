@@ -111,7 +111,7 @@ export const checkAndApproveToken = async (
                 account: account || null
             });
 
-            console.log(`Approval transaction sent: ${hash}`);
+            console.log(`Transaction sent: https://testnet.snowtrace.io/tx/${hash}`);
 
             // Optional: Wait for the transaction to be confirmed
             const receipt = await publicClient.waitForTransactionReceipt({ hash });

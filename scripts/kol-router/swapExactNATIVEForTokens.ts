@@ -4,7 +4,7 @@ import { privateKeyToAccount } from "viem/accounts";
 import { avalancheFuji } from "viem/chains";
 
 const INPUT_TOKEN = "WAVAX";
-const OUTPUT_TOKEN = "USDC";
+const OUTPUT_TOKEN = "USDT";
 const IS_EXACT_IN = true;
 const DECIMAL_VALUE_IN = "0.1";
 const NATIVE_IN = true;

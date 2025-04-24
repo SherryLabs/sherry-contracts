@@ -6,8 +6,9 @@
     "deploy:kolfactory": "npx hardhat ignition deploy ignition/modules/KOLRouterFactory.ts",
     "register:whreceiver": "npx hardhat run scripts/wormhole/RegisterSenderInReceiver.ts",
     "tokenmill:deploy": "npx hardhat run scripts/factory/CreateMarketAndVestings.ts",
-    "kolrouter:swap-native-to-token": "npx hardhat run scripts/kol-router/swapExactNATIVEForTokensV2.ts",
-    "kolrouter:swap-token-to-native": "npx hardhat run scripts/kol-router/swapExactTokenForNATIVEV2.ts",
+    "kolrouter:swap-native-to-token": "npx hardhat run scripts/kol-router/swapExactNATIVEForTokens.ts",
+    "kolrouter:swap-token-to-native": "npx hardhat run scripts/kol-router/swapExactTokenForNATIVE.ts",
+    "kolrouter:swap-token-to-token": "npx hardhat run scripts/kol-router/swapExactTokenForToken.ts",
     "deploy:capture": "npx hardhat ignition deploy ignition/modules/wormhole/CaptureFlag.ts"
   },
   "devDependencies": {
