@@ -11,13 +11,12 @@ import "@openzeppelin/contracts/utils/Address.sol";
 abstract contract KOLSwapRouterBase is ReentrancyGuard {
     using Address for address;
 
-    string public routerVersion;
     address public kolAddress;
     address public factoryAddress;
     address public dexRouter;
     uint256 public fixedFeeAmount;
 
-    event  SwapExecuted(address kol, address sender, uint256 fee);
+    event SwapExecuted(address kol, address sender, uint256 fee);
     event FeeUpdated(uint256 oldFee, uint256 newFee);
     event FeesWithdrawn(uint256 amount, address recipient);
 
@@ -40,13 +39,11 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
      * @dev Constructor
      * @param _kolAddress Address of the KOL
      * @param _dexRouter Address of the DEX router
-     * @param _version Router version
      * @param _factoryAddress Address of the factory
      */
     constructor(
         address _kolAddress,
         address _dexRouter,
-        string memory _version,
         address _factoryAddress
     ) {
         require(_kolAddress != address(0), "Invalid KOL address");
@@ -55,7 +52,6 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
 
         kolAddress = _kolAddress;
         dexRouter = _dexRouter;
-        routerVersion = _version;
         factoryAddress = _factoryAddress;
         fixedFeeAmount = 10000000000000000; // Initial fee 0.01 NATIVE token
     }
