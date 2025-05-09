@@ -40,11 +40,13 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
      * @param _kolAddress Address of the KOL
      * @param _dexRouter Address of the DEX router
      * @param _factoryAddress Address of the factory
+     * @param _fixedFeeAmount Amount to be subtracted as Fee
      */
     constructor(
         address _kolAddress,
         address _dexRouter,
-        address _factoryAddress
+        address _factoryAddress,
+        uint256 _fixedFeeAmount
     ) {
         require(_kolAddress != address(0), "Invalid KOL address");
         require(_dexRouter != address(0), "Invalid DEX router");
@@ -53,7 +55,7 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
         kolAddress = _kolAddress;
         dexRouter = _dexRouter;
         factoryAddress = _factoryAddress;
-        fixedFeeAmount = 10000000000000000; // Initial fee 0.01 NATIVE token
+        fixedFeeAmount = _fixedFeeAmount;
     }
 
     /**
@@ -61,7 +63,7 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
      * @param _fixedFeeAmount New fixed fee amount (in wei)
      */
     function updateFixedFee(uint256 _fixedFeeAmount) external onlyKOL {
-        require(_fixedFeeAmount <= 1 ether, "Fee cannot exceed 1 NATIVE token");
+        require(_fixedFeeAmount != 0, "Fee cannot be 0");
 
         uint256 oldFee = fixedFeeAmount;
         fixedFeeAmount = _fixedFeeAmount;

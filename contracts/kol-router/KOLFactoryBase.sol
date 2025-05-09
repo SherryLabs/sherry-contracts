@@ -63,14 +63,24 @@ abstract contract KOLFactoryBase is Ownable {
     /**
      * @dev Creates a KOL router and handles common registration logic
      * @param kolAddress KOL address
+     * @param _fixedFeeAmount Amount to be subtracted as Fee
      * @return routerAddress Address of the new router
      */
-    function createKOLRouter(address kolAddress) external returns (address) {
+    function createKOLRouter(
+        address kolAddress,
+        uint256 _fixedFeeAmount
+    ) external returns (address) {
         require(kolAddress != address(0), "Invalid KOL address");
-        require(kolToRouter[kolAddress] == address(0), "Router already exists for this KOL");
+        require(
+            kolToRouter[kolAddress] == address(0),
+            "Router already exists for this KOL"
+        );
 
         // Create the specific router using the derived class implementation
-        address routerAddress = _createRouterImplementation(kolAddress);
+        address routerAddress = _createRouterImplementation(
+            kolAddress,
+            _fixedFeeAmount
+        );
 
         // Register the router in base contract state
         kolToRouter[kolAddress] = routerAddress;
@@ -84,7 +94,11 @@ abstract contract KOLFactoryBase is Ownable {
      * @dev Abstract method to create the specific router implementation
      * Must be implemented by derived contracts
      * @param kolAddress Address of the KOL
+     * @param _fixedFeeAmount Amount to be subtracted as Fee
      * @return Router address
      */
-    function _createRouterImplementation(address kolAddress) internal virtual returns (address);
+    function _createRouterImplementation(
+        address kolAddress,
+        uint256 _fixedFeeAmount
+    ) internal virtual returns (address);
 }

@@ -8,51 +8,64 @@ import "./interfaces/ILBRouter.sol";
 
 /**
  * @title KOLRouterTraderJoe
- * @dev Router for KOLs that supports Trader Joe V1 and V2.x with direct interface calls
+ * @notice Router for KOLs that supports direct swaps via Trader Joe v1 and v2.x using ILBRouter.
+ * @dev Handles both native and ERC20 swaps, applying a fixed fee in native token (e.g., AVAX).
  */
 contract KOLRouterTraderJoe is KOLSwapRouterBase {
     using SafeERC20 for IERC20;
 
     /**
-     * @dev Constructor
-     * @param _kolAddress Address of the KOL
-     * @param _dexRouter Address of the DEX router
-     * @param _factoryAddress Address of the factory
+     * @dev Constructor that initializes the KOL router instance.
+     * @param _kolAddress Address of the KOL associated with this router
+     * @param _dexRouter Address of the Uniswap UniversalRouter
+     * @param _factoryAddress Address of the factory that deployed this router
+     * @param _fixedFeeAmount Amount to be subtracted as Fee
      */
     constructor(
         address _kolAddress,
         address _dexRouter,
-        address _factoryAddress
-    ) KOLSwapRouterBase(_kolAddress, _dexRouter, _factoryAddress) {}
+        address _factoryAddress,
+        uint256 _fixedFeeAmount
+    )
+        KOLSwapRouterBase(
+            _kolAddress,
+            _dexRouter,
+            _factoryAddress,
+            _fixedFeeAmount
+        )
+    {}
 
     /**
-     * @dev Exact NATIVE for tokens swap
+     * @notice Swap exact native tokens for ERC20 tokens.
+     * @dev Deducts fee and forwards the remaining native value to Trader Joe router.
+     * @return amountOut The amount of tokens received from the swap.
      */
     function swapExactNATIVEForTokens(
         uint256 amountOutMin,
         ILBRouter.Path calldata path,
         address to,
         uint256 deadline
-    ) external payable verifyFee(msg.value) returns (uint256 amountOut) {
+    )
+        external
+        payable
+        nonReentrant
+        verifyFee(msg.value)
+        returns (uint256 amountOut)
+    {
         uint256 valueToSend = msg.value - fixedFeeAmount;
 
-        // Call the DEX using direct interface call
         amountOut = ILBRouter(dexRouter).swapExactNATIVEForTokens{
             value: valueToSend
-        }(
-            amountOutMin,
-            path,
-            to,
-            deadline
-        );
+        }(amountOutMin, path, to, deadline);
 
         emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
-
         return amountOut;
     }
 
     /**
-     * @dev NATIVE for exact tokens swap
+     * @notice Swap native tokens for exact ERC20 token amount.
+     * @dev Refunds leftover AVAX if overpaid.
+     * @return amountsIn Array containing input amounts per swap hop.
      */
     function swapNATIVEForExactTokens(
         uint256 amountOut,
@@ -66,36 +79,28 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         nonReentrant
         returns (uint256[] memory amountsIn)
     {
-        // Value to send to the DEX
         uint256 valueToSend = msg.value - fixedFeeAmount;
 
-        // Call the DEX using direct interface call
         amountsIn = ILBRouter(dexRouter).swapNATIVEForExactTokens{
             value: valueToSend
-        }(
-            amountOut,
-            path,
-            to,
-            deadline
-        );
+        }(amountOut, path, to, deadline);
 
-        // Refund if necessary
+        // Refund any unspent AVAX back to the user
         if (valueToSend > amountsIn[0]) {
             (bool success, ) = msg.sender.call{
                 value: valueToSend - amountsIn[0]
-            }(
-                new bytes(0)
-            );
+            }("");
             require(success, "KOLSwapRouter: REFUND_TRANSFER_FAILED");
         }
 
         emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
-
         return amountsIn;
     }
 
     /**
-     * @dev Exact tokens for NATIVE swap
+     * @notice Swap exact amount of ERC20 tokens for native tokens.
+     * @dev Pulls tokens from user, approves DEX, and executes the swap.
+     * @return amountOut The amount of native tokens received.
      */
     function swapExactTokensForNATIVE(
         uint256 amountIn,
@@ -103,16 +108,20 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         ILBRouter.Path calldata path,
         address payable to,
         uint256 deadline
-    ) external payable verifyFee(msg.value) returns (uint256 amountOut) {
-        // Transfer tokens from user to contract
+    )
+        external
+        payable
+        nonReentrant
+        verifyFee(msg.value)
+        returns (uint256 amountOut)
+    {
         IERC20(address(path.tokenPath[0])).safeTransferFrom(
             msg.sender,
-            address(this), amountIn
+            address(this),
+            amountIn
         );
-        // Approve tokens to the DEX router
         IERC20(address(path.tokenPath[0])).approve(dexRouter, amountIn);
 
-        // Call the DEX using direct interface call
         amountOut = ILBRouter(dexRouter).swapExactTokensForNATIVE(
             amountIn,
             amountOutMinNATIVE,
@@ -122,12 +131,12 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         );
 
         emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
-
         return amountOut;
     }
 
     /**
-     * @dev Tokens for exact NATIVE swap
+     * @notice Swap up to a maximum amount of ERC20 tokens for a fixed amount of native tokens.
+     * @return amountsIn Array containing input amounts per swap hop.
      */
     function swapTokensForExactNATIVE(
         uint256 amountOutNATIVE,
@@ -138,18 +147,17 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
     )
         external
         payable
+        nonReentrant
         verifyFee(msg.value)
         returns (uint256[] memory amountsIn)
     {
-        // Transfer tokens from user to contract
         IERC20(address(path.tokenPath[0])).safeTransferFrom(
             msg.sender,
-            address(this), amountInMax
+            address(this),
+            amountInMax
         );
-        // Approve tokens to the DEX router
         IERC20(address(path.tokenPath[0])).approve(dexRouter, amountInMax);
 
-        // Call the DEX using direct interface call
         amountsIn = ILBRouter(dexRouter).swapTokensForExactNATIVE(
             amountOutNATIVE,
             amountInMax,
@@ -159,12 +167,12 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         );
 
         emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
-
         return amountsIn;
     }
 
     /**
-     * @dev Exact tokens for tokens swap
+     * @notice Swap exact amount of ERC20 tokens for another ERC20 token.
+     * @return amountOut The amount of destination token received.
      */
     function swapExactTokensForTokens(
         uint256 amountIn,
@@ -172,16 +180,20 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         ILBRouter.Path calldata path,
         address to,
         uint256 deadline
-    ) external payable verifyFee(msg.value) returns (uint256 amountOut) {
-        // Transfer tokens from user to contract
+    )
+        external
+        payable
+        nonReentrant
+        verifyFee(msg.value)
+        returns (uint256 amountOut)
+    {
         IERC20(address(path.tokenPath[0])).safeTransferFrom(
             msg.sender,
-            address(this), amountIn
+            address(this),
+            amountIn
         );
-        // Approve tokens to the DEX router
         IERC20(address(path.tokenPath[0])).approve(dexRouter, amountIn);
 
-        // Call the DEX using direct interface call
         amountOut = ILBRouter(dexRouter).swapExactTokensForTokens(
             amountIn,
             amountOutMin,
@@ -191,12 +203,12 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         );
 
         emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
-
         return amountOut;
     }
 
     /**
-     * @dev Tokens for exact tokens swap
+     * @notice Swap up to a maximum amount of ERC20 tokens to get a fixed amount of another ERC20 token.
+     * @return amountsIn Array of token amounts used in the swap path.
      */
     function swapTokensForExactTokens(
         uint256 amountOut,
@@ -208,17 +220,16 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         external
         payable
         verifyFee(msg.value)
+        nonReentrant
         returns (uint256[] memory amountsIn)
     {
-        // Transfer tokens from user to contract
         IERC20(address(path.tokenPath[0])).safeTransferFrom(
             msg.sender,
-            address(this), amountInMax
+            address(this),
+            amountInMax
         );
-        // Approve tokens to the DEX router
         IERC20(address(path.tokenPath[0])).approve(dexRouter, amountInMax);
 
-        // Call the DEX using direct interface call
         amountsIn = ILBRouter(dexRouter).swapTokensForExactTokens(
             amountOut,
             amountInMax,
@@ -228,12 +239,11 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         );
 
         emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
-
         return amountsIn;
     }
 
     /**
-    * @dev Receives NATIVE from possible refund dust native, if any
-    */
+     * @dev Allows receiving native tokens (e.g., AVAX) in case of refund or dust from swaps.
+     */
     receive() external payable {}
 }

@@ -1,18 +1,21 @@
 import path from 'path';
 import * as fs from 'fs';
-import { PublicClient, WalletClient } from 'viem';
+import { PublicClient, WalletClient, parseUnits, createPublicClient, createWalletClient, http, decodeFunctionData } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
 import { avalanche } from 'viem/chains';
 import { Token, CurrencyAmount, Percent, TradeType, Ether } from '@uniswap/sdk-core';
-import { parseUnits } from 'viem';
-import { Abi } from 'abitype';
-import { PERMIT2_ADDRESS } from '@uniswap/permit2-sdk';
 import { UniversalRouterVersion } from '@uniswap/universal-router-sdk';
 import { AlphaRouter, SwapType } from '@uniswap/smart-order-router';
 import { JsonRpcProvider } from '@ethersproject/providers';
 
-const KOL_FACTORY = '0x933Da277d2947634605DBCaE7587952700AedE59'; // TODO: take this from .env
-const KOL_ROUTER = '0x41811815AF98378B5ceed4E69a9A3d4Fe1608b4b'; // TODO: take this from .env
+const KOL_FACTORY = '0x01Db6412903838DBFAbD434Cfb772D2590F548Da'; // TODO: take this from .env
+const KOL_ROUTER = '0xDAe1254A01AA6540980B8f99f72a5B515e19d096'; // TODO: take this from .env
+const UNIVERSAL_ROUTER = '0x94b75331AE8d42C1b61065089B7d48FE14aA73b7';
+const PERMIT2 = '0x000000000022D473030F116dDEE9F6B43aC78BA3'; // Avalanche
 const CHAIN_ID = 43114; // Avalanche Mainnet
+
+let publicClient: PublicClient;
+let walletClient: WalletClient;
 
 // initialize tokens
 export const TOKENS = {
@@ -34,7 +37,7 @@ export const TOKENS = {
 
 type tokens = "WAVAX" | "USDC";
 
-const ERC20_ABI: Abi = [
+const erc20Abi = [
     {
         name: 'allowance',
         type: 'function',
@@ -57,8 +60,19 @@ const ERC20_ABI: Abi = [
     }
 ];
 
+
+//TODO: move to utils
+function decimalPercentToPercent(decimalPercent: number, precision: number = 6): Percent {
+    const actualDecimal = decimalPercent / 100;
+    const denominator = 10 ** precision;
+    const numerator = Math.round(actualDecimal * denominator);
+    return new Percent(numerator, denominator);
+}
+
+//TODO: move to base functions
 export const createKolRouter = async (
     kolAddress: string,
+    fee: string,
     walletClient: WalletClient
 ) => {
     const account = walletClient.account;
@@ -80,14 +94,14 @@ export const createKolRouter = async (
         address: KOL_FACTORY,
         abi,
         functionName: 'createKOLRouter',
-        args: [kolAddress],
+        args: [kolAddress, fee],
         chain: avalanche,
         account: account || null
     });
     console.log(`KolRouter successfully created: https://snowtrace.io/tx/${tx}`);
 }
 
-export const checkAndApproveTokenUniswap = async (
+export const checkAndApproveToken = async (
     token: tokens,
     amountNeeded: string,
     publicClient: PublicClient,
@@ -99,34 +113,38 @@ export const checkAndApproveTokenUniswap = async (
         const account = walletClient.account;
         const accountAddress = walletClient.account?.address as string;
 
+        const spender = PERMIT2;
+
+        // Check current allowance
         const currentAllowance = await publicClient.readContract({
-            address: inputToken.address as `0x${string}`,
-            abi: ERC20_ABI,
+            address: `0x${inputToken.address.slice(2)}`,
+            abi: erc20Abi,
             functionName: 'allowance',
-            args: [accountAddress, PERMIT2_ADDRESS],
+            args: [accountAddress, spender],
         }) as bigint;
 
-        console.log(`Current allowance Permit2: ${currentAllowance}`);
+        console.log(`Current allowance: ${currentAllowance}`);
+        console.log(`Amount to be approved: ${typedValueInParsed}`);
 
         if (currentAllowance < typedValueInParsed) {
-            console.log('Insufficient allowance, approving Permit2...');
+            console.log(`Insufficient allowance, sending approval...`);
             const tx = await walletClient.writeContract({
-                address: inputToken.address as `0x${string}`,
-                abi: ERC20_ABI,
+                address: `0x${inputToken.address.slice(2)}`,
+                abi: erc20Abi,
                 functionName: 'approve',
-                args: [PERMIT2_ADDRESS, typedValueInParsed],
+                args: [spender, typedValueInParsed],
                 chain: avalanche,
-                account: account || null
+                account: account || null,
             });
-            console.log(`Approved Permit2: https://snowtrace.io/tx/${tx}`);
 
-            // Wait for the transaction to be confirmed
+            console.log(`Approval TX: https://snowtrace.io/tx/${tx}`);
             const receipt = await publicClient.waitForTransactionReceipt({ hash: tx });
             console.log('Approval confirmed:', receipt.status === 'success');
 
             return receipt.status === 'success';
         } else {
             console.log('Sufficient allowance, no approval needed');
+            return true;
         }
     } catch (error) {
         console.error('Error verifying or approving tokens:', error);
@@ -134,13 +152,13 @@ export const checkAndApproveTokenUniswap = async (
     }
 };
 
-export const executeUniswapSwap = async (
+const executeUniswapSwap = async (
     input: tokens,
     output: tokens,
     typedValueIn: string,
     nativeIn: boolean,
-    publicClient: PublicClient,
-    walletClient: WalletClient,
+    nativeOut: boolean,
+    decimalSlippage: string,
 ) => {
     try {
         // Initialize variables
@@ -159,24 +177,29 @@ export const executeUniswapSwap = async (
         }
         const abi = KOLRouterUniswap.abi;
 
-
         // TODO: get tokens from here https://tokens.coingecko.com/avalanche/all.json
-        let inputToken;
+        let inputToken, outputToken;
         if (nativeIn) {
             inputToken = Ether.onChain(CHAIN_ID);
+            outputToken = TOKENS[output];
+        } else if (nativeOut) {
+            inputToken = TOKENS[input];
+            outputToken = Ether.onChain(CHAIN_ID);
         } else {
             inputToken = TOKENS[input];
+            outputToken = TOKENS[output];
         }
-        const outputToken = TOKENS[output];
+
         const account = walletClient.account?.address as `0x${string}`;
 
         const provider = new JsonRpcProvider(
-            "https://avalanche.drpc.org"
+            "https://avalanche-c-chain-rpc.publicnode.com"
         );
         const router = new AlphaRouter({
             chainId: CHAIN_ID,
             provider,
-        });
+            weth9: TOKENS['WAVAX'],
+        } as any);
 
         const typedValueInParsed = parseUnits(typedValueIn, inputToken.decimals);
         const amountIn = CurrencyAmount.fromRawAmount(
@@ -184,8 +207,10 @@ export const executeUniswapSwap = async (
             typedValueInParsed.toString()
         );
 
-        const slippage = new Percent("50", "10000"); // 0.5%
+        const slippage = decimalPercentToPercent(Number(decimalSlippage));
+        console.log(`Slippage: ${slippage.toFixed()}%`);
 
+        console.log("Searching route...")
         const route = await router.route(
             amountIn,
             outputToken,
@@ -204,6 +229,8 @@ export const executeUniswapSwap = async (
         }
 
         const { calldata, value } = route.methodParameters;
+        console.log("Route found", route.methodParameters);
+        console.log("Value without fee:", Number(value))
 
         // add KOL router fee!
         const fixedFeeAmount = await publicClient.readContract({
@@ -213,13 +240,73 @@ export const executeUniswapSwap = async (
             args: [],
         }) as bigint;
         const valuePlusFee = BigInt(value) + fixedFeeAmount;
+        console.log("Value with fee:", Number(valuePlusFee));
+
+        //const valuePlusFee = BigInt(value) //TODO: remove this, it is only for testintg
 
         // Execute trade
         // -----------------------------------------------------------------
-        // If the eth_call of .call does not revert, it means it is ok to be sent. Maybe it is better to use estimateGas.
+        // Decode calldata to operate on KOLRouter
+        const decoded = decodeFunctionData({
+            abi: [{
+                name: 'execute',
+                type: 'function',
+                inputs: [
+                    { name: 'commands', type: 'bytes' },
+                    { name: 'inputs', type: 'bytes[]' },
+                    { name: 'deadline', type: 'uint256' },
+                ],
+            }],
+            data: calldata as `0x${string}`,
+        });
+        const [commands, inputs, deadline] = decoded.args as [
+            `0x${string}`,
+            `0x${string}[]`,
+            bigint
+        ];
+
+
+        let tx;
+        if (nativeIn) {
+            tx = await walletClient.writeContract({
+                account: walletClient.account!,
+                chain: avalanche,
+                address: KOL_ROUTER,
+                abi,
+                functionName: 'executeNATIVEIn',
+                args: [
+                    commands,               // bytes
+                    inputs,                 // bytes[]
+                    deadline,               // bigint
+                ],
+                value: valuePlusFee
+            });
+        } else {
+            tx = await walletClient.writeContract({
+                account: walletClient.account!,
+                chain: avalanche,
+                address: KOL_ROUTER,
+                abi,
+                functionName: 'executeTokenIn',
+                args: [
+                    commands,               // bytes
+                    inputs,                 // bytes[]
+                    deadline,               // bigint
+                    inputToken.address,     // string
+                    typedValueInParsed      // bigint
+                ],
+                value: valuePlusFee
+            });
+        }
+
+        console.log(`Transaction sent: https://snowtrace.io/tx/${tx}`);
+
+        /*
+        // If the eth_call of .call does not revert, it means it is ok to be sent.
+        // TODO: use estimateGas instead
         await publicClient.call({
             account: walletClient.account,
-            to: KOL_ROUTER,
+            to: UNIVERSAL_ROUTER,
             data: calldata as `0x${string}`,
             value: BigInt(valuePlusFee),
         })
@@ -227,13 +314,56 @@ export const executeUniswapSwap = async (
         const tx = await walletClient.sendTransaction({
             account: walletClient.account!,
             chain: avalanche,
-            to: KOL_ROUTER,
+            to: UNIVERSAL_ROUTER,
             data: calldata as `0x${string}`,
             value: valuePlusFee,
         });
 
         console.log(`Transaction sent: https://snowtrace.io/tx/${tx}`);
+        */
     } catch (error) {
         throw error;
     }
+};
+
+export const executeSwap = async (
+    input: tokens,
+    output: tokens,
+    typedValueIn: string,
+    nativeIn: boolean,
+    nativeOut: boolean,
+    decimalSlippage: string,
+) => {
+    const privateKey = process.env.DEPLOYER_KEY as string;
+    const account = privateKeyToAccount(`0x${privateKey.slice(2)}`);
+    // Initialize clients
+    // ---------------------------------------------------------------------
+    publicClient = createPublicClient({
+        chain: avalanche,
+        transport: http(),
+    });
+
+    walletClient = createWalletClient({
+        account,
+        chain: avalanche,
+        transport: http(),
+    });
+
+    if (!nativeIn) {
+        await checkAndApproveToken(
+            input,
+            typedValueIn,
+            publicClient,
+            walletClient
+        );
+    }
+
+    await executeUniswapSwap(
+        input,
+        output,
+        typedValueIn,
+        nativeIn,
+        nativeOut,
+        decimalSlippage
+    );
 };

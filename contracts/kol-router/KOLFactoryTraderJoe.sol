@@ -18,14 +18,19 @@ contract KOLFactoryTraderJoe is KOLFactoryBase {
     /**
      * @dev Creates the specific router implementation
      * @param kolAddress Address of the KOL
+     * @param _fixedFeeAmount Amount to be subtracted as Fee
      * @return Address of the new router
      */
-    function _createRouterImplementation(address kolAddress) internal override returns (address) {
+    function _createRouterImplementation(
+        address kolAddress,
+        uint256 _fixedFeeAmount
+    ) internal override returns (address) {
         // Create new Uniswap KOL router
         KOLRouterTraderJoe router = new KOLRouterTraderJoe(
             kolAddress,
             protocolRouter,
-            address(this)
+            address(this),
+            _fixedFeeAmount
         );
 
         return address(router);
