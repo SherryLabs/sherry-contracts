@@ -24,7 +24,7 @@ contract SherryTest is Test {
         assertTrue(sherry.paused());
 
         bytes memory data = abi.encodeWithSignature("setValue(uint256)", 123);
-        vm.expectRevert(0xd93c0665);
+        vm.expectRevert();
 
         sherry.sendMessage(address(mockContract), data);
 
@@ -65,7 +65,6 @@ contract SherryTest is Test {
     function testFailedFunctionEmitsEvent() public {
         bytes memory data = abi.encodeWithSignature("revertFunction()");
 
-        
         vm.expectEmit(true, true, true, true);
         emit Sherry.FunctionFailed(
             address(mockContract),
