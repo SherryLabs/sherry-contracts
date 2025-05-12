@@ -6,12 +6,12 @@ import "./KOLRouterTraderJoe.sol";
 
 /**
  * @title KOLFactoryTraderJoe
- * @dev Factory for creating and managing KOL routers for Uniswap
+ * @dev Factory for creating and managing KOL routers for Trader Joe
  */
 contract KOLFactoryTraderJoe is KOLFactoryBase {
     /**
      * @dev Constructor
-     * @param _traderJoeRouter Address of Uniswap router
+     * @param _traderJoeRouter Address of Trader Joe router
      */
     constructor(address _traderJoeRouter) KOLFactoryBase(_traderJoeRouter) {}
 
@@ -25,7 +25,7 @@ contract KOLFactoryTraderJoe is KOLFactoryBase {
         address _kolAddress,
         uint256 _fixedFeeAmount
     ) internal override returns (address) {
-        // Create new Uniswap KOL router
+        // Create new Trader Joe KOL router
         KOLRouterTraderJoe router = new KOLRouterTraderJoe(
             _kolAddress,
             protocolRouter,
