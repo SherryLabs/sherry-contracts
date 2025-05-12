@@ -17,7 +17,7 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
     /**
      * @dev Constructor that initializes the KOL router instance.
      * @param _kolAddress Address of the KOL associated with this router
-     * @param _dexRouter Address of the Uniswap UniversalRouter
+     * @param _dexRouter Address of the Trader Joe UniversalRouter
      * @param _factoryAddress Address of the factory that deployed this router
      * @param _fixedFeeAmount Amount to be subtracted as Fee
      */

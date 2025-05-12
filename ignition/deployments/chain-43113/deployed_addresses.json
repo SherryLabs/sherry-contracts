@@ -2,5 +2,6 @@
   "SL1MessageSenderModule#SL1MessageSender": "0x1b412E757bc8359b401BcF7B0b82215c33a9B71f",
   "CaptureFlagModule#CaptureFlagWH": "0xFdC44664A0CcFa8Ed1a63ae6Be9Fb078297C0589",
   "SL1MessageReceiverModule#SL1MessageReceiver": "0xCfAfb96446C6Bd2a477D327215D358626d944E13",
-  "KOLRouterFactoryModule#KOLRouterFactory": "0x049bB9C142Fd5E4527e9D2B9E98B8958c8fF5b28"
+  "KOLRouterFactoryModule#KOLRouterFactory": "0x049bB9C142Fd5E4527e9D2B9E98B8958c8fF5b28",
+  "KOLFactoryTraderJoeModule#KOLFactoryTraderJoe": "0xA53fF666cABcEB99E792139Bf5948A6bF45BF6f0"
 }
