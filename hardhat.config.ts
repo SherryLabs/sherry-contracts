@@ -12,11 +12,37 @@ if (!deployer) {
 }
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.25",
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.25",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200
+          }
+        }
+      },
+      {
+        version: "0.8.29",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200
+          }
+        }
+      },
+    ]
+  },
   networks: {
     avalanche: {
       url: "https://api.avax.network/ext/bc/C/rpc",
       accounts: [deployer],
+    },
+    sepolia: {
+      url: "https://ethereum-sepolia.publicnode.com",
+      accounts: [deployer],
+      chainId: 11155111
     },
     sl1Testnet: {
       url: `https://subnets.avax.network/sl1/testnet/rpc`,
@@ -59,6 +85,7 @@ const config: HardhatUserConfig = {
       celo: process.env.CELO_ALFAJORES_ETHERSCAN_API_KEY || "",
       avalancheFuji: process.env.AVALANCHE_FUJI_ETHERSCAN_API_KEY || "",
       avalanche: process.env.AVALANCHE_FUJI_ETHERSCAN_API_KEY || "",
+      sepolia: process.env.SEPOLIA_ETHERSCAN_API_KEY || "",
     },
     customChains: [
       {
@@ -93,10 +120,16 @@ const config: HardhatUserConfig = {
           browserURL: "https://celoscan.io",
         }
       },
+      {
+        network: "sepolia",
+        chainId: 11155111,
+        urls: {
+          apiURL: "https://api-sepolia.etherscan.io/api",
+          browserURL: "https://sepolia.etherscan.io",
+        }
+      },
     ]
   }
-
-
 };
 
 export default config;

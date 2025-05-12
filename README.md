@@ -1,13 +1,10 @@
-# 🌟 About Sherry 
-
-At Sherry, we are committed to simplifying and making blockchain interactions more accessible, and have developed an SDK that allows developers to create highly versatile mini-apps. These mini-apps can execute any function of any smart contract using a simple metadata definition, opening up new possibilities for creating personalized and enriching experiences for users.
-
 <!-- Consider adding a logo or banner image here -->
 <!-- ![Sherry Logo](./assets/sherry-logo.png) -->
+# Sherry Smart Contracts
 
 ## 📑 Index
 - [About Sherry](#-about-sherry)
-- [Main Function](#-main-function---sendMessage)
+- [Installation](#-installation)
 - [Contract Addresses](#-contract-addresses)
   - [Main Contract](#-main-contract---sherry)
 - [Cross-Chain Interoperability](#-cross-chain-interoperability)
@@ -16,28 +13,39 @@ At Sherry, we are committed to simplifying and making blockchain interactions mo
 - [Example](#-example)
 - [Docs](#-docs)
 
+## 🌟 About Sherry
 
-### 🔧 Main Function - `sendMessage`
+At Sherry, we are committed to simplifying and making blockchain interactions more accessible, and have developed an SDK that allows developers to create highly versatile mini-apps. These mini-apps can execute any function of any smart contract using a simple metadata definition, opening up new possibilities for creating personalized and enriching experiences for users.
 
+## 🔧 Installation
+
+This project uses Git submodules to include external dependencies.
+
+### Option 1: Clone with Submodules (Recommended)
+
+To clone this repository along with all its submodules in one step:
+
+```sh
+git clone --recursive https://github.com/SherryLabs/sherry-contracts.git
+```
+
+### Option 2: Repository already cloned without the `--recursive`
+
+If you've already cloned the repository without using the `--recursive` flag, you can fetch the submodules with:
+
+```sh
+git submodule update --init
+```
+
+### Option 3: Update all submodules to their latest commits
+
+If you want to update all submodules to their latest commits on their respective branches:
+
+```sh
+git submodule update --init --recursive --remote
+```
 
 ## 📜 Contract Addresses
-
-
-### 📡 Main Contract - Sherry.sol
-
-The `Sherry` contract is our main contract, it is used to call any contract in Avalanche.
-
-In Avalanche C-Chain
-
-| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
-|---------------|----------------------------------------------|--------|
-| `Sherry`     | `0xa3CA6021b432a88EEFb5b53B31833e19195b4ecB`   | `Avalanche C-Chain`    |
-
-In Avalanche Fuji Testnet
-
-| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
-|---------------|----------------------------------------------|--------|
-| `Sherry`     | `0xd877995ddc19a8076D7bAb8BC15F625607070497`   | `Avalanche Fuji`    |
 
 ## 🌉 Cross-Chain Interoperability
 
@@ -97,17 +105,24 @@ This contract handles the reception of messages from any L1 subnet within the Av
 | `SL1AnyChainReceiver`     | ``   | `Pulsar`    |
 | `SL1AnyChainReceiver`     | ``   | `Lamina1`    |
 
-## 🎮 Example
+### 🏭 KOL Router Factories
 
-### 🚩 Capture the Flag
+These factories are used to deploy new KOL (Key Opinion Leader) specific routers for different DEX protocols.
 
-<!-- Consider adding a screenshot or diagram of the Capture the Flag example -->
-<!-- ![Capture the Flag Example](./assets/ctf-example.png) -->
+#### TraderJoe KOL Factory
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `CaptureFlag`     | `0xFdC44664A0CcFa8Ed1a63ae6Be9Fb078297C0589`   | `Avalanche Fuji`    |
-| `CaptureFlag`     | `0x812810512193d623a68e467cc314511a581E4546`   | `Celo Alfajores`    |
+| `KOLFactoryTraderJoe`     | `0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4`   | `Avalanche C-Chain`    |
+| `KOLFactoryTraderJoe`     | `0xA53fF666cABcEB99E792139Bf5948A6bF45BF6f0`      | `Avalanche Fuji`    |
+
+#### Uniswap KOL Factory
+
+| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
+|---------------|----------------------------------------------|--------|
+| `KOLFactoryUniswap`     | ``   | `Avalanche C-Chain`    |
+| `KOLFactoryUniswap`     | ``      | `Avalanche Fuji`    |
+
 
 # 📚 Docs
 
@@ -116,12 +131,11 @@ In order to learn more about Sherry go to our [docs](https://docs.sherry.social)
 ---
 
 <div align="center">
-  <!-- Consider adding social media links with icons -->
-  <!-- 
+
   [![Twitter](https://img.shields.io/twitter/follow/SherryProtocol?style=social)](https://twitter.com/SherryProtocol)
-  [![Discord](https://img.shields.io/discord/YOUR_DISCORD_ID)](https://discord.gg/sherry)
+  [![Discord](https://img.shields.io/discord/4HppNS46)](https://discord.gg/4HppNS46)
   [![GitHub](https://img.shields.io/github/stars/sherry-protocol/sherry-contracts?style=social)](https://github.com/sherry-protocol/sherry-contracts)
-  -->
+  
 </div>
 
 
