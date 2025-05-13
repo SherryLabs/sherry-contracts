@@ -23,7 +23,7 @@ const KOLFactoryTraderJoeModule = buildModule(
     }
 
     if (!joeRouter) {
-      throw new Error("JOE_ROUTER is not defined in the environment variables");
+      throw new Error("TRADER_JOE_ROUTER is not defined in the constants variables");
     }
 
     const kolFactory = m.contract("KOLFactoryTraderJoe", [joeRouter], {});

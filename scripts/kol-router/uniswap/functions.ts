@@ -69,7 +69,6 @@ function decimalPercentToPercent(decimalPercent: number, precision: number = 6):
     return new Percent(numerator, denominator);
 }
 
-//TODO: move to base functions
 export const createKolRouter = async (
     kolAddress: string,
     fee: string,

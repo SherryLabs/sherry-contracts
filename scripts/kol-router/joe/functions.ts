@@ -12,6 +12,7 @@ import path from 'path';
 import * as fs from 'fs';
 
 const KOL_ROUTER = "0x431850c483cAb3E2e497B05c3C9430daf0B6c3A6"; // TODO: take this from .env
+const KOL_FACTORY_JOE = "0x431850c483cAb3E2e497B05c3C9430daf0B6c3A6"; // TODO: take this from .env
 
 // initialize tokens
 const CHAIN_ID = ChainId.FUJI;
@@ -57,6 +58,52 @@ const erc20Abi = [
 ];
 
 type tokens = "WAVAX" | "USDT" | "USDC";
+
+export const createKolRouter = async (
+    kolAddress: string,
+    fee: string,
+    walletClient: WalletClient
+) => {
+    const account = walletClient.account;
+    const KOLFactoryJoe = JSON.parse(
+        fs.readFileSync(
+            path.resolve(
+                __dirname,
+                '../../../artifacts/contracts/kol-router/KOLFactoryTraderJoe.sol/KOLFactoryTraderJoe.json'
+            ),
+            'utf8'
+        )
+    );
+
+    if (!KOLFactoryJoe) {
+        throw new Error("Before start, compile contracts: yarn compile");
+    }
+
+    const deployedAddresses = JSON.parse(
+        fs.readFileSync(
+            path.resolve(
+                __dirname,
+                '../../../ignition/deployments/chain-43113/deployed_addresses.json'
+            ),
+            'utf8'
+        )
+    );
+
+    if (!deployedAddresses["KOLFactoryTraderJoeModule#KOLFactoryTraderJoe"]) {
+        throw new Error("Before start, deploy factory contract: yarn deploy:koljoe");
+    }
+
+    const abi = KOLFactoryJoe.abi;
+    const tx = await walletClient.writeContract({
+        address: deployedAddresses["KOLFactoryTraderJoeModule#KOLFactoryTraderJoe"],
+        abi,
+        functionName: 'createKOLRouter',
+        args: [kolAddress, fee],
+        chain: avalancheFuji,
+        account: account || null
+    });
+    console.log(`KolRouter successfully created: https://testnet.snowtrace.io/tx/${tx}`);
+}
 
 export const checkAndApproveToken = async (
     token: tokens,
