@@ -1,6 +1,6 @@
 import path from 'path';
 import * as fs from 'fs';
-import { PublicClient, WalletClient, parseUnits, createPublicClient, createWalletClient, http, decodeFunctionData } from 'viem';
+import { PublicClient, WalletClient, parseUnits, createPublicClient, createWalletClient, http, decodeFunctionData, encodeFunctionData, parseGwei } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { avalanche } from 'viem/chains';
 import { Token, CurrencyAmount, Percent, TradeType, Ether } from '@uniswap/sdk-core';
@@ -8,10 +8,7 @@ import { UniversalRouterVersion } from '@uniswap/universal-router-sdk';
 import { AlphaRouter, SwapType } from '@uniswap/smart-order-router';
 import { JsonRpcProvider } from '@ethersproject/providers';
 
-const KOL_FACTORY = '0x01Db6412903838DBFAbD434Cfb772D2590F548Da'; // TODO: take this from .env
-const KOL_ROUTER = '0xDAe1254A01AA6540980B8f99f72a5B515e19d096'; // TODO: take this from .env
-const UNIVERSAL_ROUTER = '0x94b75331AE8d42C1b61065089B7d48FE14aA73b7';
-const PERMIT2 = '0x000000000022D473030F116dDEE9F6B43aC78BA3'; // Avalanche
+const KOL_ROUTER = '0x4BfB9798Bf3960f02599eae756e735eDC6ACc7b2'; // TODO: take this from .env
 const CHAIN_ID = 43114; // Avalanche Mainnet
 
 let publicClient: PublicClient;
@@ -84,13 +81,28 @@ export const createKolRouter = async (
             'utf8'
         )
     );
+
     if (!KOLFactoryUniswap) {
         throw new Error("Before start, compile contracts: yarn compile");
     }
 
+    const deployedAddresses = JSON.parse(
+        fs.readFileSync(
+            path.resolve(
+                __dirname,
+                '../../../ignition/deployments/chain-43114/deployed_addresses.json'
+            ),
+            'utf8'
+        )
+    );
+
+    if (!deployedAddresses["KOLFactoryUniswapModule#KOLFactoryUniswap"]) {
+        throw new Error("Before start, deploy factory contract: yarn deploy:koljoe");
+    }
+
     const abi = KOLFactoryUniswap.abi;
     const tx = await walletClient.writeContract({
-        address: KOL_FACTORY,
+        address: deployedAddresses["KOLFactoryUniswapModule#KOLFactoryUniswap"],
         abi,
         functionName: 'createKOLRouter',
         args: [kolAddress, fee],
@@ -112,7 +124,7 @@ export const checkAndApproveToken = async (
         const account = walletClient.account;
         const accountAddress = walletClient.account?.address as string;
 
-        const spender = PERMIT2;
+        const spender = KOL_ROUTER;
 
         // Check current allowance
         const currentAllowance = await publicClient.readContract({
@@ -228,7 +240,7 @@ const executeUniswapSwap = async (
         }
 
         const { calldata, value } = route.methodParameters;
-        console.log("Route found", route.methodParameters);
+        console.log("Route found", route);
         console.log("Value without fee:", Number(value))
 
         // add KOL router fee!
@@ -240,8 +252,6 @@ const executeUniswapSwap = async (
         }) as bigint;
         const valuePlusFee = BigInt(value) + fixedFeeAmount;
         console.log("Value with fee:", Number(valuePlusFee));
-
-        //const valuePlusFee = BigInt(value) //TODO: remove this, it is only for testintg
 
         // Execute trade
         // -----------------------------------------------------------------
@@ -263,7 +273,6 @@ const executeUniswapSwap = async (
             `0x${string}[]`,
             bigint
         ];
-
 
         let tx;
         if (nativeIn) {
@@ -297,29 +306,24 @@ const executeUniswapSwap = async (
                 value: valuePlusFee
             });
         }
-
         console.log(`Transaction sent: https://snowtrace.io/tx/${tx}`);
 
-        /*
-        // If the eth_call of .call does not revert, it means it is ok to be sent.
-        // TODO: use estimateGas instead
-        await publicClient.call({
-            account: walletClient.account,
-            to: UNIVERSAL_ROUTER,
-            data: calldata as `0x${string}`,
-            value: BigInt(valuePlusFee),
-        })
-
-        const tx = await walletClient.sendTransaction({
-            account: walletClient.account!,
-            chain: avalanche,
-            to: UNIVERSAL_ROUTER,
-            data: calldata as `0x${string}`,
-            value: valuePlusFee,
-        });
-
-        console.log(`Transaction sent: https://snowtrace.io/tx/${tx}`);
-        */
+        //const txRequest = await walletClient.prepareTransactionRequest({
+        //    account: walletClient.account!,
+        //    to: KOL_ROUTER,
+        //    chain: avalanche,
+        //    data: encodeFunctionData({
+        //        abi,
+        //        functionName: 'executeTokenIn',
+        //        args: [commands, inputs, deadline, inputToken.address, typedValueInParsed],
+        //    }),
+        //    value: valuePlusFee,
+        //    gas: 500000n, // estimativo, podés ajustar
+        //    maxFeePerGas: parseGwei('50'),
+        //    maxPriorityFeePerGas: parseGwei('2'),
+        //});
+        //const signedTx = await walletClient.signTransaction(txRequest);
+        //console.log(signedTx)
     } catch (error) {
         throw error;
     }
