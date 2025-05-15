@@ -70,7 +70,7 @@ The system follows a modular architecture with base contracts providing common f
 
 1. A KOL registers to be part of the system
 2. A protocol-specific factory contract creates a dedicated router for the KOL
-3. The KOL can customize their fee (within limits)
+3. The KOL can customize their fee
 4. Users can swap tokens through the KOL's router:
    - A small fee is taken in the native token (e.g., AVAX)
    - The rest of the transaction is routed to the appropriate DEX
@@ -79,7 +79,7 @@ The system follows a modular architecture with base contracts providing common f
 ## Key Features
 
 - **Protocol-Specific Routing**: Each router is optimized for a specific DEX protocol
-- **Fee Customization**: KOLs can set their own fees (within predefined limits)
+- **Fee Customization**: KOLs can set their own fees
 - **Security**: Built-in protection against reentrancy and other common attacks
 - **Modularity**: Easy to add support for new DEX protocols
 - **Transparency**: Events emitted for all key actions

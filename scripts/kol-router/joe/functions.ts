@@ -12,7 +12,6 @@ import path from 'path';
 import * as fs from 'fs';
 
 const KOL_ROUTER = "0x431850c483cAb3E2e497B05c3C9430daf0B6c3A6"; // TODO: take this from .env
-const KOL_FACTORY_JOE = "0x431850c483cAb3E2e497B05c3C9430daf0B6c3A6"; // TODO: take this from .env
 
 // initialize tokens
 const CHAIN_ID = ChainId.FUJI;

@@ -1,6 +1,16 @@
 import path from 'path';
 import * as fs from 'fs';
-import { PublicClient, WalletClient, parseUnits, createPublicClient, createWalletClient, http, decodeFunctionData, encodeFunctionData, parseGwei } from 'viem';
+import {
+    PublicClient,
+    WalletClient,
+    parseUnits,
+    createPublicClient,
+    createWalletClient,
+    http,
+    decodeFunctionData,
+    encodeFunctionData,
+    parseGwei
+} from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { avalanche } from 'viem/chains';
 import { Token, CurrencyAmount, Percent, TradeType, Ether } from '@uniswap/sdk-core';
