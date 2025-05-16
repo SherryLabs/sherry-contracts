@@ -12,7 +12,7 @@ export const CONTRACT_ADDRESSES: Record<ContractName, Partial<Record<number, str
   },
   PANGOLIN_V2_ROUTER: {
     [avalanche.id]: "0xE54Ca86531e17Ef3616d22Ca28b0D458b6C89106", // PangolinRouter v2
-    [avalancheFuji.id]: "0x2D99ABD9008Dc933ff5c0CD271B88309593aB921", // PangolinRouter v2
+    [avalancheFuji.id]: "0x688d21b0B8Dc35971AF58cFF1F7Bf65639937860", // PangolinRouter v2
   },
   UNISWAP_ROUTER: {
     [avalanche.id]: "0x94b75331ae8d42c1b61065089b7d48fe14aa73b7", // Universal Router
