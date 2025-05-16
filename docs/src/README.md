@@ -47,23 +47,6 @@ git submodule update --init --recursive --remote
 
 ## 📜 Contract Addresses
 
-
-### 📡 Main Contract - Sherry.sol
-
-The `Sherry` contract is our main contract, it is used to call any contract in Avalanche.
-
-In Avalanche C-Chain
-
-| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
-|---------------|----------------------------------------------|--------|
-| `Sherry`     | `0xa3CA6021b432a88EEFb5b53B31833e19195b4ecB`   | `Avalanche C-Chain`    |
-
-In Avalanche Fuji Testnet
-
-| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
-|---------------|----------------------------------------------|--------|
-| `Sherry`     | `0xd877995ddc19a8076D7bAb8BC15F625607070497`   | `Avalanche Fuji`    |
-
 ## 🌉 Cross-Chain Interoperability
 
 Our contracts enable seamless cross-chain interactions through multiple interoperability solutions.
@@ -122,17 +105,24 @@ This contract handles the reception of messages from any L1 subnet within the Av
 | `SL1AnyChainReceiver`     | ``   | `Pulsar`    |
 | `SL1AnyChainReceiver`     | ``   | `Lamina1`    |
 
-## 🎮 Example
+### 🏭 KOL Router Factories
 
-### 🚩 Capture the Flag
+These factories are used to deploy new KOL (Key Opinion Leader) specific routers for different DEX protocols.
 
-<!-- Consider adding a screenshot or diagram of the Capture the Flag example -->
-<!-- ![Capture the Flag Example](./assets/ctf-example.png) -->
+#### TraderJoe KOL Factory
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `CaptureFlag`     | `0xFdC44664A0CcFa8Ed1a63ae6Be9Fb078297C0589`   | `Avalanche Fuji`    |
-| `CaptureFlag`     | `0x812810512193d623a68e467cc314511a581E4546`   | `Celo Alfajores`    |
+| `KOLFactoryTraderJoe`     | `0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4`   | `Avalanche C-Chain`    |
+| `KOLFactoryTraderJoe`     | `0xA53fF666cABcEB99E792139Bf5948A6bF45BF6f0`      | `Avalanche Fuji`    |
+
+#### Uniswap KOL Factory
+
+| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
+|---------------|----------------------------------------------|--------|
+| `KOLFactoryUniswap`     | ``   | `Avalanche C-Chain`    |
+| `KOLFactoryUniswap`     | ``      | `Avalanche Fuji`    |
+
 
 # 📚 Docs
 
@@ -141,12 +131,11 @@ In order to learn more about Sherry go to our [docs](https://docs.sherry.social)
 ---
 
 <div align="center">
-  <!-- Consider adding social media links with icons -->
-  <!-- 
+
   [![Twitter](https://img.shields.io/twitter/follow/SherryProtocol?style=social)](https://twitter.com/SherryProtocol)
-  [![Discord](https://img.shields.io/discord/YOUR_DISCORD_ID)](https://discord.gg/sherry)
+  [![Discord](https://img.shields.io/discord/4HppNS46)](https://discord.gg/4HppNS46)
   [![GitHub](https://img.shields.io/github/stars/sherry-protocol/sherry-contracts?style=social)](https://github.com/sherry-protocol/sherry-contracts)
-  -->
+  
 </div>
 
 
