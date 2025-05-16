@@ -1,10 +1,10 @@
-# KOLFactoryUniswap
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/abea0d8e26a21a2127d6a1d9e961e252da35642b/contracts/kol-router/KOLFactoryUniswap.sol)
+# KOLFactoryPangolin
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/abea0d8e26a21a2127d6a1d9e961e252da35642b/contracts/kol-router/KOLFactoryPangolin.sol)
 
 **Inherits:**
 [KOLFactoryBase](/contracts/kol-router/KOLFactoryBase.sol/abstract.KOLFactoryBase.md)
 
-*Factory for creating and managing KOL routers for Uniswap*
+*Factory for creating and managing KOL routers for Pangolin*
 
 
 ## Functions
@@ -14,13 +14,13 @@
 
 
 ```solidity
-constructor(address _uniswapRouter) KOLFactoryBase(_uniswapRouter);
+constructor(address _pangolinRouter) KOLFactoryBase(_pangolinRouter);
 ```
 **Parameters**
 
 |Name|Type|Description|
 |----|----|-----------|
-|`_uniswapRouter`|`address`|Address of Uniswap router|
+|`_pangolinRouter`|`address`|Address of Pangolin router|
 
 
 ### _createRouterImplementation

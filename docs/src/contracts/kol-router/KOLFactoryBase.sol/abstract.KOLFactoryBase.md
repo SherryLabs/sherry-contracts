@@ -1,5 +1,5 @@
 # KOLFactoryBase
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/7488ae397dbcaa4df700f0dbbfff7f6537916c5a/contracts/kol-router/KOLFactoryBase.sol)
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/abea0d8e26a21a2127d6a1d9e961e252da35642b/contracts/kol-router/KOLFactoryBase.sol)
 
 **Inherits:**
 Ownable
@@ -8,10 +8,10 @@ Ownable
 
 
 ## State Variables
-### kolToRouter
+### kolToRouters
 
 ```solidity
-mapping(address => address) public kolToRouter;
+mapping(address => address[]) kolToRouters;
 ```
 
 
@@ -62,7 +62,7 @@ function setProtocolRouter(address _protocolRouter) external onlyOwner;
 
 ### getTotalRouters
 
-*Gets the total number of deployed routers*
+*Gets the total number of deployed routers of all Kols*
 
 
 ```solidity
@@ -77,23 +77,45 @@ function getTotalRouters() external view returns (uint256);
 
 ### getKOLRouter
 
-*Gets a KOL's router*
+*Gets the KOL router by index*
 
 
 ```solidity
-function getKOLRouter(address kolAddress) external view returns (address);
+function getKOLRouter(address _kolAddress, uint256 _index) external view returns (address);
 ```
 **Parameters**
 
 |Name|Type|Description|
 |----|----|-----------|
-|`kolAddress`|`address`|KOL address|
+|`_kolAddress`|`address`|KOL address|
+|`_index`|`uint256`|Router index|
 
 **Returns**
 
 |Name|Type|Description|
 |----|----|-----------|
-|`<none>`|`address`|Router address|
+|`<none>`|`address`|Router address by index|
+
+
+### getKOLRoutersCount
+
+*Gets the KOL's routers count*
+
+
+```solidity
+function getKOLRoutersCount(address _kolAddress) external view returns (uint256);
+```
+**Parameters**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`_kolAddress`|`address`|KOL address|
+
+**Returns**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`<none>`|`uint256`|KOL's number of routers|
 
 
 ### createKOLRouter
@@ -102,13 +124,13 @@ function getKOLRouter(address kolAddress) external view returns (address);
 
 
 ```solidity
-function createKOLRouter(address kolAddress, uint256 _fixedFeeAmount) external returns (address);
+function createKOLRouter(address _kolAddress, uint256 _fixedFeeAmount) external returns (address);
 ```
 **Parameters**
 
 |Name|Type|Description|
 |----|----|-----------|
-|`kolAddress`|`address`|KOL address|
+|`_kolAddress`|`address`|KOL address|
 |`_fixedFeeAmount`|`uint256`|Amount to be subtracted as Fee|
 
 **Returns**

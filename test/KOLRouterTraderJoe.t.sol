@@ -2,7 +2,7 @@
 pragma solidity ^0.8.29;
 
 import "forge-std/Test.sol";
-import "../contracts/kol-router/KOLSwapRouterV2.sol";
+import "../contracts/kol-router/KOLRouterTraderJoe.sol";
 import "../contracts/kol-router/interfaces/ILBRouter.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -105,7 +105,7 @@ contract MockLBRouter {
 
 // Main test contract
 contract KOLSwapRouterV2Test is Test {
-    KOLSwapRouterV2 public router;
+    KOLRouterTraderJoe public router;
     MockLBRouter public mockLBRouter;
     MockERC20 public tokenA;
     MockERC20 public tokenB;
@@ -125,10 +125,11 @@ contract KOLSwapRouterV2Test is Test {
         tokenB = new MockERC20("Token B", "TKNB");
 
         // Deploy the router
-        router = new KOLSwapRouterV2(
+        router = new KOLRouterTraderJoe(
             kolAddress,
             address(mockLBRouter),
-            factoryAddress
+            factoryAddress,
+            FEE_AMOUNT
         );
 
         // Set up balances
