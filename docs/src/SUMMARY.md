@@ -14,7 +14,6 @@
     - [CaptureFlag](contracts/examples/CaptureFlag.sol/contract.CaptureFlag.md)
   - [❱ kol-router](contracts/kol-router/README.md)
     - [❱ interfaces](contracts/kol-router/interfaces/README.md)
-      - [IJoeRouter02](contracts/kol-router/interfaces/IJoeRouter02.sol/interface.IJoeRouter02.md)
       - [ILBRouter](contracts/kol-router/interfaces/ILBRouter.sol/interface.ILBRouter.md)
       - [IPangolinRouter](contracts/kol-router/interfaces/IPangolinRouter.sol/interface.IPangolinRouter.md)
       - [IUniversalRouter](contracts/kol-router/interfaces/IUniversalRouter.sol/interface.IUniversalRouter.md)

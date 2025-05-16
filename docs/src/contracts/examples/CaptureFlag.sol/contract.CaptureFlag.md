@@ -1,5 +1,5 @@
 # CaptureFlag
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/abea0d8e26a21a2127d6a1d9e961e252da35642b/contracts/examples/CaptureFlag.sol)
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/ef85f626b2f11fa0f36e09ddd8fdd3d9da90d8ba/contracts/examples/CaptureFlag.sol)
 
 
 ## State Variables
