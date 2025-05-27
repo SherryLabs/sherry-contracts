@@ -11,8 +11,8 @@ import "@openzeppelin/contracts/utils/Address.sol";
 abstract contract KOLFactoryBase is Ownable {
     using Address for address;
 
-    // Mapping of KOL to their router
-    mapping(address => address) public kolToRouter;
+    // Mapping of KOL to their routers
+    mapping(address => address[]) kolToRouters;
 
     // List of deployed routers
     address[] public deployedRouters;
@@ -44,7 +44,7 @@ abstract contract KOLFactoryBase is Ownable {
     }
 
     /**
-     * @dev Gets the total number of deployed routers
+     * @dev Gets the total number of deployed routers of all Kols
      * @return Number of routers
      */
     function getTotalRouters() external view returns (uint256) {
@@ -52,12 +52,22 @@ abstract contract KOLFactoryBase is Ownable {
     }
 
     /**
-     * @dev Gets a KOL's router
+     * @dev Gets the KOL router by index
      * @param _kolAddress KOL address
-     * @return Router address
+     * @param _index Router index
+     * @return Router address by index
      */
-    function getKOLRouter(address _kolAddress) external view returns (address) {
-        return kolToRouter[_kolAddress];
+    function getKOLRouter(address _kolAddress, uint256 _index) external view returns (address) {
+        return kolToRouters[_kolAddress][_index];
+    }
+
+    /**
+     * @dev Gets the KOL's routers count
+     * @param _kolAddress KOL address
+     * @return KOL's number of routers
+     */
+    function getKOLRoutersCount(address _kolAddress) external view returns (uint256) {
+        return kolToRouters[_kolAddress].length;
     }
 
     /**
@@ -71,10 +81,6 @@ abstract contract KOLFactoryBase is Ownable {
         uint256 _fixedFeeAmount
     ) external returns (address) {
         require(_kolAddress != address(0), "Invalid KOL address");
-        require(
-            kolToRouter[_kolAddress] == address(0),
-            "Router already exists for this KOL"
-        );
 
         // Create the specific router using the derived class implementation
         address routerAddress = _createRouterImplementation(
@@ -83,7 +89,7 @@ abstract contract KOLFactoryBase is Ownable {
         );
 
         // Register the router in base contract state
-        kolToRouter[_kolAddress] = routerAddress;
+        kolToRouters[_kolAddress].push(routerAddress);
         deployedRouters.push(routerAddress);
 
         emit RouterCreated(_kolAddress, routerAddress);

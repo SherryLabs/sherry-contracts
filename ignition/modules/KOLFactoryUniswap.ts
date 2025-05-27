@@ -1,6 +1,6 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 import { getContractAddress } from "../../utils/constants";
-import { avalanche, avalancheFuji } from "viem/chains";
+import { avalanche, sepolia } from "viem/chains";
 import hre from "hardhat";
 
 const KOLFactoryUniswapModule = buildModule("KOLFactoryUniswapModule", (m) => {
@@ -10,8 +10,8 @@ const KOLFactoryUniswapModule = buildModule("KOLFactoryUniswapModule", (m) => {
     case "avalanche":
       uniRouter = getContractAddress("UNISWAP_ROUTER", avalanche.id);
       break;
-    case "avalancheFuji":
-      uniRouter = getContractAddress("UNISWAP_ROUTER", avalancheFuji.id);
+    case "sepolia":
+      uniRouter = getContractAddress("UNISWAP_ROUTER", sepolia.id);
       break;
     case "hardhat":
       uniRouter = getContractAddress("UNISWAP_ROUTER", avalanche.id);
@@ -21,7 +21,7 @@ const KOLFactoryUniswapModule = buildModule("KOLFactoryUniswapModule", (m) => {
   }
 
   if (!uniRouter) {
-    throw new Error("We couldn't find -> UNI_ROUTER");
+    throw new Error("UNISWAP_ROUTER is not defined in the constants variables");
   }
 
   const kolFactory = m.contract("KOLFactoryUniswap", [uniRouter], {});

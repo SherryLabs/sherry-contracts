@@ -1,10 +1,10 @@
 # KOLFactoryTraderJoe
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/7488ae397dbcaa4df700f0dbbfff7f6537916c5a/contracts/kol-router/KOLFactoryTraderJoe.sol)
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/ef85f626b2f11fa0f36e09ddd8fdd3d9da90d8ba/contracts/kol-router/KOLFactoryTraderJoe.sol)
 
 **Inherits:**
 [KOLFactoryBase](/contracts/kol-router/KOLFactoryBase.sol/abstract.KOLFactoryBase.md)
 
-*Factory for creating and managing KOL routers for Uniswap*
+*Factory for creating and managing KOL routers for Trader Joe*
 
 
 ## Functions
@@ -20,7 +20,7 @@ constructor(address _traderJoeRouter) KOLFactoryBase(_traderJoeRouter);
 
 |Name|Type|Description|
 |----|----|-----------|
-|`_traderJoeRouter`|`address`|Address of Uniswap router|
+|`_traderJoeRouter`|`address`|Address of Trader Joe router|
 
 
 ### _createRouterImplementation
@@ -29,13 +29,16 @@ constructor(address _traderJoeRouter) KOLFactoryBase(_traderJoeRouter);
 
 
 ```solidity
-function _createRouterImplementation(address kolAddress, uint256 _fixedFeeAmount) internal override returns (address);
+function _createRouterImplementation(address _kolAddress, uint256 _fixedFeeAmount)
+    internal
+    override
+    returns (address);
 ```
 **Parameters**
 
 |Name|Type|Description|
 |----|----|-----------|
-|`kolAddress`|`address`|Address of the KOL|
+|`_kolAddress`|`address`|Address of the KOL|
 |`_fixedFeeAmount`|`uint256`|Amount to be subtracted as Fee|
 
 **Returns**
