@@ -73,7 +73,7 @@ This section describes the detailed flow of each supported swap operation initia
 
 ### 4.1 swapExactNATIVEForToken
 
-![Swap Native to Token](images/kolrouterNativeToToken.png)
+![Swap Native to Token](../../images/kolrouterNativeToToken.png)
 
 1. The **user wallet** sends native tokens (e.g., AVAX) and calls `swapExactNATIVEForToken` on the **KOLRouter**.
 2. The **KOLRouter**:
@@ -85,7 +85,7 @@ This section describes the detailed flow of each supported swap operation initia
 
 ### 4.2 swapExactTokenForNATIVE
 
-![Swap Token to Native](images/kolrouterTokenToNative.png)
+![Swap Token to Native](../../images/kolrouterTokenToNative.png)
 
 1. The **user wallet** approves the **KOLRouter** to spend ERC20 tokens, then calls `swapExactTokenForNATIVE`.
 2. The **KOLRouter**:
@@ -97,7 +97,7 @@ This section describes the detailed flow of each supported swap operation initia
 
 ### 4.3 swapExactTokenForToken
 
-![Swap Token to Token](images/kolrouterTokenToToken.png)
+![Swap Token to Token](../../images/kolrouterTokenToToken.png)
 
 1. The **user wallet** approves the **KOLRouter** to spend ERC20 tokens, then calls `swapExactTokenForToken`.
 2. The **KOLRouter**:
@@ -111,7 +111,7 @@ This section describes the detailed flow of each supported swap operation initia
 
 This optional flow can be initiated by the KOL at any time to retrieve their accumulated fees.
 
-![Withdraw Fees](images/kolrouterWithdrawFee.png)
+![Withdraw Fees](../../images/kolrouterWithdrawFee.png)
 
 1. The **KOL Wallet** calls `withdrawNativeFee()` on the **KOLRouter**.
 2. The **KOLRouter** transfers the collected native token fees to the **KOL Wallet**.
