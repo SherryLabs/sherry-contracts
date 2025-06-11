@@ -6,6 +6,7 @@
     "deploy:koltraderjoe": "npx hardhat ignition deploy ignition/modules/KOLFactoryTraderJoe.ts",
     "deploy:koluniswap": "npx hardhat ignition deploy ignition/modules/KOLFactoryUniswap.ts",
     "deploy:kolpangolin": "npx hardhat ignition deploy ignition/modules/KOLFactoryPangolin.ts",
+    "deploy:kolarenaswap": "npx hardhat ignition deploy ignition/modules/KOLFactoryArenaSwap.ts",
     "register:whreceiver": "npx hardhat run scripts/wormhole/RegisterSenderInReceiver.ts",
     "tokenmill:deploy": "npx hardhat run scripts/factory/CreateMarketAndVestings.ts",
     "deploy:capture": "npx hardhat ignition deploy ignition/modules/wormhole/CaptureFlag.ts",
