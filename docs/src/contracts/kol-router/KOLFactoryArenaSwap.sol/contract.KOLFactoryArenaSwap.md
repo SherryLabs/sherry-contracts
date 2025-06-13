@@ -1,10 +1,10 @@
-# KOLFactoryPangolin
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/kol-router/KOLFactoryPangolin.sol)
+# KOLFactoryArenaSwap
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/kol-router/KOLFactoryArenaSwap.sol)
 
 **Inherits:**
 [KOLFactoryBase](/contracts/kol-router/KOLFactoryBase.sol/abstract.KOLFactoryBase.md)
 
-*Factory for creating and managing KOL routers for Pangolin*
+*Factory for creating and managing KOL routers for ArenaSwap*
 
 
 ## Functions
@@ -14,13 +14,13 @@
 
 
 ```solidity
-constructor(address _pangolinRouter) KOLFactoryBase(_pangolinRouter);
+constructor(address _arenaSwapRouter) KOLFactoryBase(_arenaSwapRouter);
 ```
 **Parameters**
 
 |Name|Type|Description|
 |----|----|-----------|
-|`_pangolinRouter`|`address`|Address of Pangolin router|
+|`_arenaSwapRouter`|`address`|Address of ArenaSwap router|
 
 
 ### _createRouterImplementation

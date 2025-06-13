@@ -1,5 +1,5 @@
-# IPangolinRouter
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/kol-router/interfaces/IPangolinRouter.sol)
+# IArenaRouter01
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/kol-router/interfaces/IArenaRouter01.sol)
 
 
 ## Functions

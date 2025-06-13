@@ -1,10 +1,10 @@
-# KOLRouterPangolinV2
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/kol-router/KOLRouterPangolinV2.sol)
+# KOLRouterArenaSwap
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/kol-router/KOLRouterArenaSwap.sol)
 
 **Inherits:**
 [KOLSwapRouterBase](/contracts/kol-router/KOLSwapRouterBase.sol/abstract.KOLSwapRouterBase.md)
 
-Router for KOLs that supports direct swaps via Pangolin v2 using IPangolinRouter.
+Router for KOLs that supports direct swaps via ArenaSwap v2 using IArenaRouter01.
 
 *Handles both native and ERC20 swaps, applying a fixed fee in native token (e.g., AVAX).*
 
@@ -24,7 +24,7 @@ constructor(address _kolAddress, address _dexRouter, address _factoryAddress, ui
 |Name|Type|Description|
 |----|----|-----------|
 |`_kolAddress`|`address`|Address of the KOL associated with this router|
-|`_dexRouter`|`address`|Address of the Pangolin UniversalRouter|
+|`_dexRouter`|`address`|Address of the ArenaSwap UniversalRouter|
 |`_factoryAddress`|`address`|Address of the factory that deployed this router|
 |`_fixedFeeAmount`|`uint256`|Amount to be subtracted as Fee|
 
@@ -75,7 +75,7 @@ function swapTokensForExactTokens(
 
 Swap exact native tokens for ERC20 tokens.
 
-*Deducts fee and forwards the remaining native value to Pangolin router.*
+*Deducts fee and forwards the remaining native value to ArenaSwap router.*
 
 
 ```solidity
