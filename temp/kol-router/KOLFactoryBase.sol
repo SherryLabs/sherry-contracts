@@ -23,50 +23,34 @@ abstract contract KOLFactoryBase is Ownable {
     // Sherry Foundation address
     address public sherryFoundationAddress;
 
-    // Sherry Treasury address
-    address public sherryTreasuryAddress;
-
     // Fee configuration (modifiable)
-    uint16 public kolFeeRate = 100; // default: 1% (in basis points)
-    uint16 public foundationFeeRate = 50; // default: 0.5% (in basis points)
-    uint16 public treasuryFeeRate = 50; // default: 0.5% (in basis points)
-    uint16 public constant BASIS_POINTS = 10000;
+    uint256 public kolFeeRate = 100; // default: 1% (in basis points)
+    uint256 public foundationFeeRate = 100; // default: 1% (in basis points)
+    uint256 public constant BASIS_POINTS = 10000;
 
     // Events
     event RouterCreated(address indexed kolAddress, address routerAddress);
     event ProtocolAddressUpdated(address routerAddress);
     event FoundationAddressUpdated(address foundationAddress);
-    event TreasuryAddressUpdated(address foundationAddress);
-    event FeeRatesUpdated(
-        uint16 kolFeeRate,
-        uint16 foundationFeeRate,
-        uint16 treasuryFeeRate
-    );
+    event FeeRatesUpdated(uint256 kolFeeRate, uint256 foundationFeeRate);
 
     /**
      * @dev Constructor
      * @param _protocolRouter Address of the protocol's router
      * @param _sherryFoundationAddress Address of Sherry Foundation
-     * @param _sherryTreasuryAddress Address of Sherry Treasury
      */
     constructor(
         address _protocolRouter,
-        address _sherryFoundationAddress,
-        address _sherryTreasuryAddress
+        address _sherryFoundationAddress
     ) Ownable(msg.sender) {
         require(_protocolRouter != address(0), "Invalid protocol router");
         require(
             _sherryFoundationAddress != address(0),
             "Invalid foundation address"
         );
-        require(
-            _sherryTreasuryAddress != address(0),
-            "Invalid treasury address"
-        );
 
         protocolRouter = _protocolRouter;
         sherryFoundationAddress = _sherryFoundationAddress;
-        sherryTreasuryAddress = _sherryTreasuryAddress;
     }
 
     /**
@@ -95,44 +79,27 @@ abstract contract KOLFactoryBase is Ownable {
     }
 
     /**
-     * @dev Updates the Sherry Treasury address
-     * @param _sherryTreasuryAddress New foundation address
-     */
-    function setSherryTreasuryAddress(
-        address _sherryTreasuryAddress
-    ) external onlyOwner {
-        require(
-            _sherryTreasuryAddress != address(0),
-            "Invalid treasury address"
-        );
-        sherryTreasuryAddress = _sherryTreasuryAddress;
-        emit TreasuryAddressUpdated(_sherryTreasuryAddress);
-    }
-
-    /**
      * @dev Updates the fee rates
      * @param _kolFeeRate New KOL fee rate in basis points
      * @param _foundationFeeRate New foundation fee rate in basis points
      */
     function setFeeRates(
-        uint16 _kolFeeRate,
-        uint16 _foundationFeeRate,
-        uint16 _treasuryFeeRate
+        uint256 _kolFeeRate,
+        uint256 _foundationFeeRate
     ) external onlyOwner {
         require(
-            _kolFeeRate + _foundationFeeRate + _treasuryFeeRate <= BASIS_POINTS,
+            _kolFeeRate + _foundationFeeRate <= BASIS_POINTS,
             "Total fee cannot exceed 100%"
         );
         require(
-            _kolFeeRate > 0 && _foundationFeeRate > 0 && _treasuryFeeRate > 0,
+            _kolFeeRate > 0 && _foundationFeeRate > 0,
             "Fee rates must be greater than 0"
         );
 
         kolFeeRate = _kolFeeRate;
         foundationFeeRate = _foundationFeeRate;
-        treasuryFeeRate = _treasuryFeeRate;
 
-        emit FeeRatesUpdated(_kolFeeRate, _foundationFeeRate, _treasuryFeeRate);
+        emit FeeRatesUpdated(_kolFeeRate, _foundationFeeRate);
     }
 
     /**
@@ -196,26 +163,23 @@ abstract contract KOLFactoryBase is Ownable {
         address kolAddress
     ) internal virtual returns (address);
 
+
     /**
      * @dev Getter functions for fee configuration (used by routers)
      */
-    function getKOLFeeRate() external view returns (uint16) {
+    function getKOLFeeRate() external view returns (uint256) {
         return kolFeeRate;
     }
 
-    function getFoundationFeeRate() external view returns (uint16) {
+    function getFoundationFeeRate() external view returns (uint256) {
         return foundationFeeRate;
     }
 
-    function getTreasuryFeeRate() external view returns (uint16) {
-        return treasuryFeeRate;
+    function getTotalFeeRate() external view returns (uint256) {
+        return kolFeeRate + foundationFeeRate;
     }
 
-    function getTotalFeeRate() external view returns (uint16) {
-        return kolFeeRate + foundationFeeRate + treasuryFeeRate;
-    }
-
-    function getBasisPoints() external pure returns (uint16) {
+    function getBasisPoints() external pure returns (uint256) {
         return BASIS_POINTS;
     }
 }

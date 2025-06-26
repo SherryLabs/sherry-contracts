@@ -13,13 +13,11 @@ contract KOLFactoryTraderJoe is KOLFactoryBase {
      * @dev Constructor
      * @param _traderJoeRouter Address of Trader Joe router
      * @param _sherryFoundationAddress Address of Sherry Foundation
-     * @param _sherryTreasuryAddress Address of Sherry Treasury
      */
     constructor(
         address _traderJoeRouter,
-        address _sherryFoundationAddress,
-        address _sherryTreasuryAddress
-    ) KOLFactoryBase(_traderJoeRouter, _sherryFoundationAddress, _sherryTreasuryAddress) {}
+        address _sherryFoundationAddress
+    ) KOLFactoryBase(_traderJoeRouter, _sherryFoundationAddress) {}
 
     /**
      * @dev Creates the specific router implementation
@@ -34,8 +32,7 @@ contract KOLFactoryTraderJoe is KOLFactoryBase {
             _kolAddress,
             protocolRouter,
             address(this),
-            sherryFoundationAddress,
-            sherryTreasuryAddress
+            sherryFoundationAddress
         );
 
         return address(router);

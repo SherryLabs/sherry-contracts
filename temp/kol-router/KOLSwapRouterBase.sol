@@ -8,11 +8,9 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 // Interface for accessing factory fee settings
 interface IKOLFactory {
-    function getKOLFeeRate() external view returns (uint16);
-    function getFoundationFeeRate() external view returns (uint16);
-    function getTreasuryFeeRate() external view returns (uint16);
-    function getBasisPoints() external view returns (uint16);
-    function getTotalFeeRate() external view returns (uint16);
+    function getKOLFeeRate() external view returns (uint256);
+    function getFoundationFeeRate() external view returns (uint256);
+    function getBasisPoints() external view returns (uint256);
 }
 
 /**
@@ -27,23 +25,13 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
     IKOLFactory public factory;
     address public dexRouter;
     address public sherryFoundationAddress;
-    address public sherryTreasuryAddress;
-
-    struct NetAmount {
-        uint256 netAmount;
-        uint256 kolFee;
-        uint256 foundationFee;
-        uint256 treasuryFee;
-    }
 
     event SwapExecuted(
         address indexed kol,
-        address indexed trader,
-        address tokenIn,
-        address indexed tokenOut,
+        address indexed sender,
+        address indexed token,
         uint256 kolFee,
-        uint256 foundationFee,
-        uint256 treasuryFee
+        uint256 foundationFee
     );
 
     // Modifier to restrict access to KOL only
@@ -58,14 +46,12 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
      * @param _dexRouter Address of the DEX router
      * @param _factoryAddress Address of the factory
      * @param _sherryFoundationAddress Address of Sherry Foundation
-     * @param _sherryTreasuryAddress Address of Sherry Treasury
      */
     constructor(
         address _kolAddress,
         address _dexRouter,
         address _factoryAddress,
-        address _sherryFoundationAddress,
-        address _sherryTreasuryAddress
+        address _sherryFoundationAddress
     ) {
         require(_kolAddress != address(0), "Invalid KOL address");
         require(_dexRouter != address(0), "Invalid DEX router");
@@ -74,84 +60,49 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
             _sherryFoundationAddress != address(0),
             "Invalid foundation address"
         );
-        require(
-            _sherryTreasuryAddress != address(0),
-            "Invalid treasury address"
-        );
 
         kolAddress = _kolAddress;
         dexRouter = _dexRouter;
         factory = IKOLFactory(_factoryAddress);
         sherryFoundationAddress = _sherryFoundationAddress;
-        sherryTreasuryAddress = _sherryTreasuryAddress;
     }
 
     /**
      * @dev Calculates and deducts fees from input amount
      * @param inputAmount The original input amount
      * @param tokenAddress Address of the token (address(0) for native)
-     * @return netAmount Amount after fees deduction and fee data
+     * @return netAmount Amount after fees deduction
      */
     function _deductFees(
         uint256 inputAmount,
         address tokenAddress
-    ) internal returns (NetAmount memory) {
-        uint16 kolFeeRate = factory.getKOLFeeRate();
-        uint16 foundationFeeRate = factory.getFoundationFeeRate();
-        uint16 treasuryFeeRate = factory.getTreasuryFeeRate();
-        uint16 basisPoints = factory.getBasisPoints();
+    ) internal returns (uint256[3] memory) {
+        uint256 kolFeeRate = factory.getKOLFeeRate();
+        uint256 foundationFeeRate = factory.getFoundationFeeRate();
+        uint256 basisPoints = factory.getBasisPoints();
 
         uint256 kolFee = (inputAmount * kolFeeRate) / basisPoints;
         uint256 foundationFee = (inputAmount * foundationFeeRate) / basisPoints;
-        uint256 treasuryFee = (inputAmount * treasuryFeeRate) / basisPoints;
 
-        // Send foundation and treasury fee directly to respective addresses
+        // Send foundation fee directly to foundation address
         if (tokenAddress == address(0)) {
             // Native token
-            (bool successF, ) = sherryFoundationAddress.call{
+            (bool success, ) = sherryFoundationAddress.call{
                 value: foundationFee
             }("");
-            require(successF, "KOLSwapRouter: FUNDATION_FEE_TRANSFER_FAILED");
-            (bool successT, ) = sherryTreasuryAddress.call{value: treasuryFee}(
-                ""
-            );
-            require(successT, "KOLSwapRouter: TREASURY_FEE_TRANSFER_FAILED");
+            require(success, "KOLSwapRouter: FUNDATION_FEE_TRANSFER_FAILED");
         } else {
             // ERC20 token
             IERC20(tokenAddress).safeTransfer(
                 sherryFoundationAddress,
                 foundationFee
             );
-            IERC20(tokenAddress).safeTransfer(
-                sherryTreasuryAddress,
-                treasuryFee
-            );
         }
 
-        uint256 netAmount = inputAmount - kolFee - foundationFee - treasuryFee;
+        uint256 netAmount = inputAmount - kolFee - foundationFee;
 
-        return
-            NetAmount({
-                netAmount: netAmount,
-                kolFee: kolFee,
-                foundationFee: foundationFee,
-                treasuryFee: treasuryFee
-            });
-    }
+        return [netAmount, kolFee, foundationFee];
 
-    /**
-     * @notice Calculates the net amount after deducting total fees from the given input amount.
-     * @param _inputAmount The original amount before fees.
-     * @return The net amount after fee deduction.
-     */
-    function calculateNetAmount(
-        uint256 _inputAmount
-    ) external view returns (uint256) {
-        uint16 totalFeeRate = factory.getTotalFeeRate();
-        uint16 basisPoints = factory.getBasisPoints();
-        uint256 totalFee = (_inputAmount * totalFeeRate) / basisPoints;
-
-        return _inputAmount - totalFee;
     }
 
     /**
@@ -173,6 +124,7 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
 
         // Withdraw specified ERC20 tokens
         for (uint256 i = 0; i < tokenAddresses.length; i++) {
+
             if (tokenAddresses[i] == address(0)) continue;
 
             uint256 amount = IERC20(tokenAddresses[i]).balanceOf(address(this));

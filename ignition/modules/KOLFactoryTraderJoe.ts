@@ -1,5 +1,5 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
-import { getContractAddress } from "../../utils/constants";
+import { getContractAddress, SHERRY_FUNDATION_ADDRESS, SHERRY_TREASURY_ADDRESS } from "../../utils/constants";
 import { avalanche, avalancheFuji } from "viem/chains";
 import hre from "hardhat";
 
@@ -26,7 +26,7 @@ const KOLFactoryTraderJoeModule = buildModule(
       throw new Error("TRADER_JOE_ROUTER is not defined in the constants variables");
     }
 
-    const kolFactory = m.contract("KOLFactoryTraderJoe", [joeRouter], {});
+    const kolFactory = m.contract("KOLFactoryTraderJoe", [joeRouter, SHERRY_FUNDATION_ADDRESS, SHERRY_TREASURY_ADDRESS], {});
     return { kolFactory };
   }
 );

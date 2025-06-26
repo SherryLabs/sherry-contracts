@@ -6,7 +6,7 @@ import { avalancheFuji } from "viem/chains";
 const INPUT_TOKEN = "WAVAX";
 const OUTPUT_TOKEN = "USDC";
 const IS_EXACT_IN = true;
-const DECIMAL_VALUE_IN = "0.01";
+const DECIMAL_VALUE_IN = "0.004";
 const NATIVE_IN = false;
 const NATIVE_OUT = false;
 

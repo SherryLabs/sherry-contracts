@@ -20,21 +20,18 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
      * @param _dexRouter Address of the Trader Joe UniversalRouter
      * @param _factoryAddress Address of the factory that deployed this router
      * @param _sherryFoundationAddress Address of Sherry Foundation
-     * @param _sherryTreasuryAddress Address of Sherry Treasury
      */
     constructor(
         address _kolAddress,
         address _dexRouter,
         address _factoryAddress,
-        address _sherryFoundationAddress,
-        address _sherryTreasuryAddress
+        address _sherryFoundationAddress
     )
         KOLSwapRouterBase(
             _kolAddress,
             _dexRouter,
             _factoryAddress,
-            _sherryFoundationAddress,
-            _sherryTreasuryAddress
+            _sherryFoundationAddress
         )
     {}
 
@@ -51,20 +48,18 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
     ) external payable nonReentrant returns (uint256 amountOut) {
         require(msg.value > 0, "KOLSwapRouter: INVALID_INPUT_AMOUNT");
 
-        NetAmount memory netAmountData = _deductFees(msg.value, address(0));
+        uint256[3] memory netAmount = _deductFees(msg.value, address(0));
 
         amountOut = ILBRouter(dexRouter).swapExactNATIVEForTokens{
-            value: netAmountData.netAmount
+            value: netAmount[0]
         }(amountOutMin, path, to, deadline);
 
         emit SwapExecuted(
             kolAddress,
             msg.sender,
             address(0),
-            address(path.tokenPath[path.tokenPath.length - 1]),
-            netAmountData.kolFee,
-            netAmountData.foundationFee,
-            netAmountData.treasuryFee
+            netAmount[1],
+            netAmount[2]
         );
 
         return amountOut;
@@ -83,16 +78,16 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
     ) external payable nonReentrant returns (uint256[] memory amountsIn) {
         require(msg.value > 0, "KOLSwapRouter: INVALID_INPUT_AMOUNT");
 
-        NetAmount memory netAmountData = _deductFees(msg.value, address(0));
+        uint256[3] memory netAmount = _deductFees(msg.value, address(0));
 
         amountsIn = ILBRouter(dexRouter).swapNATIVEForExactTokens{
-            value: netAmountData.netAmount
+            value: netAmount[0]
         }(amountOut, path, to, deadline);
 
         // Refund any unspent AVAX back to the user (after fees)
-        if (netAmountData.netAmount > amountsIn[0]) {
+        if (netAmount[0] > amountsIn[0]) {
             (bool success, ) = msg.sender.call{
-                value: netAmountData.netAmount - amountsIn[0]
+                value: netAmount[0] - amountsIn[0]
             }("");
             require(success, "KOLSwapRouter: REFUND_TRANSFER_FAILED");
         }
@@ -101,10 +96,8 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
             kolAddress,
             msg.sender,
             address(0),
-            address(path.tokenPath[path.tokenPath.length - 1]),
-            netAmountData.kolFee,
-            netAmountData.foundationFee,
-            netAmountData.treasuryFee
+            netAmount[1],
+            netAmount[2]
         );
 
         return amountsIn;
@@ -134,13 +127,13 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         );
 
         // Deduct fees from the transferred amount
-        NetAmount memory netAmountData = _deductFees(amountIn, inputToken);
+        uint256[3] memory netAmount = _deductFees(amountIn, inputToken);
 
         // Approve only the net amount for the swap
-        IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
+        IERC20(inputToken).approve(dexRouter, netAmount[0]);
 
         amountOut = ILBRouter(dexRouter).swapExactTokensForNATIVE(
-            netAmountData.netAmount,
+            netAmount[0],
             amountOutMinNATIVE,
             path,
             to,
@@ -150,11 +143,9 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         emit SwapExecuted(
             kolAddress,
             msg.sender,
-            address(path.tokenPath[0]),
-            address(path.tokenPath[path.tokenPath.length - 1]),
-            netAmountData.kolFee,
-            netAmountData.foundationFee,
-            netAmountData.treasuryFee
+            inputToken,
+            netAmount[1],
+            netAmount[2]
         );
 
         return amountOut;
@@ -183,14 +174,14 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         );
 
         // Calculate net amount after fees
-        NetAmount memory netAmountData = _deductFees(amountInMax, inputToken);
+        uint256[3] memory netAmount = _deductFees(amountInMax, inputToken);
 
         // Approve the net amount for the swap
-        IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
+        IERC20(inputToken).approve(dexRouter, netAmount[0]);
 
         amountsIn = ILBRouter(dexRouter).swapTokensForExactNATIVE(
             amountOutNATIVE,
-            netAmountData.netAmount,
+            netAmount[0],
             path,
             to,
             deadline
@@ -199,11 +190,9 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         emit SwapExecuted(
             kolAddress,
             msg.sender,
-            address(path.tokenPath[0]),
-            address(path.tokenPath[path.tokenPath.length - 1]),
-            netAmountData.kolFee,
-            netAmountData.foundationFee,
-            netAmountData.treasuryFee
+            inputToken,
+            netAmount[1],
+            netAmount[2]
         );
 
         return amountsIn;
@@ -232,13 +221,13 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         );
 
         // Deduct fees
-        NetAmount memory netAmountData = _deductFees(amountIn, inputToken);
+        uint256[3] memory netAmount = _deductFees(amountIn, inputToken);
 
         // Approve net amount for swap
-        IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
+        IERC20(inputToken).approve(dexRouter, netAmount[0]);
 
         amountOut = ILBRouter(dexRouter).swapExactTokensForTokens(
-            netAmountData.netAmount,
+            netAmount[0],
             amountOutMin,
             path,
             to,
@@ -248,11 +237,9 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         emit SwapExecuted(
             kolAddress,
             msg.sender,
-            address(path.tokenPath[0]),
-            address(path.tokenPath[path.tokenPath.length - 1]),
-            netAmountData.kolFee,
-            netAmountData.foundationFee,
-            netAmountData.treasuryFee
+            inputToken,
+            netAmount[1],
+            netAmount[2]
         );
 
         return amountOut;
@@ -281,14 +268,14 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         );
 
         // Deduct fees from max amount
-        NetAmount memory netAmountData = _deductFees(amountInMax, inputToken);
+        uint256[3] memory netAmount = _deductFees(amountInMax, inputToken);
 
         // Approve net amount for swap
-        IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
+        IERC20(inputToken).approve(dexRouter, netAmount[0]);
 
         amountsIn = ILBRouter(dexRouter).swapTokensForExactTokens(
             amountOut,
-            netAmountData.netAmount,
+            netAmount[0],
             path,
             to,
             deadline
@@ -297,11 +284,9 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
         emit SwapExecuted(
             kolAddress,
             msg.sender,
-            address(path.tokenPath[0]),
-            address(path.tokenPath[path.tokenPath.length - 1]),
-            netAmountData.kolFee,
-            netAmountData.foundationFee,
-            netAmountData.treasuryFee
+            inputToken,
+            netAmount[1],
+            netAmount[2]
         );
 
         return amountsIn;
