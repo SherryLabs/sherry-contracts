@@ -19,7 +19,13 @@ contract KOLFactoryTraderJoe is KOLFactoryBase {
         address _traderJoeRouter,
         address _sherryFoundationAddress,
         address _sherryTreasuryAddress
-    ) KOLFactoryBase(_traderJoeRouter, _sherryFoundationAddress, _sherryTreasuryAddress) {}
+    )
+        KOLFactoryBase(
+            _traderJoeRouter,
+            _sherryFoundationAddress,
+            _sherryTreasuryAddress
+        )
+    {}
 
     /**
      * @dev Creates the specific router implementation
