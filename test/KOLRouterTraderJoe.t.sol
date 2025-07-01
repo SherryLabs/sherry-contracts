@@ -52,6 +52,10 @@ contract MockLBRouter {
         address payable to,
         uint256 deadline
     ) external returns (uint256) {
+        // Mock consumes the approved tokens from the caller
+        address inputToken = address(path.tokenPath[0]);
+        MockERC20(inputToken).transferFrom(msg.sender, address(this), amountIn);
+
         // Simulates the transfer of NATIVE to the recipient
         payable(to).transfer(amountOutMinNATIVE + 100);
         return amountOutMinNATIVE + 100;
@@ -65,6 +69,14 @@ contract MockLBRouter {
         address payable to,
         uint256 deadline
     ) external returns (uint256[] memory) {
+        // Mock consumes the approved tokens from the caller
+        address inputToken = address(path.tokenPath[0]);
+        MockERC20(inputToken).transferFrom(
+            msg.sender,
+            address(this),
+            amountInMax
+        );
+
         uint256[] memory amounts = new uint256[](2);
         amounts[0] = amountInMax; // Use exact amount to avoid discrepancies
         amounts[1] = amountOutNATIVE;
@@ -83,6 +95,10 @@ contract MockLBRouter {
         address to,
         uint256 deadline
     ) external returns (uint256) {
+        // Mock consumes the approved tokens from the caller
+        address inputToken = address(path.tokenPath[0]);
+        MockERC20(inputToken).transferFrom(msg.sender, address(this), amountIn);
+
         return amountOutMin + 100;
     }
 
@@ -94,6 +110,14 @@ contract MockLBRouter {
         address to,
         uint256 deadline
     ) external returns (uint256[] memory) {
+        // Mock consumes the approved tokens from the caller
+        address inputToken = address(path.tokenPath[0]);
+        MockERC20(inputToken).transferFrom(
+            msg.sender,
+            address(this),
+            amountInMax
+        );
+
         uint256[] memory amounts = new uint256[](2);
         amounts[0] = amountInMax; // Use exact amount to avoid discrepancies
         amounts[1] = amountOut;
@@ -348,6 +372,7 @@ contract KOLSwapRouterTest is Test {
         // Prepare test data
         uint256 amountIn = 1000 * 1e18;
         uint256 amountOutMinNATIVE = 0.5 ether;
+
         ILBRouter.Path memory path = createPath(address(tokenA), address(0));
 
         // Calculate expected fees
@@ -359,7 +384,6 @@ contract KOLSwapRouterTest is Test {
         ) = calculateFees(amountIn);
 
         // Check initial balances
-        uint256 initialRouterTokenBalance = tokenA.balanceOf(address(router));
         uint256 initialFoundationTokenBalance = tokenA.balanceOf(
             sherryFoundation
         );
@@ -381,11 +405,11 @@ contract KOLSwapRouterTest is Test {
         );
         vm.stopPrank();
 
-        // Verifications
+        // Router should only keep the KOL fee, the rest goes to DEX, Foundation, and Treasury
         assertEq(
             tokenA.balanceOf(address(router)),
-            initialRouterTokenBalance + expectedKolFee,
-            "KOL fee tokens not accumulated correctly in the router"
+            expectedKolFee,
+            "Router should only keep KOL fee"
         );
 
         assertEq(
@@ -422,6 +446,7 @@ contract KOLSwapRouterTest is Test {
         // Prepare test data
         uint256 amountIn = 1000 * 1e18;
         uint256 amountOutMin = 500 * 1e18;
+
         ILBRouter.Path memory path = createPath(
             address(tokenA),
             address(tokenB)
@@ -436,7 +461,6 @@ contract KOLSwapRouterTest is Test {
         ) = calculateFees(amountIn);
 
         // Check initial balances
-        uint256 initialRouterTokenBalance = tokenA.balanceOf(address(router));
         uint256 initialFoundationTokenBalance = tokenA.balanceOf(
             sherryFoundation
         );
@@ -457,11 +481,17 @@ contract KOLSwapRouterTest is Test {
         );
         vm.stopPrank();
 
+        // The router receives the full amountIn, then sends fees to Foundation/Treasury
+        // What remains in the router is: amountIn - foundationFee - treasuryFee - netAmount (sent to DEX)
+        // Since the DEX doesn't return tokens in this mock, the router keeps: amountIn - foundationFee - treasuryFee - netAmount
+        // But actually, the router should keep the KOL fee: expectedKolFee
+        uint256 expectedRouterBalance = expectedKolFee;
+
         // Verifications
         assertEq(
             tokenA.balanceOf(address(router)),
-            initialRouterTokenBalance + expectedKolFee,
-            "KOL fee tokens not accumulated correctly in the router"
+            expectedRouterBalance,
+            "Router should only keep KOL fee"
         );
 
         assertEq(
@@ -491,14 +521,62 @@ contract KOLSwapRouterTest is Test {
     // Test KOL withdrawing fees (multiple tokens)
     function testWithdrawKOLFees() public {
         // First perform swaps to accumulate fees in different tokens
-        testSwapExactNATIVEForTokens(); // Accumulates NATIVE fees
-        testSwapExactTokensForTokens(); // Accumulates tokenA fees
+        // Native fee from swap
+        uint256 valueSent = 1 ether;
+        uint256 amountOutMin = 100;
+
+        ILBRouter.Path memory pathNative = createPath(
+            address(0),
+            address(tokenA)
+        );
+
+        vm.prank(user);
+        router.swapExactNATIVEForTokens{value: valueSent}(
+            amountOutMin,
+            pathNative,
+            user,
+            block.timestamp + 3600
+        );
+
+        // Token fee from swap
+        uint256 amountIn = 1000 * 1e18;
+        ILBRouter.Path memory pathToken = createPath(
+            address(tokenA),
+            address(tokenB)
+        );
+
+        vm.startPrank(user);
+        tokenA.approve(address(router), amountIn);
+        router.swapExactTokensForTokens(
+            amountIn,
+            500 * 1e18,
+            pathToken,
+            user,
+            block.timestamp + 3600
+        );
+        vm.stopPrank();
+
+        // Calculate expected fees
+        (uint256 expectedNativeKolFee, , , ) = calculateFees(valueSent);
+        (uint256 expectedTokenKolFee, , , ) = calculateFees(amountIn);
 
         // Get balances before withdrawal
         uint256 routerNativeBalance = address(router).balance;
         uint256 routerTokenABalance = tokenA.balanceOf(address(router));
         uint256 kolNativeBalance = kolAddress.balance;
         uint256 kolTokenABalance = tokenA.balanceOf(kolAddress);
+
+        // Verify the router has the expected fees
+        assertEq(
+            routerNativeBalance,
+            expectedNativeKolFee,
+            "Router should have expected native KOL fee"
+        );
+        assertEq(
+            routerTokenABalance,
+            expectedTokenKolFee,
+            "Router should have expected token KOL fee"
+        );
 
         // Prepare token addresses array
         address[] memory tokenAddresses = new address[](1);
@@ -537,8 +615,40 @@ contract KOLSwapRouterTest is Test {
     // Test fee balance queries
     function testGetKOLFeeBalances() public {
         // Perform swaps to accumulate fees
-        testSwapExactNATIVEForTokens();
-        testSwapExactTokensForTokens();
+        // Native fee
+        uint256 valueSent = 1 ether;
+        uint256 amountOutMin = 100;
+
+        ILBRouter.Path memory pathNative = createPath(
+            address(0),
+            address(tokenA)
+        );
+
+        vm.prank(user);
+        router.swapExactNATIVEForTokens{value: valueSent}(
+            amountOutMin,
+            pathNative,
+            user,
+            block.timestamp + 3600
+        );
+
+        // Token fee
+        uint256 amountIn = 1000 * 1e18;
+        ILBRouter.Path memory pathToken = createPath(
+            address(tokenA),
+            address(tokenB)
+        );
+
+        vm.startPrank(user);
+        tokenA.approve(address(router), amountIn);
+        router.swapExactTokensForTokens(
+            amountIn,
+            500 * 1e18,
+            pathToken,
+            user,
+            block.timestamp + 3600
+        );
+        vm.stopPrank();
 
         // Prepare token addresses array
         address[] memory tokenAddresses = new address[](2);
@@ -548,17 +658,21 @@ contract KOLSwapRouterTest is Test {
         // Get balances
         uint256[] memory balances = router.getKOLFeeBalances(tokenAddresses);
 
+        // Calculate expected fees
+        (uint256 expectedNativeKolFee, , , ) = calculateFees(valueSent);
+        (uint256 expectedTokenKolFee, , , ) = calculateFees(amountIn);
+
         // Verify balances
         assertEq(
             balances[0],
-            address(router).balance,
-            "Native balance should match router balance"
+            expectedNativeKolFee,
+            "Native balance should match expected KOL fee"
         );
 
         assertEq(
             balances[1],
-            tokenA.balanceOf(address(router)),
-            "TokenA balance should match router tokenA balance"
+            expectedTokenKolFee,
+            "TokenA balance should match expected KOL fee"
         );
     }
 
@@ -609,7 +723,7 @@ contract KOLSwapRouterTest is Test {
     }
 
     // Test calculateNetAmount function
-    function testCalculateNetAmount() public {
+    function testCalculateNetAmount() public view {
         uint256 inputAmount = 1 ether;
         uint256 expectedNetAmount = inputAmount -
             (inputAmount * TOTAL_FEE_RATE) /
@@ -639,6 +753,7 @@ contract KOLSwapRouterTest is Test {
     function testImmediateFeeDistribution() public {
         uint256 valueSent = 1 ether;
         uint256 amountOutMin = 100;
+
         ILBRouter.Path memory path = createPath(address(0), address(tokenA));
 
         // Check initial balances
@@ -648,9 +763,9 @@ contract KOLSwapRouterTest is Test {
         // Calculate expected fees
         (
             ,
-            ,
             uint256 expectedFoundationFee,
-            uint256 expectedTreasuryFee
+            uint256 expectedTreasuryFee,
+
         ) = calculateFees(valueSent);
 
         // Execute swap
