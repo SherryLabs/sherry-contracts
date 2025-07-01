@@ -4,20 +4,20 @@ pragma solidity ^0.8.29;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./KOLSwapRouterBase.sol";
-import "./interfaces/IArenaRouter01.sol";
+import "./interfaces/IPangolinRouter.sol";
 
 /**
- * @title KOLRouterArenaSwap
- * @notice Router for KOLs that supports direct swaps via ArenaSwap v2 using IArenaRouter01.
+ * @title KOLRouterPangolinV2
+ * @notice Router for KOLs that supports direct swaps via Pangolin v2 using IPangolinRouter.
  * @dev Handles both native and ERC20 swaps, applying a fixed fee in native token (e.g., AVAX).
  */
-contract KOLRouterArenaSwap is KOLSwapRouterBase {
+contract KOLRouterPangolinV2 is KOLSwapRouterBase {
     using SafeERC20 for IERC20;
 
     /**
      * @dev Constructor that initializes the KOL router instance.
      * @param _kolAddress Address of the KOL associated with this router
-     * @param _dexRouter Address of the ArenaSwap UniversalRouter
+     * @param _dexRouter Address of the Pangolin UniversalRouter
      * @param _factoryAddress Address of the factory that deployed this router
      * @param _sherryFoundationAddress Address of Sherry Foundation
      * @param _sherryTreasuryAddress Address of Sherry Treasury
@@ -40,7 +40,6 @@ contract KOLRouterArenaSwap is KOLSwapRouterBase {
 
     /**
      * @notice Swap exact amount of ERC20 tokens for another ERC20 token.
-     * @dev Deducts 2% fee and forwards the remaining native value to Arena Swap router.
      * @return amounts The amount of destination token received.
      */
     function swapExactTokensForTokens(
@@ -67,7 +66,7 @@ contract KOLRouterArenaSwap is KOLSwapRouterBase {
         // Approve net amount for swap
         IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
 
-        amounts = IArenaRouter01(dexRouter).swapExactTokensForTokens(
+        amounts = IPangolinRouter(dexRouter).swapExactTokensForTokens(
             netAmountData.netAmount,
             amountOutMin,
             path,
@@ -116,7 +115,7 @@ contract KOLRouterArenaSwap is KOLSwapRouterBase {
         // Approve net amount for swap
         IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
 
-        amounts = IArenaRouter01(dexRouter).swapTokensForExactTokens(
+        amounts = IPangolinRouter(dexRouter).swapTokensForExactTokens(
             amountOut,
             netAmountData.netAmount,
             path,
@@ -139,7 +138,7 @@ contract KOLRouterArenaSwap is KOLSwapRouterBase {
 
     /**
      * @notice Swap exact native tokens for ERC20 tokens.
-     * @dev Deducts fee and forwards the remaining native value to ArenaSwap router.
+     * @dev Deducts fee and forwards the remaining native value to Pangolin router.
      * @return amounts The amount of tokens received from the swap.
      */
     function swapExactAVAXForTokens(
@@ -152,7 +151,7 @@ contract KOLRouterArenaSwap is KOLSwapRouterBase {
 
         NetAmount memory netAmountData = _deductFees(msg.value, address(0));
 
-        amounts = IArenaRouter01(dexRouter).swapExactAVAXForTokens{
+        amounts = IPangolinRouter(dexRouter).swapExactAVAXForTokens{
             value: netAmountData.netAmount
         }(amountOutMin, path, to, deadline);
 
@@ -197,7 +196,7 @@ contract KOLRouterArenaSwap is KOLSwapRouterBase {
         // Approve the net amount for the swap
         IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
 
-        amounts = IArenaRouter01(dexRouter).swapTokensForExactAVAX(
+        amounts = IPangolinRouter(dexRouter).swapTokensForExactAVAX(
             amountOut,
             netAmountData.netAmount,
             path,
@@ -247,7 +246,7 @@ contract KOLRouterArenaSwap is KOLSwapRouterBase {
         // Approve only the net amount for the swap
         IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
 
-        amounts = IArenaRouter01(dexRouter).swapExactTokensForAVAX(
+        amounts = IPangolinRouter(dexRouter).swapExactTokensForAVAX(
             netAmountData.netAmount,
             amountOutMin,
             path,
@@ -283,7 +282,7 @@ contract KOLRouterArenaSwap is KOLSwapRouterBase {
 
         NetAmount memory netAmountData = _deductFees(msg.value, address(0));
 
-        amounts = IArenaRouter01(dexRouter).swapAVAXForExactTokens{
+        amounts = IPangolinRouter(dexRouter).swapAVAXForExactTokens{
             value: netAmountData.netAmount
         }(amountOut, path, to, deadline);
 
