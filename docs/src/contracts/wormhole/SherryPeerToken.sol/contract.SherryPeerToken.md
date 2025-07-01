@@ -1,5 +1,5 @@
 # SherryPeerToken
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/wormhole/SherryPeerToken.sol)
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/ac3659d9daf69f5807477dfb4ad35c396dc00c1f/contracts/wormhole/SherryPeerToken.sol)
 
 **Inherits:**
 [BaseToken](/contracts/lib/BaseToken.sol/contract.BaseToken.md), ERC20Burnable, Ownable

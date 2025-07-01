@@ -5,15 +5,7 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-
-// Interface for accessing factory fee settings
-interface IKOLFactory {
-    function getKOLFeeRate() external view returns (uint16);
-    function getFoundationFeeRate() external view returns (uint16);
-    function getTreasuryFeeRate() external view returns (uint16);
-    function getBasisPoints() external view returns (uint16);
-    function getTotalFeeRate() external view returns (uint16);
-}
+import "./interfaces/IKOLFactory.sol";
 
 /**
  * @title KOLSwapRouterBase
