@@ -1,6 +1,6 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
-import { getContractAddress } from "../../utils/constants";
-import { avalanche, avalancheFuji } from "viem/chains";
+import { getContractAddress, SHERRY_FUNDATION_ADDRESS, SHERRY_TREASURY_ADDRESS } from "../../utils/constants";
+import { avalanche } from "viem/chains";
 import hre from "hardhat";
 
 const KOLFactoryArenaSwapModule = buildModule(
@@ -23,7 +23,7 @@ const KOLFactoryArenaSwapModule = buildModule(
       throw new Error("ARENA_SWAP_ROUTER is not defined in the constants variables");
     }
 
-    const kolFactory = m.contract("KOLFactoryArenaSwap", [arenaSwapRouter], {});
+    const kolFactory = m.contract("KOLFactoryArenaSwap", [arenaSwapRouter, SHERRY_FUNDATION_ADDRESS, SHERRY_TREASURY_ADDRESS], {});
     return { kolFactory };
   }
 );

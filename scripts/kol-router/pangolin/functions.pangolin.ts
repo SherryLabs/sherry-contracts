@@ -6,7 +6,7 @@ import {
     TradeType,
     Route,
     Percent,
-    Fetcher,
+    Fetcher
 } from "@pangolindex/sdk";
 import {
     createWalletClient,
@@ -16,7 +16,8 @@ import {
     getAddress,
     PublicClient,
     WalletClient,
-    parseUnits
+    parseUnits,
+    Account
 } from "viem";
 import { avalancheFuji } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
@@ -24,7 +25,7 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import path from 'path';
 import * as fs from 'fs';
 
-const KOL_ROUTER = getAddress("0xe93CDaa38881302E851fee03DB3126212604A89d");
+const KOL_ROUTER = getAddress("0xF42B5dBe313CF9ff360A33A2f3Ca7eba3F7A1F89");
 
 let publicClient: PublicClient;
 let walletClient: WalletClient;
@@ -99,7 +100,6 @@ function getSwapFunction(nativeIn: boolean, nativeOut: boolean) {
 
 export const createKolRouter = async (
     kolAddress: string,
-    fee: string,
     walletClient: WalletClient
 ) => {
     const account = walletClient.account;
@@ -136,7 +136,7 @@ export const createKolRouter = async (
         address: deployedAddresses["KOLFactoryPangolinModule#KOLFactoryPangolin"],
         abi,
         functionName: 'createKOLRouter',
-        args: [kolAddress, fee],
+        args: [kolAddress],
         chain: avalancheFuji,
         account: account || null
     });
@@ -196,30 +196,30 @@ export const checkAndApproveToken = async (
 }
 
 export const findViableRoute = async (
-  inputToken: Token,
-  outputToken: Token,
-  provider: JsonRpcProvider
+    inputToken: Token,
+    outputToken: Token,
+    provider: JsonRpcProvider
 ): Promise<Route> => {
-  const WAVAX = TOKENS["WAVAX"];
+    const WAVAX = TOKENS["WAVAX"];
 
-  // 1. Try direct pair
-  try {
-    const directPair = await Fetcher.fetchPairData(inputToken, outputToken, provider);
-    return new Route([directPair], inputToken, outputToken);
-  } catch (e) {
-    console.warn("No direct pair found:", (e as Error).message);
-  }
+    // 1. Try direct pair
+    try {
+        const directPair = await Fetcher.fetchPairData(inputToken, outputToken, provider);
+        return new Route([directPair], inputToken, outputToken);
+    } catch (e) {
+        console.warn("No direct pair found:", (e as Error).message);
+    }
 
-  // 2. Try via WAVAX
-  try {
-    const firstLeg = await Fetcher.fetchPairData(inputToken, WAVAX, provider);
-    const secondLeg = await Fetcher.fetchPairData(WAVAX, outputToken, provider);
-    return new Route([firstLeg, secondLeg], inputToken, outputToken);
-  } catch (e) {
-    console.warn("No multi-hop route via WAVAX:", (e as Error).message);
-  }
+    // 2. Try via WAVAX
+    try {
+        const firstLeg = await Fetcher.fetchPairData(inputToken, WAVAX, provider);
+        const secondLeg = await Fetcher.fetchPairData(WAVAX, outputToken, provider);
+        return new Route([firstLeg, secondLeg], inputToken, outputToken);
+    } catch (e) {
+        console.warn("No multi-hop route via WAVAX:", (e as Error).message);
+    }
 
-  throw new Error(`No viable route found from ${inputToken.symbol} to ${outputToken.symbol}`);
+    throw new Error(`No viable route found from ${inputToken.symbol} to ${outputToken.symbol}`);
 };
 
 const executePangolinSwap = async (
@@ -227,8 +227,7 @@ const executePangolinSwap = async (
     output: tokens,
     typedValueIn: string,
     nativeIn: boolean,
-    nativeOut: boolean,
-    decimalSlippage: string,
+    nativeOut: boolean
 ) => {
     // Initialize variables
     // -------------------------------------------------------------------------
@@ -246,34 +245,50 @@ const executePangolinSwap = async (
     }
     const abi = KOLRouterPangolin.abi;
 
-    // TODO: get tokens from here https://tokens.coingecko.com/avalanche/all.json
+    // Declare user inputs
+    // -------------------------------------------------------------------------
+    // declare bases used to generate trade routes
     const inputToken = TOKENS[input];
     const outputToken = TOKENS[output];
 
-    const account = walletClient.account;
+    const account = walletClient.account as Account;
     const accountAddress = walletClient.account?.address as `0x${string}`;
 
     const provider = new JsonRpcProvider("https://api.avax-test.network/ext/bc/C/rpc");
     const route = await findViableRoute(inputToken, outputToken, provider);
     const swapPath = route.path.map(token => token.address);
-
     const typedValueInParsed = parseUnits(typedValueIn, inputToken.decimals);
-    const amountIn = typedValueInParsed.toString();
 
+    console.log("typedValueInParsed", typedValueInParsed)
+
+    // calculate net amount
+    const netAmount = await publicClient.readContract({
+        address: KOL_ROUTER,
+        abi,
+        functionName: 'calculateNetAmount',
+        args: [typedValueInParsed],
+    }) as bigint;
+
+    console.log("netAmount", netAmount)
+
+    const amountIn = new TokenAmount(inputToken, netAmount.toString());
 
     const trade = new Trade(
         route,
-        new TokenAmount(inputToken, amountIn),
+        amountIn,
         TradeType.EXACT_INPUT
     );
 
-    const slippage = decimalPercentToPercent(Number(decimalSlippage));
+    // Declare slippage tolerance and swap method/parameters
+    // -----------------------------------------------------------------
+    // set slippage tolerance
+    const slippage = new Percent("50", "10000"); // 0.5%
+
+    // set swap options
     const amountOutMin = trade
         .minimumAmountOut(slippage)
         .raw.toString();
-
     const deadline = BigInt(Math.floor(Date.now() / 1000) + 600);
-
 
     let args = [
         amountOutMin,
@@ -285,6 +300,7 @@ const executePangolinSwap = async (
     if (!nativeIn) {
         args = [typedValueInParsed, ...args]
     }
+
     const data = encodeFunctionData({
         abi,
         functionName: getSwapFunction(nativeIn, nativeOut),
@@ -293,26 +309,18 @@ const executePangolinSwap = async (
 
     // add KOL router fee!
     const value = nativeIn ? typedValueInParsed : BigInt(0);
-    const fixedFeeAmount = await publicClient.readContract({
-        address: KOL_ROUTER,
-        abi,
-        functionName: 'fixedFeeAmount',
-        args: [],
-    }) as bigint;
-    const valuePlusFee = BigInt(value) + fixedFeeAmount;
-    console.log("Value with fee:", Number(valuePlusFee));
 
     const gasPrice = await publicClient.getGasPrice();
     const gas = await publicClient.estimateGas({
         account,
         to: KOL_ROUTER,
         data,
-        value: BigInt(valuePlusFee),
+        value,
     });
     const hash = await walletClient.sendTransaction({
         account,
         to: KOL_ROUTER,
-        value: BigInt(valuePlusFee),
+        value,
         data,
         gas,
         gasPrice,
@@ -327,7 +335,6 @@ export const executeSwap = async (
     typedValueIn: string,
     nativeIn: boolean,
     nativeOut: boolean,
-    decimalSlippage: string,
 ) => {
     const privateKey = process.env.DEPLOYER_KEY as string;
     const account = privateKeyToAccount(`0x${privateKey.slice(2)}`);
@@ -358,7 +365,6 @@ export const executeSwap = async (
         output,
         typedValueIn,
         nativeIn,
-        nativeOut,
-        decimalSlippage
+        nativeOut
     );
 };

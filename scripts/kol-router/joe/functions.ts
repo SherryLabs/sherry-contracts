@@ -185,9 +185,9 @@ export const execute = async (
         // Declare user inputs
         // -------------------------------------------------------------------------
         // declare bases used to generate trade routes
-        const BASES = [TOKENS[input], TOKENS[output]];
         const inputToken = TOKENS[input];
         const outputToken = TOKENS[output];
+        const BASES = [inputToken, outputToken];
         const typedValueInParsed = parseUnits(typedValueIn, inputToken.decimals);
 
         console.log("typedValueInParsed", typedValueInParsed)
