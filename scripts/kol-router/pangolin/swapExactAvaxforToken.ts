@@ -5,7 +5,6 @@ const OUTPUT_TOKEN = "PNG";
 const DECIMAL_VALUE_IN = "0.001";
 const NATIVE_IN = true;
 const NATIVE_OUT = false;
-const SLIPPAGE = "0.5";
 
 async function main() {
     await executeSwap(
@@ -13,8 +12,7 @@ async function main() {
         OUTPUT_TOKEN,
         DECIMAL_VALUE_IN,
         NATIVE_IN,
-        NATIVE_OUT,
-        SLIPPAGE
+        NATIVE_OUT
     );
 }
 

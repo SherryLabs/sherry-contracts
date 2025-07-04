@@ -1,12 +1,12 @@
 # KOLRouterTraderJoe
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/kol-router/KOLRouterTraderJoe.sol)
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/ac3659d9daf69f5807477dfb4ad35c396dc00c1f/contracts/kol-router/KOLRouterTraderJoe.sol)
 
 **Inherits:**
 [KOLSwapRouterBase](/contracts/kol-router/KOLSwapRouterBase.sol/abstract.KOLSwapRouterBase.md)
 
 Router for KOLs that supports direct swaps via Trader Joe v1 and v2.x using ILBRouter.
 
-*Handles both native and ERC20 swaps, applying a fixed fee in native token (e.g., AVAX).*
+*Handles both native and ERC20 swaps, applying a 2% fee split between KOL and Foundation.*
 
 
 ## Functions
@@ -16,8 +16,13 @@ Router for KOLs that supports direct swaps via Trader Joe v1 and v2.x using ILBR
 
 
 ```solidity
-constructor(address _kolAddress, address _dexRouter, address _factoryAddress, uint256 _fixedFeeAmount)
-    KOLSwapRouterBase(_kolAddress, _dexRouter, _factoryAddress, _fixedFeeAmount);
+constructor(
+    address _kolAddress,
+    address _dexRouter,
+    address _factoryAddress,
+    address _sherryFoundationAddress,
+    address _sherryTreasuryAddress
+) KOLSwapRouterBase(_kolAddress, _dexRouter, _factoryAddress, _sherryFoundationAddress, _sherryTreasuryAddress);
 ```
 **Parameters**
 
@@ -26,14 +31,15 @@ constructor(address _kolAddress, address _dexRouter, address _factoryAddress, ui
 |`_kolAddress`|`address`|Address of the KOL associated with this router|
 |`_dexRouter`|`address`|Address of the Trader Joe UniversalRouter|
 |`_factoryAddress`|`address`|Address of the factory that deployed this router|
-|`_fixedFeeAmount`|`uint256`|Amount to be subtracted as Fee|
+|`_sherryFoundationAddress`|`address`|Address of Sherry Foundation|
+|`_sherryTreasuryAddress`|`address`|Address of Sherry Treasury|
 
 
 ### swapExactNATIVEForTokens
 
 Swap exact native tokens for ERC20 tokens.
 
-*Deducts fee and forwards the remaining native value to Trader Joe router.*
+*Deducts 2% fee and forwards the remaining native value to Trader Joe router.*
 
 
 ```solidity
@@ -41,7 +47,6 @@ function swapExactNATIVEForTokens(uint256 amountOutMin, ILBRouter.Path calldata 
     external
     payable
     nonReentrant
-    verifyFee(msg.value)
     returns (uint256 amountOut);
 ```
 **Returns**
@@ -55,14 +60,13 @@ function swapExactNATIVEForTokens(uint256 amountOutMin, ILBRouter.Path calldata 
 
 Swap native tokens for exact ERC20 token amount.
 
-*Refunds leftover AVAX if overpaid.*
+*Deducts fees and refunds leftover AVAX if overpaid.*
 
 
 ```solidity
 function swapNATIVEForExactTokens(uint256 amountOut, ILBRouter.Path calldata path, address to, uint256 deadline)
     external
     payable
-    verifyFee(msg.value)
     nonReentrant
     returns (uint256[] memory amountsIn);
 ```
@@ -77,7 +81,7 @@ function swapNATIVEForExactTokens(uint256 amountOut, ILBRouter.Path calldata pat
 
 Swap exact amount of ERC20 tokens for native tokens.
 
-*Pulls tokens from user, approves DEX, and executes the swap.*
+*Pulls tokens from user, deducts fees, approves DEX, and executes the swap.*
 
 
 ```solidity
@@ -87,7 +91,7 @@ function swapExactTokensForNATIVE(
     ILBRouter.Path calldata path,
     address payable to,
     uint256 deadline
-) external payable nonReentrant verifyFee(msg.value) returns (uint256 amountOut);
+) external nonReentrant returns (uint256 amountOut);
 ```
 **Returns**
 
@@ -108,7 +112,7 @@ function swapTokensForExactNATIVE(
     ILBRouter.Path calldata path,
     address payable to,
     uint256 deadline
-) external payable nonReentrant verifyFee(msg.value) returns (uint256[] memory amountsIn);
+) external nonReentrant returns (uint256[] memory amountsIn);
 ```
 **Returns**
 
@@ -129,7 +133,7 @@ function swapExactTokensForTokens(
     ILBRouter.Path calldata path,
     address to,
     uint256 deadline
-) external payable nonReentrant verifyFee(msg.value) returns (uint256 amountOut);
+) external nonReentrant returns (uint256 amountOut);
 ```
 **Returns**
 
@@ -150,7 +154,7 @@ function swapTokensForExactTokens(
     ILBRouter.Path calldata path,
     address to,
     uint256 deadline
-) external payable verifyFee(msg.value) nonReentrant returns (uint256[] memory amountsIn);
+) external nonReentrant returns (uint256[] memory amountsIn);
 ```
 **Returns**
 

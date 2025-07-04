@@ -1,5 +1,5 @@
 # KOLFactoryArenaSwap
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/kol-router/KOLFactoryArenaSwap.sol)
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/ac3659d9daf69f5807477dfb4ad35c396dc00c1f/contracts/kol-router/KOLFactoryArenaSwap.sol)
 
 **Inherits:**
 [KOLFactoryBase](/contracts/kol-router/KOLFactoryBase.sol/abstract.KOLFactoryBase.md)
@@ -14,13 +14,16 @@
 
 
 ```solidity
-constructor(address _arenaSwapRouter) KOLFactoryBase(_arenaSwapRouter);
+constructor(address _arenaSwapRouter, address _sherryFoundationAddress, address _sherryTreasuryAddress)
+    KOLFactoryBase(_arenaSwapRouter, _sherryFoundationAddress, _sherryTreasuryAddress);
 ```
 **Parameters**
 
 |Name|Type|Description|
 |----|----|-----------|
 |`_arenaSwapRouter`|`address`|Address of ArenaSwap router|
+|`_sherryFoundationAddress`|`address`|Address of Sherry Foundation|
+|`_sherryTreasuryAddress`|`address`|Address of Sherry Treasury|
 
 
 ### _createRouterImplementation
@@ -29,17 +32,13 @@ constructor(address _arenaSwapRouter) KOLFactoryBase(_arenaSwapRouter);
 
 
 ```solidity
-function _createRouterImplementation(address _kolAddress, uint256 _fixedFeeAmount)
-    internal
-    override
-    returns (address);
+function _createRouterImplementation(address _kolAddress) internal override returns (address);
 ```
 **Parameters**
 
 |Name|Type|Description|
 |----|----|-----------|
 |`_kolAddress`|`address`|Address of the KOL|
-|`_fixedFeeAmount`|`uint256`|Amount to be subtracted as Fee|
 
 **Returns**
 

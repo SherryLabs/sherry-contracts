@@ -19,19 +19,22 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
      * @param _kolAddress Address of the KOL associated with this router
      * @param _dexRouter Address of the Pangolin UniversalRouter
      * @param _factoryAddress Address of the factory that deployed this router
-     * @param _fixedFeeAmount Amount to be subtracted as Fee
+     * @param _sherryFoundationAddress Address of Sherry Foundation
+     * @param _sherryTreasuryAddress Address of Sherry Treasury
      */
     constructor(
         address _kolAddress,
         address _dexRouter,
         address _factoryAddress,
-        uint256 _fixedFeeAmount
+        address _sherryFoundationAddress,
+        address _sherryTreasuryAddress
     )
         KOLSwapRouterBase(
             _kolAddress,
             _dexRouter,
             _factoryAddress,
-            _fixedFeeAmount
+            _sherryFoundationAddress,
+            _sherryTreasuryAddress
         )
     {}
 
@@ -45,29 +48,43 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
         address[] calldata path,
         address to,
         uint deadline
-    )
-        external
-        payable
-        nonReentrant
-        verifyFee(msg.value)
-        returns (uint[] memory amounts)
-    {
-        IERC20(address(path[0])).safeTransferFrom(
+    ) external nonReentrant returns (uint[] memory amounts) {
+        require(amountIn > 0, "KOLSwapRouter: INVALID_INPUT_AMOUNT");
+
+        address inputToken = address(path[0]);
+
+        // Transfer full amount from user
+        IERC20(inputToken).safeTransferFrom(
             msg.sender,
             address(this),
             amountIn
         );
-        IERC20(address(path[0])).approve(dexRouter, amountIn);
+
+        // Deduct fees
+        NetAmount memory netAmountData = _deductFees(amountIn, inputToken);
+
+        // Approve net amount for swap
+        IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
 
         amounts = IPangolinRouter(dexRouter).swapExactTokensForTokens(
-            amountIn,
+            netAmountData.netAmount,
             amountOutMin,
             path,
             to,
             deadline
         );
 
-        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
+        emit SwapExecuted(
+            kolAddress,
+            msg.sender,
+            inputToken,
+            address(path[path.length - 1]),
+            netAmountData.kolFee,
+            netAmountData.foundationFee,
+            netAmountData.treasuryFee
+        );
+
+        return amounts;
     }
 
     /**
@@ -80,29 +97,43 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
         address[] calldata path,
         address to,
         uint deadline
-    )
-        external
-        payable
-        verifyFee(msg.value)
-        nonReentrant
-        returns (uint[] memory amounts)
-    {
-        IERC20(address(path[0])).safeTransferFrom(
+    ) external nonReentrant returns (uint[] memory amounts) {
+        require(amountInMax > 0, "KOLSwapRouter: INVALID_INPUT_AMOUNT");
+
+        address inputToken = address(path[0]);
+
+        // Transfer max amount from user
+        IERC20(inputToken).safeTransferFrom(
             msg.sender,
             address(this),
             amountInMax
         );
-        IERC20(address(path[0])).approve(dexRouter, amountInMax);
+
+        // Deduct fees from max amount
+        NetAmount memory netAmountData = _deductFees(amountInMax, inputToken);
+
+        // Approve net amount for swap
+        IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
 
         amounts = IPangolinRouter(dexRouter).swapTokensForExactTokens(
             amountOut,
-            amountInMax,
+            netAmountData.netAmount,
             path,
             to,
             deadline
         );
 
-        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
+        emit SwapExecuted(
+            kolAddress,
+            msg.sender,
+            inputToken,
+            address(path[path.length - 1]),
+            netAmountData.kolFee,
+            netAmountData.foundationFee,
+            netAmountData.treasuryFee
+        );
+
+        return amounts;
     }
 
     /**
@@ -115,20 +146,26 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
         address[] calldata path,
         address to,
         uint deadline
-    )
-        external
-        payable
-        nonReentrant
-        verifyFee(msg.value)
-        returns (uint[] memory amounts)
-    {
-        uint256 valueToSend = msg.value - fixedFeeAmount;
+    ) external payable nonReentrant returns (uint[] memory amounts) {
+        require(msg.value > 0, "KOLSwapRouter: INVALID_INPUT_AMOUNT");
+
+        NetAmount memory netAmountData = _deductFees(msg.value, address(0));
 
         amounts = IPangolinRouter(dexRouter).swapExactAVAXForTokens{
-            value: valueToSend
+            value: netAmountData.netAmount
         }(amountOutMin, path, to, deadline);
 
-        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
+        emit SwapExecuted(
+            kolAddress,
+            msg.sender,
+            address(0),
+            address(path[path.length - 1]),
+            netAmountData.kolFee,
+            netAmountData.foundationFee,
+            netAmountData.treasuryFee
+        );
+
+        return amounts;
     }
 
     /**
@@ -142,22 +179,42 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
         address to,
         uint deadline
     ) external returns (uint[] memory amounts) {
-        IERC20(address(path[0])).safeTransferFrom(
+        require(amountInMax > 0, "KOLSwapRouter: INVALID_INPUT_AMOUNT");
+
+        address inputToken = address(path[0]);
+
+        // Transfer max amount from user
+        IERC20(inputToken).safeTransferFrom(
             msg.sender,
             address(this),
             amountInMax
         );
-        IERC20(address(path[0])).approve(dexRouter, amountInMax);
+
+        // Calculate net amount after fees
+        NetAmount memory netAmountData = _deductFees(amountInMax, inputToken);
+
+        // Approve the net amount for the swap
+        IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
 
         amounts = IPangolinRouter(dexRouter).swapTokensForExactAVAX(
             amountOut,
-            amountInMax,
+            netAmountData.netAmount,
             path,
             to,
             deadline
         );
 
-        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
+        emit SwapExecuted(
+            kolAddress,
+            msg.sender,
+            inputToken,
+            address(path[path.length - 1]),
+            netAmountData.kolFee,
+            netAmountData.foundationFee,
+            netAmountData.treasuryFee
+        );
+
+        return amounts;
     }
 
     /**
@@ -171,29 +228,43 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
         address[] calldata path,
         address to,
         uint deadline
-    )
-        external
-        payable
-        nonReentrant
-        verifyFee(msg.value)
-        returns (uint[] memory amounts)
-    {
-        IERC20(address(path[0])).safeTransferFrom(
+    ) external nonReentrant returns (uint[] memory amounts) {
+        require(amountIn > 0, "KOLSwapRouter: INVALID_INPUT_AMOUNT");
+
+        address inputToken = address(path[0]);
+
+        // Transfer full amount from user
+        IERC20(inputToken).safeTransferFrom(
             msg.sender,
             address(this),
             amountIn
         );
-        IERC20(address(path[0])).approve(dexRouter, amountIn);
+
+        // Deduct fees from the transferred amount
+        NetAmount memory netAmountData = _deductFees(amountIn, inputToken);
+
+        // Approve only the net amount for the swap
+        IERC20(inputToken).approve(dexRouter, netAmountData.netAmount);
 
         amounts = IPangolinRouter(dexRouter).swapExactTokensForAVAX(
-            amountIn,
+            netAmountData.netAmount,
             amountOutMin,
             path,
             to,
             deadline
         );
 
-        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
+        emit SwapExecuted(
+            kolAddress,
+            msg.sender,
+            inputToken,
+            address(path[path.length - 1]),
+            netAmountData.kolFee,
+            netAmountData.foundationFee,
+            netAmountData.treasuryFee
+        );
+
+        return amounts;
     }
 
     /**
@@ -206,28 +277,34 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
         address[] calldata path,
         address to,
         uint deadline
-    )
-        external
-        payable
-        verifyFee(msg.value)
-        nonReentrant
-        returns (uint[] memory amounts)
-    {
-        uint256 valueToSend = msg.value - fixedFeeAmount;
+    ) external payable nonReentrant returns (uint[] memory amounts) {
+        require(msg.value > 0, "KOLSwapRouter: INVALID_INPUT_AMOUNT");
+
+        NetAmount memory netAmountData = _deductFees(msg.value, address(0));
 
         amounts = IPangolinRouter(dexRouter).swapAVAXForExactTokens{
-            value: valueToSend
+            value: netAmountData.netAmount
         }(amountOut, path, to, deadline);
 
-        // Refund any unspent AVAX back to the user
-        if (valueToSend > amounts[0]) {
-            (bool success, ) = msg.sender.call{value: valueToSend - amounts[0]}(
-                ""
-            );
+        // Refund any unspent AVAX back to the user (after fees)
+        if (netAmountData.netAmount > amounts[0]) {
+            (bool success, ) = msg.sender.call{
+                value: netAmountData.netAmount - amounts[0]
+            }("");
             require(success, "KOLSwapRouter: REFUND_TRANSFER_FAILED");
         }
 
-        emit SwapExecuted(kolAddress, msg.sender, fixedFeeAmount);
+        emit SwapExecuted(
+            kolAddress,
+            msg.sender,
+            address(0),
+            address(path[path.length - 1]),
+            netAmountData.kolFee,
+            netAmountData.foundationFee,
+            netAmountData.treasuryFee
+        );
+
+        return amounts;
     }
 
     /**
