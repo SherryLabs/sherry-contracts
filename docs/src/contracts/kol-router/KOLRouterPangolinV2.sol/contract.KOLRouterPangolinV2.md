@@ -1,5 +1,5 @@
 # KOLRouterPangolinV2
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/ef85f626b2f11fa0f36e09ddd8fdd3d9da90d8ba/contracts/kol-router/KOLRouterPangolinV2.sol)
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/ac3659d9daf69f5807477dfb4ad35c396dc00c1f/contracts/kol-router/KOLRouterPangolinV2.sol)
 
 **Inherits:**
 [KOLSwapRouterBase](/contracts/kol-router/KOLSwapRouterBase.sol/abstract.KOLSwapRouterBase.md)
@@ -16,8 +16,13 @@ Router for KOLs that supports direct swaps via Pangolin v2 using IPangolinRouter
 
 
 ```solidity
-constructor(address _kolAddress, address _dexRouter, address _factoryAddress, uint256 _fixedFeeAmount)
-    KOLSwapRouterBase(_kolAddress, _dexRouter, _factoryAddress, _fixedFeeAmount);
+constructor(
+    address _kolAddress,
+    address _dexRouter,
+    address _factoryAddress,
+    address _sherryFoundationAddress,
+    address _sherryTreasuryAddress
+) KOLSwapRouterBase(_kolAddress, _dexRouter, _factoryAddress, _sherryFoundationAddress, _sherryTreasuryAddress);
 ```
 **Parameters**
 
@@ -26,7 +31,8 @@ constructor(address _kolAddress, address _dexRouter, address _factoryAddress, ui
 |`_kolAddress`|`address`|Address of the KOL associated with this router|
 |`_dexRouter`|`address`|Address of the Pangolin UniversalRouter|
 |`_factoryAddress`|`address`|Address of the factory that deployed this router|
-|`_fixedFeeAmount`|`uint256`|Amount to be subtracted as Fee|
+|`_sherryFoundationAddress`|`address`|Address of Sherry Foundation|
+|`_sherryTreasuryAddress`|`address`|Address of Sherry Treasury|
 
 
 ### swapExactTokensForTokens
@@ -41,7 +47,7 @@ function swapExactTokensForTokens(
     address[] calldata path,
     address to,
     uint256 deadline
-) external payable nonReentrant verifyFee(msg.value) returns (uint256[] memory amounts);
+) external nonReentrant returns (uint256[] memory amounts);
 ```
 **Returns**
 
@@ -62,7 +68,7 @@ function swapTokensForExactTokens(
     address[] calldata path,
     address to,
     uint256 deadline
-) external payable verifyFee(msg.value) nonReentrant returns (uint256[] memory amounts);
+) external nonReentrant returns (uint256[] memory amounts);
 ```
 **Returns**
 
@@ -83,7 +89,6 @@ function swapExactAVAXForTokens(uint256 amountOutMin, address[] calldata path, a
     external
     payable
     nonReentrant
-    verifyFee(msg.value)
     returns (uint256[] memory amounts);
 ```
 **Returns**
@@ -128,7 +133,7 @@ function swapExactTokensForAVAX(
     address[] calldata path,
     address to,
     uint256 deadline
-) external payable nonReentrant verifyFee(msg.value) returns (uint256[] memory amounts);
+) external nonReentrant returns (uint256[] memory amounts);
 ```
 **Returns**
 
@@ -148,7 +153,6 @@ Swap native tokens for exact ERC20 token amount.
 function swapAVAXForExactTokens(uint256 amountOut, address[] calldata path, address to, uint256 deadline)
     external
     payable
-    verifyFee(msg.value)
     nonReentrant
     returns (uint256[] memory amounts);
 ```

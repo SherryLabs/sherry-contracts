@@ -1,11 +1,15 @@
 import { avalanche, avalancheFuji, sepolia } from "viem/chains";
 
-export type ContractName =
+export const SHERRY_FUNDATION_ADDRESS = '0x23e5Cb3118106736277Bc1C2b5F7f8B83411409b';
+export const SHERRY_TREASURY_ADDRESS = '0xfE5E335363f0B95e5Ce15040976c6Cbab331491a';
+
+type ContractName =
   | "TRADER_JOE_ROUTER"
   | "UNISWAP_ROUTER"
-  | "PANGOLIN_V2_ROUTER";
+  | "PANGOLIN_V2_ROUTER"
+  | "ARENA_SWAP_ROUTER";
 
-export const CONTRACT_ADDRESSES: Record<ContractName, Partial<Record<number, string>>> = {
+const CONTRACT_ADDRESSES: Record<ContractName, Partial<Record<number, string>>> = {
   TRADER_JOE_ROUTER: {
     [avalanche.id]: "0x18556DA13313f3532c54711497A8FedAC273220E", // LBRouter v2.2
     [avalancheFuji.id]: "0x18556DA13313f3532c54711497A8FedAC273220E", // LBRouter v2.2
@@ -17,6 +21,9 @@ export const CONTRACT_ADDRESSES: Record<ContractName, Partial<Record<number, str
   UNISWAP_ROUTER: {
     [avalanche.id]: "0x94b75331ae8d42c1b61065089b7d48fe14aa73b7", // Universal Router
     [sepolia.id]: "0x3a9d48ab9751398bbfa63ad67599bb04e4bdf98b", // Universal Router
+  },
+  ARENA_SWAP_ROUTER: {
+    [avalanche.id]: "0xF56D524D651B90E4B84dc2FffD83079698b9066E", // Arena Swap Router
   },
 }
 
