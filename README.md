@@ -108,20 +108,21 @@ This contract handles the reception of messages from any L1 subnet within the Av
 ### 🏭 KOL Router Factories
 
 These factories are used to deploy new KOL (Key Opinion Leader) specific routers for different DEX protocols.
+For more informaction read the [KOLSwapRouter System](contracts/kol-router/README.md) document.
 
 #### TraderJoe KOL Factory
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryTraderJoe`     | `0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4`   | `Avalanche C-Chain`    |
-| `KOLFactoryTraderJoe`     | `0xA53fF666cABcEB99E792139Bf5948A6bF45BF6f0`      | `Avalanche Fuji`    |
+| `KOLFactoryTraderJoe`     | ``   | `Avalanche C-Chain`    |
+| `KOLFactoryTraderJoe`     | `0x6Ee892Bc5102ef22BF7064032FcDBE1Dc5e1dD5c`      | `Avalanche Fuji`    |
 
-#### Uniswap KOL Factory
+#### Pangolin KOL Factory
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryUniswap`     | ``   | `Avalanche C-Chain`    |
-| `KOLFactoryUniswap`     | ``      | `Avalanche Fuji`    |
+| `KOLFactoryPangolin`     | ``   | `Avalanche C-Chain`    |
+| `KOLFactoryPangolin`     | `0x49c9455A7AF8454EAc6A4fDA0271A372136bf6Ae`      | `Avalanche Fuji`    |
 
 
 # 📚 Docs
@@ -133,9 +134,8 @@ In order to learn more about Sherry go to our [docs](https://docs.sherry.social)
 <div align="center">
 
   [![Twitter](https://img.shields.io/twitter/follow/SherryProtocol?style=social)](https://twitter.com/SherryProtocol)
-  [![Discord](https://img.shields.io/discord/4HppNS46)](https://discord.gg/4HppNS46)
-  [![GitHub](https://img.shields.io/github/stars/sherry-protocol/sherry-contracts?style=social)](https://github.com/sherry-protocol/sherry-contracts)
-  
+  [![GitHub](https://img.shields.io/github/stars/SherryLabs/sherry-contracts?style=social)](https://github.com/SherryLabs/sherry-contracts)
+
 </div>
 
 
