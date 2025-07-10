@@ -11,7 +11,7 @@ import { avalancheFuji } from "viem/chains";
 import path from 'path';
 import * as fs from 'fs';
 
-const KOL_ROUTER = "0x431850c483cAb3E2e497B05c3C9430daf0B6c3A6"; // TODO: take this from .env
+const KOL_ROUTER = "0xC723ff604E1ce13a5e7d7bc5CcA2b76E3A61946b"; // TODO: take this from .env
 
 // initialize tokens
 const CHAIN_ID = ChainId.FUJI;
@@ -57,6 +57,51 @@ const erc20Abi = [
 ];
 
 type tokens = "WAVAX" | "USDT" | "USDC";
+
+export const createKolRouter = async (
+    kolAddress: string,
+    walletClient: WalletClient
+) => {
+    const account = walletClient.account;
+    const KOLFactoryJoe = JSON.parse(
+        fs.readFileSync(
+            path.resolve(
+                __dirname,
+                '../../../artifacts/contracts/kol-router/KOLFactoryTraderJoe.sol/KOLFactoryTraderJoe.json'
+            ),
+            'utf8'
+        )
+    );
+
+    if (!KOLFactoryJoe) {
+        throw new Error("Before start, compile contracts: yarn compile");
+    }
+
+    const deployedAddresses = JSON.parse(
+        fs.readFileSync(
+            path.resolve(
+                __dirname,
+                '../../../ignition/deployments/chain-43113/deployed_addresses.json'
+            ),
+            'utf8'
+        )
+    );
+
+    if (!deployedAddresses["KOLFactoryTraderJoeModule#KOLFactoryTraderJoe"]) {
+        throw new Error("Before start, deploy factory contract: yarn deploy:koltraderjoe");
+    }
+
+    const abi = KOLFactoryJoe.abi;
+    const tx = await walletClient.writeContract({
+        address: deployedAddresses["KOLFactoryTraderJoeModule#KOLFactoryTraderJoe"],
+        abi,
+        functionName: 'createKOLRouter',
+        args: [kolAddress],
+        chain: avalancheFuji,
+        account: account || null
+    });
+    console.log(`KolRouter successfully created: https://testnet.snowtrace.io/tx/${tx}`);
+}
 
 export const checkAndApproveToken = async (
     token: tokens,
@@ -140,11 +185,24 @@ export const execute = async (
         // Declare user inputs
         // -------------------------------------------------------------------------
         // declare bases used to generate trade routes
-        const BASES = [TOKENS[input], TOKENS[output]];
         const inputToken = TOKENS[input];
         const outputToken = TOKENS[output];
+        const BASES = [inputToken, outputToken];
         const typedValueInParsed = parseUnits(typedValueIn, inputToken.decimals);
-        const amountIn = new TokenAmount(inputToken, typedValueInParsed);
+
+        console.log("typedValueInParsed", typedValueInParsed)
+
+        // calculate net amount
+        const netAmount = await publicClient.readContract({
+            address: KOL_ROUTER,
+            abi,
+            functionName: 'calculateNetAmount',
+            args: [typedValueInParsed],
+        }) as bigint;
+
+        console.log("netAmount", netAmount)
+
+        const amountIn = new TokenAmount(inputToken, netAmount);
         const account = walletClient.account;
 
         // Generate all possible routes
@@ -203,20 +261,17 @@ export const execute = async (
             };
 
             // generate swap method and parameters for contract call
-            const {
+            let {
                 methodName, // e.g. swapExactNATIVEforToken,
                 args, // e.g.[amountIn, amountOut, (pairBinSteps, versions, tokenPath) to, deadline]
                 value, // e.g. 0.1 eth in hex: 0x16345785d8a0000
             } = bestTrade.swapCallParameters(swapOptions);
 
-            // add KOL router fee!
-            const fixedFeeAmount = await publicClient.readContract({
-                address: KOL_ROUTER,
-                abi,
-                functionName: 'fixedFeeAmount',
-                args: [],
-            }) as bigint;
-            const valuePlusFee = BigInt(value) + fixedFeeAmount;
+            if (isNativeIn) {
+                value = typedValueInParsed.toString();
+            } else {
+                args[0] = typedValueInParsed.toString();
+            }
 
             // Execute trade
             // -----------------------------------------------------------------
@@ -226,7 +281,7 @@ export const execute = async (
                 functionName: methodName,
                 args,
                 account,
-                value: valuePlusFee,
+                value: BigInt(value),
             });
 
             const hash = await walletClient.writeContract(request);

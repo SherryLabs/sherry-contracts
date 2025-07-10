@@ -1,5 +1,5 @@
 # KOLFactoryUniswap
-[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/7488ae397dbcaa4df700f0dbbfff7f6537916c5a/contracts/kol-router/KOLFactoryUniswap.sol)
+[Git Source](https://github.com-smastropiero/SherryLabs/sherry-contracts/blob/390adef083cf3e2fd6de18cb4a729a02cfd3c226/contracts/kol-router/KOLFactoryUniswap.sol)
 
 **Inherits:**
 [KOLFactoryBase](/contracts/kol-router/KOLFactoryBase.sol/abstract.KOLFactoryBase.md)
@@ -29,13 +29,16 @@ constructor(address _uniswapRouter) KOLFactoryBase(_uniswapRouter);
 
 
 ```solidity
-function _createRouterImplementation(address kolAddress, uint256 _fixedFeeAmount) internal override returns (address);
+function _createRouterImplementation(address _kolAddress, uint256 _fixedFeeAmount)
+    internal
+    override
+    returns (address);
 ```
 **Parameters**
 
 |Name|Type|Description|
 |----|----|-----------|
-|`kolAddress`|`address`|Address of the KOL|
+|`_kolAddress`|`address`|Address of the KOL|
 |`_fixedFeeAmount`|`uint256`|Amount to be subtracted as Fee|
 
 **Returns**

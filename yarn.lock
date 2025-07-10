@@ -2293,6 +2293,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pangolindex/sdk@npm:^5.8.4":
+  version: 5.8.4
+  resolution: "@pangolindex/sdk@npm:5.8.4"
+  dependencies:
+    big.js: "npm:^5.2.2"
+    decimal.js-light: "npm:^2.5.0"
+    jsbi: "npm:^3.1.1"
+    tiny-invariant: "npm:^1.1.0"
+    tiny-warning: "npm:^1.0.3"
+    toformat: "npm:^2.0.0"
+  peerDependencies:
+    "@ethersproject/address": ^5.0.0-beta
+    "@ethersproject/contracts": ^5.0.0-beta
+    "@ethersproject/networks": ^5.0.0-beta
+    "@ethersproject/providers": ^5.0.0-beta
+    "@ethersproject/solidity": ^5.0.0-beta
+  checksum: 10c0/f421fcf91aaadbf083677891a0e61fd8eea4879c5256c4e4365813a5042307d92367087daeb0d675cc36508210aa59c9cf4166cd9a4470ec9e160d7e928c57b1
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -3390,7 +3410,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uniswap/v4-sdk@npm:^1.21.2, @uniswap/v4-sdk@npm:^1.21.4":
+"@uniswap/v4-sdk@npm:^1.21.2":
   version: 1.21.4
   resolution: "@uniswap/v4-sdk@npm:1.21.4"
   dependencies:
@@ -8509,6 +8529,7 @@ __metadata:
     "@nomicfoundation/hardhat-viem": "npm:^2.0.6"
     "@nomicfoundation/ignition-core": "npm:^0.15.10"
     "@openzeppelin/contracts": "npm:^5.1.0"
+    "@pangolindex/sdk": "npm:^5.8.4"
     "@traderjoe-xyz/sdk-core": "npm:^2.0.11"
     "@traderjoe-xyz/sdk-v2": "npm:^3.0.26"
     "@typechain/ethers-v6": "npm:^0.5.0"
@@ -8522,7 +8543,6 @@ __metadata:
     "@uniswap/smart-order-router": "npm:^4.21.2"
     "@uniswap/universal-router-sdk": "npm:^4.19.5"
     "@uniswap/v3-sdk": "npm:^3.25.2"
-    "@uniswap/v4-sdk": "npm:^1.21.4"
     dotenv: "npm:^16.4.5"
     eslint: "npm:^9.25.1"
     eslint-config-prettier: "npm:^10.1.2"
