@@ -111,7 +111,7 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
 | `KOLFactoryTraderJoe`     | `0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4`   | `Avalanche C-Chain`    |
-| `KOLFactoryTraderJoe`     | `0xA53fF666cABcEB99E792139Bf5948A6bF45BF6f0`      | `Avalanche Fuji`    |
+| `KOLFactoryTraderJoe`     | `0x6Ee892Bc5102ef22BF7064032FcDBE1Dc5e1dD5c`      | `Avalanche Fuji`    |
 
 #### Uniswap KOL Factory
 
@@ -120,11 +120,17 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 | `KOLFactoryUniswap`     | `0x`   | `Ethereum Mainnet`    |
 | `KOLFactoryUniswap`     | `0xB85cEcD024DCDd6eF3BBADabacd0CDEC4a71B3e4`   | `Ethereum Sepolia`    |
 
-#### KOL Router Factory
+#### Pangolin KOL Factory
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `KOLRouterFactory`     | `0x049bB9C142Fd5E4527e9D2B9E98B8958c8fF5b28`   | `Avalanche Fuji`    |
+| `KOLFactoryPangolin`     | `0x49c9455A7AF8454EAc6A4fDA0271A372136bf6Ae`   | `Avalanche Fuji`    |
+
+#### ArenaSwap KOL Factory
+
+| Contract Name | Address | Chain |
+|---------------|----------------------------------------------|--------|
+| `KOLFactoryArenaSwap`     | `0x13F8A20fcdd364aE59355A1135CFe80A1CD7580d`   | `Avalanche C-Chain`    |
 
 # Docs
 
