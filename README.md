@@ -63,11 +63,8 @@ These contracts leverage Wormhole to connect Avalanche with all other chains sup
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1MessageSender`     | `0xe0e07c70b7fB31d58AFf69C1750520baebaa632D`   | `Avalanche C-Chain`    |
-| `SL1MessageSender`     | `0xa3CA6021b432a88EEFb5b53B31833e19195b4ecB`   | `Monad Testnet`    |
-
-| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
-|---------------|----------------------------------------------|--------|
 | `SL1MessageSender`     | `0x1b412E757bc8359b401BcF7B0b82215c33a9B71f`   | `Avalanche Fuji`    |
+| `SL1MessageSender`     | `0x1b412E757bc8359b401BcF7B0b82215c33a9B71f`   | `Chain 10143`    |
 
 #### 📥 SL1MessageReceiver.sol
 
@@ -94,7 +91,6 @@ This contract enables sending messages from Avalanche C-Chain to any L1 subnet w
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
 | `SL1Sender`     | `0x42E610784cf9fB37Ea0D33919100Cf7b54D87500`   | `Avalanche C-Chain`    |
-| `SL1Sender`     | ``   | `Avalanche Fuji`    |
 
 #### 🔄 SL1AnyChainReceiver.sol
 
@@ -120,9 +116,13 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 
 | ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryUniswap`     | ``   | `Avalanche C-Chain`    |
-| `KOLFactoryUniswap`     | ``      | `Avalanche Fuji`    |
+| `KOLFactoryUniswap`     | `0xB85cEcD024DCDd6eF3BBADabacd0CDEC4a71B3e4`   | `Ethereum Sepolia`    |
 
+#### 🏭 KOL Router Factory
+
+| ✅ Contract Name | :spiral_notepad: Address  | :chains: Chain  |
+|---------------|----------------------------------------------|--------|
+| `KOLRouterFactory`     | `0x049bB9C142Fd5E4527e9D2B9E98B8958c8fF5b28`   | `Avalanche Fuji`    |
 
 # 📚 Docs
 
