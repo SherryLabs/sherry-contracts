@@ -2,7 +2,9 @@
 
 ## 1. Introduction
 
-The **KOLSwapRouter** system enables Key Opinion Leaders (KOLs) to promote and monetize token transactions through dedicated smart contract routers. These routers are designed to be integrated into **Sherry's mini-apps**, which render interactive swap interfaces directly within social media platforms such as Discord, YouTube, and X (formerly Twitter). KOLs earn a configurable fee in the native token of the network (e.g., AVAX) from each user-initiated swap routed to supported DEX protocols like ArenaSwap, TraderJoe, and Pangolin.
+The **KOLSwapRouter** system enables Key Opinion Leaders (KOLs) to promote and monetize token transactions through dedicated smart contract routers. These routers are designed to be integrated into **Sherry's mini-apps**, which render interactive swap interfaces directly within social media platforms such as Discord, YouTube, and X (formerly Twitter). 
+
+The system implements a **percentage-based fee structure** where KOLs earn a configurable percentage (default 1%) of the input token amount from each user-initiated swap, while the Sherry Foundation and Treasury also receive their respective portions (0.5% each) to support ecosystem development. All fees are calculated as percentages of the input token, supporting both native tokens (e.g., AVAX) and ERC20 tokens across supported DEX protocols like ArenaSwap, TraderJoe, and Pangolin.
 
 ## 2. System Architecture
 
@@ -12,6 +14,8 @@ The **KOLSwapRouter** system enables Key Opinion Leaders (KOLs) to promote and m
                           +--------------------------------+
                           |       KOLSwapRouterBase        |
                           |  (Common router functionality) |
+                          |    - Percentage fee system     |
+                          |    - Foundation/Treasury fees  |
                           +---------------+----------------+
                                           |
                                           | extends
@@ -37,40 +41,54 @@ The **KOLSwapRouter** system enables Key Opinion Leaders (KOLs) to promote and m
           +-------------------------------------------------------------------+
           |                         KOLFactoryBase                            |
           |               (Common factory functionality)                      |
+          |               - Configurable fee rates (BPS)                     |
+          |               - Foundation/Treasury management                    |
           +-------------------------------------------------------------------+
 ```
 
 ### Key Layers
 
-- **Router Base**: Common router logic including fee processing, withdrawals, access control.
+- **Router Base**: Common router logic including percentage-based fee processing, multi-token withdrawals, access control.
 - **Protocol Routers**: Protocol-specific integrations with ArenaSwap, TraderJoe, Pangolin.
-- **Factory Base**: Common factory logic to deploy and manage routers.
-- **Protocol Factories**: Create routers for individual KOLs for each protocol.
+- **Factory Base**: Common factory logic to deploy and manage routers, configure fee rates, and manage Foundation/Treasury addresses.
+- **Protocol Factories**: Create routers for individual KOLs for each protocol with updated constructor parameters.
+
+### Fee Structure
+
+The system implements a **2% total fee** on input tokens, distributed as follows:
+
+- **KOL Fee (1%)**: Accumulated in the router contract for later withdrawal by the KOL
+- **Foundation Fee (0.5%)**: Sent immediately to Sherry Foundation address during each swap
+- **Treasury Fee (0.5%)**: Sent immediately to Sherry Treasury address during each swap
+
+All fee rates are configurable through the factory contract and measured in basis points (BPS).
 
 ## 3. Workflow
 
 1. A KOL registers through a protocol-specific factory.
-2. The factory deploys a dedicated router contract for that KOL.
-3. The KOL sets their custom fee (in BPS).
+2. The factory deploys a dedicated router contract for that KOL with the current fee configuration.
+3. Fee rates are managed at the factory level and can be updated by the factory owner.
 4. Users interact with the KOL router to perform swaps:
-
-   - The router takes a fee in the native token.
-   - The remaining amount is routed via the target DEX.
-
-5. The KOL can withdraw accumulated native fees at any time.
+   - The router calculates percentage-based fees from the input token amount.
+   - Foundation and Treasury fees are sent immediately to their respective addresses.
+   - KOL fees are accumulated in the router contract.
+   - The remaining amount (net amount) is routed via the target DEX.
+5. The KOL can withdraw accumulated fees for multiple tokens at any time using batch withdrawal.
 
 ## 4. Swap Flow Description
 
-This section describes the detailed flow of each supported swap operation initiated by a user through a KOLRouter.
+This section describes the detailed flow of each supported swap operation initiated by a user through a KOLRouter with the new percentage-based fee system.
 
 > Note: The function names shown here are representative. Actual function names may vary slightly depending on the protocol integration, but the available swap types remain consistent across all supported protocols.
 
 ### Involved Parties
 
 - **User Wallet**: The wallet initiating the swap.
-- **KOL Router Contract**: The proxy handling the swap on behalf of the user.
+- **KOL Router Contract**: The proxy handling the swap and fee distribution.
 - **DEX Router Contract**: The official router from the respective protocol (e.g., ArenaSwap, LBRouter).
-- **KOL Wallet**: The recipient of the swap fee in native token.
+- **KOL Wallet**: The recipient of accumulated KOL fees.
+- **Sherry Foundation**: Receives 0.5% of input tokens immediately.
+- **Sherry Treasury**: Receives 0.5% of input tokens immediately.
 
 ### 4.1 swapExactNATIVEForToken
 
@@ -78,12 +96,13 @@ This section describes the detailed flow of each supported swap operation initia
 
 1. The **user wallet** sends native tokens (e.g., AVAX) and calls `swapExactNATIVEForToken` on the **KOLRouter**.
 2. The **KOLRouter**:
-
-   - Calculates the fee (based on BPS configuration).
-   - Retains the fee in the contract.
-   - Forwards the remaining native token amount to the **DEX Router**.
-
+   - Calculates percentage-based fees from the input amount:
+     - KOL Fee (1%): Accumulated in contract
+     - Foundation Fee (0.5%): Sent immediately to Foundation address
+     - Treasury Fee (0.5%): Sent immediately to Treasury address
+   - Forwards the remaining amount (98%) to the **DEX Router**.
 3. The **DEX Router** swaps the received AVAX for the desired ERC20 token and sends it to the **user wallet**.
+4. Emits `SwapExecuted` event with detailed fee breakdown.
 
 ### 4.2 swapExactTokenForNATIVE
 
@@ -91,11 +110,12 @@ This section describes the detailed flow of each supported swap operation initia
 
 1. The **user wallet** approves the **KOLRouter** to spend ERC20 tokens, then calls `swapExactTokenForNATIVE`.
 2. The **KOLRouter**:
-
-   - Calculates and retains the fee in native token.
-   - Transfers the ERC20 tokens from the **user wallet**.
-   - Approves the **DEX Router** to spend tokens and forwards them.
-
+   - Transfers the full ERC20 token amount from the **user wallet**.
+   - Calculates percentage-based fees from the input tokens:
+     - KOL Fee (1%): Kept in contract
+     - Foundation Fee (0.5%): Sent immediately to Foundation address  
+     - Treasury Fee (0.5%): Sent immediately to Treasury address
+   - Approves the **DEX Router** to spend the net amount (98%) and forwards them.
 3. The **DEX Router** swaps tokens for native currency and sends it to the **user wallet**.
 
 ### 4.3 swapExactTokenForToken
@@ -104,46 +124,104 @@ This section describes the detailed flow of each supported swap operation initia
 
 1. The **user wallet** approves the **KOLRouter** to spend ERC20 tokens, then calls `swapExactTokenForToken`.
 2. The **KOLRouter**:
-
-   - Calculates and retains the fee in native token.
-   - Transfers the ERC20 tokens from the **user wallet**.
-   - Approves and forwards tokens to the **DEX Router**.
-
+   - Transfers the full ERC20 token amount from the **user wallet**.
+   - Calculates percentage-based fees from the input tokens:
+     - KOL Fee (1%): Accumulated in contract
+     - Foundation Fee (0.5%): Sent immediately to Foundation address
+     - Treasury Fee (0.5%): Sent immediately to Treasury address
+   - Approves and forwards the net amount (98%) to the **DEX Router**.
 3. The **DEX Router** swaps the input token for another token and sends it to the **user wallet**.
 
-### 4.4 withdrawNativeFee Flow
+### 4.4 withdrawKOLFees Flow (Multi-Token Support)
 
-This optional flow can be initiated by the KOL at any time to retrieve their accumulated fees.
+This flow can be initiated by the KOL at any time to retrieve their accumulated fees across multiple tokens.
 
 ![Withdraw Fees](../../images/kolrouterWithdrawFee.png)
 
-1. The **KOL Wallet** calls `withdrawNativeFee()` on the **KOLRouter**.
-2. The **KOLRouter** transfers the collected native token fees to the **KOL Wallet**.
+1. The **KOL Wallet** calls `withdrawKOLFees(tokenAddresses[])` on the **KOLRouter**.
+2. The **KOLRouter**:
+   - Always checks and withdraws native token balance if available.
+   - Iterates through the provided token addresses array.
+   - Transfers accumulated fees for each token to the **KOL Wallet**.
+   - Supports both native tokens and ERC20 tokens in a single transaction.
 
-## 5. Security Considerations
+### 4.5 Fee Calculation and Preview
 
-- **Access Control**: `Ownable` and `onlyFactoryAdmin` patterns restrict sensitive operations.
+Users and frontends can preview fees before executing swaps:
+
+1. Call `calculateNetAmount(inputAmount)` to get the amount after fees.
+2. Fee breakdown calculation:
+   ```
+   Input Amount: 1000 tokens
+   ├── KOL Fee (1%): 10 tokens → Router contract
+   ├── Foundation Fee (0.5%): 5 tokens → Foundation address  
+   ├── Treasury Fee (0.5%): 5 tokens → Treasury address
+   └── Net Amount (98%): 980 tokens → DEX swap
+   ```
+
+## 5. Fee Management
+
+### Factory-Level Configuration
+
+Fee rates are managed at the factory level and apply to all routers created by that factory:
+
+- **Owner Control**: Only factory owner can update fee rates
+- **Validation**: Total fees cannot exceed 100% (10000 basis points)
+- **Flexibility**: Each fee component can be adjusted independently
+- **Events**: Fee rate changes emit `FeeRatesUpdated` events
+
+### Example Fee Configuration:
+
+```solidity
+// Update fee rates (only factory owner)
+factory.setFeeRates(
+    150,  // KOL fee: 1.5%
+    75,   // Foundation fee: 0.75%  
+    75    // Treasury fee: 0.75%
+);
+// Total: 3% fees
+```
+
+### Multi-Token Fee Queries
+
+KOLs can query their accumulated fees across multiple tokens:
+
+```solidity
+// Query single token balance
+uint256 balance = router.getKOLFeeBalance(tokenAddress);
+
+// Query multiple token balances
+address[] memory tokens = [nativeToken, usdcToken, wavaxToken];
+uint256[] memory balances = router.getKOLFeeBalances(tokens);
+```
+
+## 6. Security Considerations
+
+- **Access Control**: `Ownable` and `onlyKOL` patterns restrict sensitive operations.
 - **Reentrancy Protection**: All routers use `ReentrancyGuard` to prevent recursive attacks.
-- **Minimal Handling**: The router does not perform swap logic; it delegates to DEX router contracts.
-- **Event Logging**: All key actions emit events (`SwapExecuted`, `FeeCollected`).
+- **Immediate Distribution**: Foundation and Treasury fees are sent immediately, reducing contract risk.
+- **Safe Transfers**: All token transfers use `SafeERC20` for enhanced security.
+- **Event Logging**: All key actions emit detailed events (`SwapExecuted`, `FeeRatesUpdated`).
+- **Input Validation**: Fee calculations validate against overflow and underflow.
 
-## 6. Extensibility
+## 7. Extensibility
 
 Adding new protocols involves:
 
 1. Creating a new `KOLRouterX` contract inheriting `KOLSwapRouterBase`
-2. Implementing swap calls using the respective DEX SDK/API
+2. Implementing swap calls using the respective DEX SDK/API with percentage fee integration
 3. Creating a `KOLFactoryX` contract inheriting `KOLFactoryBase`
+4. Updating constructor to include Foundation and Treasury addresses
 
-This modular architecture allows safe, incremental expansion while maintaining auditability.
+This modular architecture allows safe, incremental expansion while maintaining the consistent fee structure across all protocols.
 
-## 7. Supported DEX Protocols
+## 8. Supported DEX Protocols
 
 - ArenaSwap V1
-- TraderJoe V1, V2
+- TraderJoe V1, V2.x
 - Pangolin V2
 
-## 8. Technical References
+## 10. Technical References
 
 For detailed function signatures, inheritance structure, and technical specifications, refer to the following contract documentation:
 
