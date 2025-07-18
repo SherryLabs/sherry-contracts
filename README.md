@@ -110,7 +110,7 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryTraderJoe`     | `0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4`   | `Avalanche C-Chain`    |
+| `KOLFactoryTraderJoe`     | `0xd7f21898f4D4fb89d70ac4f22F540Ece263b2f38`   | `Avalanche C-Chain`    |
 | `KOLFactoryTraderJoe`     | `0x6Ee892Bc5102ef22BF7064032FcDBE1Dc5e1dD5c`      | `Avalanche Fuji`    |
 
 #### Uniswap KOL Factory
@@ -124,6 +124,7 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
+| `KOLFactoryPangolin`     | `0x929FAdE8AA2104df52F337cbACcFf94F0ec120E5`   | `Avalanche C-Chain`    |
 | `KOLFactoryPangolin`     | `0x49c9455A7AF8454EAc6A4fDA0271A372136bf6Ae`   | `Avalanche Fuji`    |
 
 #### ArenaSwap KOL Factory
