@@ -23,7 +23,14 @@ const KOLFactoryArenaSwapModule = buildModule(
       throw new Error("ARENA_SWAP_ROUTER is not defined in the constants variables");
     }
 
-    const kolFactory = m.contract("KOLFactoryArenaSwap", [arenaSwapRouter, SHERRY_FUNDATION_ADDRESS, SHERRY_TREASURY_ADDRESS], {});
+    const args = [arenaSwapRouter, SHERRY_FUNDATION_ADDRESS, SHERRY_TREASURY_ADDRESS];
+    const kolFactory = m.contract("KOLFactoryArenaSwap", args, {});
+
+    console.log("\nTo verify the contract, run:");
+    console.log(
+      `npx hardhat verify --network ${hre.network.name} CONTRACT_ADDRESS ${args.join(" ")}`
+    );
+
     return { kolFactory };
   }
 );

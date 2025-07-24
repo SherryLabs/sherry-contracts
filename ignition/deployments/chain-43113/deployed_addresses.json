@@ -2,6 +2,6 @@
   "SL1MessageSenderModule#SL1MessageSender": "0x1b412E757bc8359b401BcF7B0b82215c33a9B71f",
   "CaptureFlagModule#CaptureFlagWH": "0xFdC44664A0CcFa8Ed1a63ae6Be9Fb078297C0589",
   "SL1MessageReceiverModule#SL1MessageReceiver": "0xCfAfb96446C6Bd2a477D327215D358626d944E13",
-  "KOLFactoryTraderJoeModule#KOLFactoryTraderJoe": "0x6Ee892Bc5102ef22BF7064032FcDBE1Dc5e1dD5c",
-  "KOLFactoryPangolinModule#KOLFactoryPangolin": "0x49c9455A7AF8454EAc6A4fDA0271A372136bf6Ae"
+  "KOLFactoryTraderJoeModule#KOLFactoryTraderJoe": "0x3A0c3635900625837449aE2E256263f4B0ACbb58",
+  "KOLFactoryPangolinModule#KOLFactoryPangolin": "0x4da94D5e22332Aa25aAc8ebAC260c5f71a449135"
 }
