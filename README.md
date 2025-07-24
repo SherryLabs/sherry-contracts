@@ -110,7 +110,7 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryTraderJoe`     | `0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4`   | `Avalanche C-Chain`    |
+| `KOLFactoryTraderJoe`     |    | `Avalanche C-Chain`    |
 | `KOLFactoryTraderJoe`     | `0x3A0c3635900625837449aE2E256263f4B0ACbb58`      | `Avalanche Fuji`    |
 
 #### Pangolin KOL Factory
