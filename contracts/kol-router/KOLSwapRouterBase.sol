@@ -33,6 +33,7 @@ abstract contract KOLSwapRouterBase is ReentrancyGuard {
         address indexed trader,
         address tokenIn,
         address indexed tokenOut,
+        uint256 amountIn,
         uint256 kolFee,
         uint256 foundationFee,
         uint256 treasuryFee

@@ -157,6 +157,7 @@ contract KOLSwapRouterTest is Test {
         address indexed trader,
         address tokenIn,
         address indexed tokenOut,
+        uint256 amountIn,
         uint256 kolFee,
         uint256 foundationFee,
         uint256 treasuryFee
@@ -265,6 +266,7 @@ contract KOLSwapRouterTest is Test {
             user,
             address(0),
             address(tokenA),
+            expectedNetAmount,
             expectedKolFee,
             expectedFoundationFee,
             expectedTreasuryFee
