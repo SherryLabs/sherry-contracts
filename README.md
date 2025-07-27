@@ -110,27 +110,20 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryTraderJoe`     | `0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4`   | `Avalanche C-Chain`    |
-| `KOLFactoryTraderJoe`     | `0x6Ee892Bc5102ef22BF7064032FcDBE1Dc5e1dD5c`      | `Avalanche Fuji`    |
-
-#### Uniswap KOL Factory
-
-| Contract Name | Address | Chain |
-|---------------|----------------------------------------------|--------|
-| `KOLFactoryUniswap`     | `0x`   | `Ethereum Mainnet`    |
-| `KOLFactoryUniswap`     | `0xB85cEcD024DCDd6eF3BBADabacd0CDEC4a71B3e4`   | `Ethereum Sepolia`    |
+| `KOLFactoryTraderJoe`     |    | `Avalanche C-Chain`    |
+| `KOLFactoryTraderJoe`     | `0x3A0c3635900625837449aE2E256263f4B0ACbb58`      | `Avalanche Fuji`    |
 
 #### Pangolin KOL Factory
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryPangolin`     | `0x49c9455A7AF8454EAc6A4fDA0271A372136bf6Ae`   | `Avalanche Fuji`    |
+| `KOLFactoryPangolin`     | `0x4da94D5e22332Aa25aAc8ebAC260c5f71a449135`   | `Avalanche Fuji`    |
 
 #### ArenaSwap KOL Factory
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryArenaSwap`     | `0x13F8A20fcdd364aE59355A1135CFe80A1CD7580d`   | `Avalanche C-Chain`    |
+| `KOLFactoryArenaSwap`     |    | `Avalanche C-Chain`    |
 
 # Docs
 
@@ -143,7 +136,7 @@ In order to learn more about Sherry go to our [docs](https://docs.sherry.social)
   [![Twitter](https://img.shields.io/twitter/follow/SherryProtocol?style=social)](https://twitter.com/SherryProtocol)
   [![Discord](https://img.shields.io/discord/4HppNS46)](https://discord.gg/4HppNS46)
   [![GitHub](https://img.shields.io/github/stars/sherry-protocol/sherry-contracts?style=social)](https://github.com/sherry-protocol/sherry-contracts)
-  
+
 </div>
 
 

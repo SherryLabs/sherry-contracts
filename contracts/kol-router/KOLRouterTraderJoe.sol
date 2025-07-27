@@ -62,6 +62,7 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
             msg.sender,
             address(0),
             address(path.tokenPath[path.tokenPath.length - 1]),
+            netAmountData.netAmount,
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -102,6 +103,7 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
             msg.sender,
             address(0),
             address(path.tokenPath[path.tokenPath.length - 1]),
+            amountsIn[0],
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -152,6 +154,7 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
             msg.sender,
             address(path.tokenPath[0]),
             address(path.tokenPath[path.tokenPath.length - 1]),
+            netAmountData.netAmount,
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -201,6 +204,7 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
             msg.sender,
             address(path.tokenPath[0]),
             address(path.tokenPath[path.tokenPath.length - 1]),
+            amountsIn[0],
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -250,6 +254,7 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
             msg.sender,
             address(path.tokenPath[0]),
             address(path.tokenPath[path.tokenPath.length - 1]),
+            netAmountData.netAmount,
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -299,6 +304,7 @@ contract KOLRouterTraderJoe is KOLSwapRouterBase {
             msg.sender,
             address(path.tokenPath[0]),
             address(path.tokenPath[path.tokenPath.length - 1]),
+            amountsIn[0],
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
