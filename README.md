@@ -64,21 +64,25 @@ These contracts leverage Wormhole to connect Avalanche with all other chains sup
 |---------------|----------------------------------------------|--------|
 | `SL1MessageSender`     | `0xe0e07c70b7fB31d58AFf69C1750520baebaa632D`   | `Avalanche C-Chain`    |
 | `SL1MessageSender`     | `0x1b412E757bc8359b401BcF7B0b82215c33a9B71f`   | `Avalanche Fuji`    |
-| `SL1MessageSender`     | `0x`   | `Celo`    |
-| `SL1MessageSender`     | `0x`   | `Celo Alfajores`    |
-| `SL1MessageSender`     | `0x`   | `Base`    |
-| `SL1MessageSender`     | `0x`   | `Mantle`    |
+| `SL1MessageSender`     | `0x812810512193d623a68e467cc314511a581E4546`   | `Celo`    |
+| `SL1MessageSender`     | `0xd6b8f5Ddf0dA19C4bEF691A93666605A451A39Cc`   | `Celo Alfajores`    |
+| `SL1MessageSender`     | `0x36285B0876E0B45771C5c76885B35d4FE5b39b10`   | `Base`    |
+| `SL1MessageSender`     | `0x22b79dB03361689644EBc9d00bd131cB44e9f93d`   | `Base Sepolia`    |
+| `SL1MessageSender`     | `0x22bf4Be375941853e42ce559258362819b7ee637`   | `Ethereum`    |
+| `SL1MessageSender`     | `0x5F5Bb1bAdDB3B428874393e6E4F2623Fa67AF49c`   | `Ethereum Sepolia`    |
 
 #### SL1MessageReceiver.sol
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `SL1MessageReceiver`     | `0x`   | `Avalanche C-Chain`    |
+| `SL1MessageReceiver`     | `0xa1Aa6d54D5379576d7968EbFef67F1A382396c39`   | `Avalanche C-Chain`    |
 | `SL1MessageReceiver`     | `0xCfAfb96446C6Bd2a477D327215D358626d944E13`   | `Avalanche Fuji`    |
 | `SL1MessageReceiver`     | `0x21fb3E1D7a7a218fdd9C28b0b18D8b9Cb49Fe259`   | `Celo`    |
 | `SL1MessageReceiver`     | `0x4DC7CdD6d7062add8bB3e4512E987aC111388335`   | `Celo Alfajores`    |
-| `SL1MessageReceiver`     | `0x`   | `Base`    |
-| `SL1MessageReceiver`     | `0x`   | `Mantle`    |
+| `SL1MessageReceiver`     | `0x21fb3E1D7a7a218fdd9C28b0b18D8b9Cb49Fe259`   | `Base`    |
+| `SL1MessageReceiver`     | `0x6451fB63747eE21Cf866203092228c770fbd8D35`   | `Base Sepolia`    |
+| `SL1MessageReceiver`     | `0xE46b6b941BbBf93be4D422C96aaf4749CAf9a386`   | `Ethereum`    |
+| `SL1MessageReceiver`     | `0xc96FC8c19D0b9f6D1B68114a4565aD40117e55B1`   | `Ethereum Sepolia`    |
 
 ### Avalanche Ecosystem Interoperability
 

@@ -1,4 +1,14 @@
 import { HardhatUserConfig } from "hardhat/config";
+import {
+  base,
+  baseSepolia,
+  avalanche,
+  avalancheFuji,
+  celo,
+  celoAlfajores,
+  sepolia,
+  mainnet
+} from "viem/chains"
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomicfoundation/hardhat-viem";
 import * as dotenv from "dotenv"
@@ -36,22 +46,49 @@ const config: HardhatUserConfig = {
   },
   networks: {
     avalanche: {
-      url: "https://api.avax.network/ext/bc/C/rpc",
+      url: avalanche.rpcUrls.default.http[0],
       accounts: [deployer],
+      chainId: avalanche.id,
+    },
+    avalancheFuji: {
+      url: avalancheFuji.rpcUrls.default.http[0],
+      accounts: [deployer],
+      chainId: avalancheFuji.id
+    },
+    mainnet: {
+      url: mainnet.rpcUrls.default.http[0],
+      accounts: [deployer],
+      chainId: mainnet.id
     },
     sepolia: {
-      url: "https://ethereum-sepolia.publicnode.com",
+      url: sepolia.rpcUrls.default.http[0],
       accounts: [deployer],
-      chainId: 11155111
+      chainId: sepolia.id
+    },
+    base: {
+      url: base.rpcUrls.default.http[0],
+      accounts: [deployer],
+      chainId: base.id
+    },
+    baseSepolia: {
+      url: baseSepolia.rpcUrls.default.http[0],
+      accounts: [deployer],
+      chainId: baseSepolia.id
+    },
+    celo: {
+      url: celo.rpcUrls.default.http[0],
+      accounts: [deployer],
+      chainId: celo.id
+    },
+    celoAlfajores: {
+      url: celoAlfajores.rpcUrls.default.http[0],
+      accounts: [deployer],
+      chainId: celoAlfajores.id
     },
     sl1Testnet: {
       url: `https://subnets.avax.network/sl1/testnet/rpc`,
       accounts: [deployer],
       chainId: 3030
-    },
-    avalancheFuji: {
-      url: "https://api.avax-test.network/ext/bc/C/rpc",
-      accounts: [deployer],
     },
     echoTestnet: {
       url: "https://subnets.avax.network/echo/testnet/rpc",
@@ -59,14 +96,6 @@ const config: HardhatUserConfig = {
     },
     dispatchTestnet: {
       url: "https://subnets.avax.network/dispatch/testnet/rpc",
-      accounts: [deployer],
-    },
-    celoAlfajores: {
-      url: "https://alfajores-forno.celo-testnet.org",
-      accounts: [deployer],
-    },
-    celo: {
-      url: "https://forno.celo.org",
       accounts: [deployer],
     },
     monadTestnet: {
