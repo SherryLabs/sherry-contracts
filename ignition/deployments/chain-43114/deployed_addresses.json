@@ -1,4 +1,5 @@
 {
   "KOLFactoryTraderJoeModule#KOLFactoryTraderJoe": "0x4aFA9180928fc6A90050B8AF850eCDA94238418e",
-  "SL1MessageReceiverModule#SL1MessageReceiver": "0xa1Aa6d54D5379576d7968EbFef67F1A382396c39"
+  "SL1MessageReceiverModule#SL1MessageReceiver": "0xa1Aa6d54D5379576d7968EbFef67F1A382396c39",
+  "SL1MessageSenderModule#SL1MessageSender": "0xCa342963D6E9CAD9DB192F57691942B3860A7492"
 }
