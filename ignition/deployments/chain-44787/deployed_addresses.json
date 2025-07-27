@@ -1,4 +1,5 @@
 {
   "SL1MessageReceiverModule#SL1MessageReceiver": "0x4DC7CdD6d7062add8bB3e4512E987aC111388335",
-  "CaptureFlagModule#CaptureFlagWH": "0x812810512193d623a68e467cc314511a581E4546"
+  "CaptureFlagModule#CaptureFlagWH": "0x812810512193d623a68e467cc314511a581E4546",
+  "SL1MessageSenderModule#SL1MessageSender": "0xd6b8f5Ddf0dA19C4bEF691A93666605A451A39Cc"
 }
