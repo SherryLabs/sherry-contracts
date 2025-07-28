@@ -17,6 +17,7 @@ contract SL1MessageReceiver is IWormholeReceiver {
         bytes encodedFunctionCall
     );
     event FunctionCallError(string message);
+    event RefundFailed(address recipient, uint256 amount);
     event SenderRegistered(uint16 sourceChain, bytes32 sourceAddress);
     event Withdraw(address indexed owner, uint256 amount);
 
@@ -67,7 +68,13 @@ contract SL1MessageReceiver is IWormholeReceiver {
 
         if (!success) {
             emit FunctionCallError("Error executing function call");
-            payable(sender).transfer(msg.value);
+            
+            if (msg.value > 0) {
+                (bool refundSuccess, ) = payable(sender).call{value: msg.value}("");
+                if (!refundSuccess) {
+                    emit RefundFailed(sender, msg.value);
+                }
+            }
         } else {
             emit FunctionExecuted(contractToBeCalled, encodedFunctionCall);
         }
