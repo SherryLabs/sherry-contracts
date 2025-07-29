@@ -26,10 +26,12 @@ const CONTRACT_ADDRESSES: Record<ContractName, Partial<Record<number, string>>> 
     [avalanche.id]: "0xF56D524D651B90E4B84dc2FffD83079698b9066E", // Arena Swap Router
   },
   SHERRY_FUNDATION_ADDRESS: {
-    [avalancheFuji.id]: '0x23e5Cb3118106736277Bc1C2b5F7f8B83411409b',
+    [avalancheFuji.id]: '0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465',
+    [avalanche.id]: '0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465', // Sherry Foundation address on Avalanche
   },
   SHERRY_TREASURY_ADDRESS: {
-    [avalancheFuji.id]: '0xfE5E335363f0B95e5Ce15040976c6Cbab331491a',
+    [avalancheFuji.id]: '0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465',
+    [avalanche.id]: '0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465', // Sherry Treasury address on Avalanche
   }
 }
 
