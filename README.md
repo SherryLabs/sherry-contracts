@@ -53,17 +53,17 @@ git submodule update --init --recursive --remote
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `SL1MessageSender`     | `0x16546E8FE5Ea8277005c98B32C201f43B9b43C16`   | `Avalanche C-Chain (43114)`    |
+| `SL1MessageSender`     | `0xe41C42Ccc6370Aef75Bca3287396659F39CC4f2D`   | `Avalanche C-Chain (43114)`    |
 | `SL1MessageSender`     | `0x16546E8FE5Ea8277005c98B32C201f43B9b43C16`   | `Celo (42220)`    |
-| `SL1MessageSender`     | `0x27BB8FC84F18f73AAE0a63A1ef70E824091C8734`   | `Base (8453)`    |
+| `SL1MessageSender`     | `0xb0c46cAb920d4577ad6F901D7C56972836A981ad`   | `Base (8453)`    |
 
 #### SL1MessageReceiver.sol
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `SL1MessageReceiver`     | `0x6cEc2B70F7D32f5DD5a2065DDEB8Ed16C7cf9a54`   | `Avalanche C-Chain (43114)`    |
+| `SL1MessageReceiver`     | `0x6B520163Db9eC91a34dDE572f4174e1de09A7E9D`   | `Avalanche C-Chain (43114)`    |
 | `SL1MessageReceiver`     | `0xe0e07c70b7fB31d58AFf69C1750520baebaa632D`   | `Celo (42220)`    |
-| `SL1MessageReceiver`     | `0xeC6319D3c7BD339e133458DB3500a417DeB54a8A`   | `Base (8453)`    |
+| `SL1MessageReceiver`     | `0xbd84C59CE99A4A6e48727DA7581794442BA7C2eD`   | `Base (8453)`    |
 
 ### Testnet Deployments
 
@@ -71,19 +71,19 @@ git submodule update --init --recursive --remote
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
+| `SL1MessageSender`     | `0xd7a2e6Ee0A148A50EF7cac6730eEDaeecE59E388`   | `Avalanche Fuji (43113)`    |
+| `SL1MessageSender`     | `0x16546E8FE5Ea8277005c98B32C201f43B9b43C16`   | `Celo Alfajores (44787)`    |
+| `SL1MessageSender`     | `0xb0c46cAb920d4577ad6F901D7C56972836A981ad`   | `Base Sepolia (84532)`    |
 | `SL1MessageSender`     | `0x5AeFC2a2B4beB709a7E77b19Ba3596e0675f8140`   | `Ethereum Sepolia (11155111)`    |
-| `SL1MessageSender`     | `0xe41C42Ccc6370Aef75Bca3287396659F39CC4f2D`   | `Avalanche Fuji (43113)`    |
-| `SL1MessageSender`     | `0xb0c46cAb920d4577ad6F901D7C56972836A981ad`   | `Celo Alfajores (44787)`    |
-| `SL1MessageSender`     | `0xd7a2e6Ee0A148A50EF7cac6730eEDaeecE59E388`   | `Base Sepolia (84532)`    |
 
 #### SL1MessageReceiver.sol
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
+| `SL1MessageReceiver`     | `0x40F9eDf329f43dB834Fb677B076FF1Ad7d165b57`   | `Avalanche Fuji (43113)`    |
+| `SL1MessageReceiver`     | `0x6cEc2B70F7D32f5DD5a2065DDEB8Ed16C7cf9a54`   | `Celo Alfajores (44787)`    |
+| `SL1MessageReceiver`     | `0xbd84C59CE99A4A6e48727DA7581794442BA7C2eD`   | `Base Sepolia (84532)`    |
 | `SL1MessageReceiver`     | `0xA1A0AAe4f65Dce959D0B66738f78887a844CEc40`   | `Ethereum Sepolia (11155111)`    |
-| `SL1MessageReceiver`     | `0x6B520163Db9eC91a34dDE572f4174e1de09A7E9D`   | `Avalanche Fuji (43113)`    |
-| `SL1MessageReceiver`     | `0xbd84C59CE99A4A6e48727DA7581794442BA7C2eD`   | `Celo Alfajores (44787)`    |
-| `SL1MessageReceiver`     | `0x40F9eDf329f43dB834Fb677B076FF1Ad7d165b57`   | `Base Sepolia (84532)`    |
 
 ## Cross-Chain Interoperability
 
