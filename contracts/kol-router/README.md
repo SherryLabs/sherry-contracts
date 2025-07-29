@@ -113,7 +113,7 @@ This section describes the detailed flow of each supported swap operation initia
    - Transfers the full ERC20 token amount from the **user wallet**.
    - Calculates percentage-based fees from the input tokens:
      - KOL Fee (1%): Kept in contract
-     - Foundation Fee (0.5%): Sent immediately to Foundation address  
+     - Foundation Fee (0.5%): Sent immediately to Foundation address
      - Treasury Fee (0.5%): Sent immediately to Treasury address
    - Approves the **DEX Router** to spend the net amount (98%) and forwards them.
 3. The **DEX Router** swaps tokens for native currency and sends it to the **user wallet**.
@@ -154,7 +154,7 @@ Users and frontends can preview fees before executing swaps:
    ```
    Input Amount: 1000 tokens
    ├── KOL Fee (1%): 10 tokens → Router contract
-   ├── Foundation Fee (0.5%): 5 tokens → Foundation address  
+   ├── Foundation Fee (0.5%): 5 tokens → Foundation address
    ├── Treasury Fee (0.5%): 5 tokens → Treasury address
    └── Net Amount (98%): 980 tokens → DEX swap
    ```
@@ -172,11 +172,11 @@ Fee rates are managed at the factory level and apply to all routers created by t
 
 ### Example Fee Configuration:
 
-```solidity
+```javascript
 // Update fee rates (only factory owner)
 factory.setFeeRates(
     150,  // KOL fee: 1.5%
-    75,   // Foundation fee: 0.75%  
+    75,   // Foundation fee: 0.75%
     75    // Treasury fee: 0.75%
 );
 // Total: 3% fees
@@ -186,13 +186,14 @@ factory.setFeeRates(
 
 KOLs can query their accumulated fees across multiple tokens:
 
-```solidity
+```javascript
 // Query single token balance
-uint256 balance = router.getKOLFeeBalance(tokenAddress);
+const balance = await router.getKOLFeeBalance([tokenAddress]);
 
 // Query multiple token balances
-address[] memory tokens = [nativeToken, usdcToken, wavaxToken];
-uint256[] memory balances = router.getKOLFeeBalances(tokens);
+const nativeToken = '0x0000000000000000000000000000000000000000';
+const tokens = [nativeToken, usdcTokenAddress, joeTokenAddress];
+const balances = await router.getKOLFeeBalances(tokens);
 ```
 
 ## 6. Security Considerations
