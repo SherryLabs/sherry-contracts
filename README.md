@@ -47,48 +47,60 @@ git submodule update --init --recursive --remote
 
 ## Contract Addresses
 
+### Mainnet Deployments
+
+#### SL1MessageSender.sol
+
+| Contract Name | Address | Chain |
+|---------------|----------------------------------------------|--------|
+| `SL1MessageSender`     | `0xe41C42Ccc6370Aef75Bca3287396659F39CC4f2D`   | `Avalanche C-Chain (43114)`    |
+| `SL1MessageSender`     | `0x16546E8FE5Ea8277005c98B32C201f43B9b43C16`   | `Celo (42220)`    |
+| `SL1MessageSender`     | `0xb0c46cAb920d4577ad6F901D7C56972836A981ad`   | `Base (8453)`    |
+
+#### SL1MessageReceiver.sol
+
+| Contract Name | Address | Chain |
+|---------------|----------------------------------------------|--------|
+| `SL1MessageReceiver`     | `0x6B520163Db9eC91a34dDE572f4174e1de09A7E9D`   | `Avalanche C-Chain (43114)`    |
+| `SL1MessageReceiver`     | `0xe0e07c70b7fB31d58AFf69C1750520baebaa632D`   | `Celo (42220)`    |
+| `SL1MessageReceiver`     | `0xbd84C59CE99A4A6e48727DA7581794442BA7C2eD`   | `Base (8453)`    |
+
+### Testnet Deployments
+
+#### SL1MessageSender.sol
+
+| Contract Name | Address | Chain |
+|---------------|----------------------------------------------|--------|
+| `SL1MessageSender`     | `0xd7a2e6Ee0A148A50EF7cac6730eEDaeecE59E388`   | `Avalanche Fuji (43113)`    |
+| `SL1MessageSender`     | `0x16546E8FE5Ea8277005c98B32C201f43B9b43C16`   | `Celo Alfajores (44787)`    |
+| `SL1MessageSender`     | `0xb0c46cAb920d4577ad6F901D7C56972836A981ad`   | `Base Sepolia (84532)`    |
+| `SL1MessageSender`     | `0x5AeFC2a2B4beB709a7E77b19Ba3596e0675f8140`   | `Ethereum Sepolia (11155111)`    |
+
+#### SL1MessageReceiver.sol
+
+| Contract Name | Address | Chain |
+|---------------|----------------------------------------------|--------|
+| `SL1MessageReceiver`     | `0x40F9eDf329f43dB834Fb677B076FF1Ad7d165b57`   | `Avalanche Fuji (43113)`    |
+| `SL1MessageReceiver`     | `0x6cEc2B70F7D32f5DD5a2065DDEB8Ed16C7cf9a54`   | `Celo Alfajores (44787)`    |
+| `SL1MessageReceiver`     | `0xbd84C59CE99A4A6e48727DA7581794442BA7C2eD`   | `Base Sepolia (84532)`    |
+| `SL1MessageReceiver`     | `0xA1A0AAe4f65Dce959D0B66738f78887a844CEc40`   | `Ethereum Sepolia (11155111)`    |
+
 ## Cross-Chain Interoperability
 
 Our contracts enable seamless cross-chain interactions through multiple interoperability solutions.
 
-<!-- Consider adding a diagram showing cross-chain interactions -->
+<!-- TODO: Consider adding a diagram showing cross-chain interactions -->
 <!-- ![Cross-Chain Architecture](./assets/cross-chain-diagram.png) -->
 
 ### Wormhole Integration
 
 These contracts leverage Wormhole to connect Avalanche with all other chains supported by the Wormhole protocol, enabling bidirectional communication between Avalanche and various blockchain networks.
 
-#### SL1MessageSender.sol
-
-| Contract Name | Address | Chain |
-|---------------|----------------------------------------------|--------|
-| `SL1MessageSender`     | `0x022dCe2109655C5a849E1631a412d34c33Eb7A79`   | `Avalanche C-Chain`    |
-| `SL1MessageSender`     | ``   | `Avalanche Fuji`    |
-| `SL1MessageSender`     | ``   | `Celo`    |
-| `SL1MessageSender`     | ``   | `Celo Alfajores`    |
-| `SL1MessageSender`     | `0x9c9f3052Fcdde50d6E1f9241d6b3b35044FACec0`   | `Base`    |
-| `SL1MessageSender`     | ``   | `Base Sepolia`    |
-| `SL1MessageSender`     | ``   | `Ethereum`    |
-| `SL1MessageSender`     | ``   | `Ethereum Sepolia`    |
-
-#### SL1MessageReceiver.sol
-
-| Contract Name | Address | Chain |
-|---------------|----------------------------------------------|--------|
-| `SL1MessageReceiver`     | `0x93D1b20F0Cd17958Fcc17A59B07AcD4d304618f8`   | `Avalanche C-Chain`    |
-| `SL1MessageReceiver`     | ``   | `Avalanche Fuji`    |
-| `SL1MessageReceiver`     | `0xe0e07c70b7fB31d58AFf69C1750520baebaa632D`   | `Celo`    |
-| `SL1MessageReceiver`     | ``   | `Celo Alfajores`    |
-| `SL1MessageReceiver`     | ``   | `Base`    |
-| `SL1MessageReceiver`     | ``   | `Base Sepolia`    |
-| `SL1MessageReceiver`     | ``   | `Ethereum`    |
-| `SL1MessageReceiver`     | ``   | `Ethereum Sepolia`    |
-
 ### Avalanche Ecosystem Interoperability
 
 Our solution also provides native interoperability within the Avalanche ecosystem, connecting the C-Chain with various L1 subnets in the Avalanche network. This is achieved through our specialized contracts:
 
-<!-- Consider adding a diagram showing Avalanche ecosystem connectivity -->
+<!-- TODO: Consider adding a diagram showing Avalanche ecosystem connectivity -->
 <!-- ![Avalanche Ecosystem](./assets/avalanche-ecosystem.png) -->
 
 #### SL1Sender.sol
