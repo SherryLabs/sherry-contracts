@@ -122,12 +122,19 @@ This contract handles the reception of messages from any L1 subnet within the Av
 
 These factories are used to deploy new KOL (Key Opinion Leader) specific routers for different DEX protocols.
 
-#### TraderJoe KOL Factory
+#### TraderJoe/LFJ KOL Factory
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryTraderJoe`     | `0x4aFA9180928fc6A90050B8AF850eCDA94238418e`   | `Avalanche C-Chain`    |
-| `KOLFactoryTraderJoe`     | `0x375A9602c78D32a733Ddc84DeEdfd9305822B9F6`   | `Avalanche Fuji`    |
+| `KOLFactoryTraderJoe`     | `0x5F5Bb1bAdDB3B428874393e6E4F2623Fa67AF49c`   | `Avalanche C-Chain`    |
+| `KOLFactoryTraderJoe`     | `0x331c5162aEe34Fa6Fb1d4Ac538264eBC376aB5c4`   | `Avalanche Fuji`    |
+
+#### Pangolin KOL Factory
+
+| Contract Name | Address | Chain |
+|---------------|----------------------------------------------|--------|
+| `KOLFactoryTraderJoe`     | `0xc96FC8c19D0b9f6D1B68114a4565aD40117e55B1`   | `Avalanche C-Chain`    |
+| `KOLFactoryTraderJoe`     | `0x0cbe9C578cc875Eee855483233d1222552068aA2`   | `Avalanche Fuji`    |
 
 #### Uniswap KOL Factory
 
