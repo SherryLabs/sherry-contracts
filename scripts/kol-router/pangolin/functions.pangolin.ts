@@ -25,7 +25,7 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import path from 'path';
 import * as fs from 'fs';
 
-const KOL_ROUTER = getAddress("0xF42B5dBe313CF9ff360A33A2f3Ca7eba3F7A1F89");
+const { FUJI_PANGOLIN_KOL_ROUTER } = process.env;
 
 let publicClient: PublicClient;
 let walletClient: WalletClient;
@@ -160,7 +160,7 @@ export const checkAndApproveToken = async (
             address: `0x${inputToken.address.slice(2)}`,
             abi: erc20Abi,
             functionName: 'allowance',
-            args: [accountAddress, KOL_ROUTER]
+            args: [accountAddress, FUJI_PANGOLIN_KOL_ROUTER]
         }) as bigint;
 
         console.log(`Current allowance: ${currentAllowance}`);
@@ -173,7 +173,7 @@ export const checkAndApproveToken = async (
                 address: `0x${inputToken.address.slice(2)}`,
                 abi: erc20Abi,
                 functionName: 'approve',
-                args: [KOL_ROUTER, typedValueInParsed],
+                args: [FUJI_PANGOLIN_KOL_ROUTER, typedValueInParsed],
                 chain: avalancheFuji,
                 account: account || null
             });
@@ -263,7 +263,7 @@ const executePangolinSwap = async (
 
     // calculate net amount
     const netAmount = await publicClient.readContract({
-        address: KOL_ROUTER,
+        address: FUJI_PANGOLIN_KOL_ROUTER as `0x${string}`,
         abi,
         functionName: 'calculateNetAmount',
         args: [typedValueInParsed],
@@ -313,13 +313,13 @@ const executePangolinSwap = async (
     const gasPrice = await publicClient.getGasPrice();
     const gas = await publicClient.estimateGas({
         account,
-        to: KOL_ROUTER,
+        to: FUJI_PANGOLIN_KOL_ROUTER as `0x${string}`,
         data,
         value,
     });
     const hash = await walletClient.sendTransaction({
         account,
-        to: KOL_ROUTER,
+        to: FUJI_PANGOLIN_KOL_ROUTER as `0x${string}`,
         value,
         data,
         gas,
