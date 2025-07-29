@@ -1,3 +1,4 @@
 {
-  "KOLFactoryUniswapModule#KOLFactoryUniswap": "0xB85cEcD024DCDd6eF3BBADabacd0CDEC4a71B3e4"
+  "SL1MessageReceiverModule#SL1MessageReceiver": "0xA1A0AAe4f65Dce959D0B66738f78887a844CEc40",
+  "SL1MessageSenderModule#SL1MessageSender": "0x5AeFC2a2B4beB709a7E77b19Ba3596e0675f8140"
 }

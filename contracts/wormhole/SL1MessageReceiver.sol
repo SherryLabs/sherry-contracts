@@ -11,12 +11,12 @@ contract SL1MessageReceiver is IWormholeReceiver {
     mapping(uint16 => bytes32) public s_registeredSenders;
 
     event MessageInfoReceived(bytes32 sourceAddress, bytes payload);
-    event SourceChainLogged(uint16 sourceChain, address sender);
     event FunctionExecuted(
         address contractToBeCalled,
         bytes encodedFunctionCall
     );
     event FunctionCallError(string message);
+    event RefundFailed(address recipient, uint256 amount);
     event SenderRegistered(uint16 sourceChain, bytes32 sourceAddress);
     event Withdraw(address indexed owner, uint256 amount);
 
@@ -61,13 +61,24 @@ contract SL1MessageReceiver is IWormholeReceiver {
             bytes memory encodedFunctionCall
         ) = abi.decode(payload, (address, address, bytes));
 
+        if (contractToBeCalled == address(0)) {
+            // Direct transfer to sender when no contract specified
+            if (msg.value > 0 && sender != address(0)) {
+                (bool transferSuccess, ) = payable(sender).call{value: msg.value}("");
+                if (!transferSuccess) {
+                    emit RefundFailed(sender, msg.value);
+                }
+            }
+            return;
+        }
+
         (bool success, ) = contractToBeCalled.call{value: msg.value}(
             encodedFunctionCall
         );
 
         if (!success) {
             emit FunctionCallError("Error executing function call");
-            payable(sender).transfer(msg.value);
+            _refundSender(sender);
         } else {
             emit FunctionExecuted(contractToBeCalled, encodedFunctionCall);
         }
@@ -78,6 +89,15 @@ contract SL1MessageReceiver is IWormholeReceiver {
         require(balance > 0, "No balance to withdraw");
         payable(msg.sender).transfer(balance);
         emit Withdraw(msg.sender, balance);
+    }
+
+    function _refundSender(address sender) internal {
+        if (msg.value > 0 && sender != address(0)) {
+            (bool refundSuccess, ) = payable(sender).call{value: msg.value}("");
+            if (!refundSuccess) {
+                emit RefundFailed(sender, msg.value);
+            }
+        }
     }
 
     modifier onlyOwner() {

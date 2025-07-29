@@ -11,7 +11,7 @@ import { avalancheFuji } from "viem/chains";
 import path from 'path';
 import * as fs from 'fs';
 
-const KOL_ROUTER = "0xC723ff604E1ce13a5e7d7bc5CcA2b76E3A61946b"; // TODO: take this from .env
+const { FUJI_LFJ_KOL_ROUTER } = process.env;
 
 // initialize tokens
 const CHAIN_ID = ChainId.FUJI;
@@ -120,7 +120,7 @@ export const checkAndApproveToken = async (
             address: `0x${inputToken.address.slice(2)}`,
             abi: erc20Abi,
             functionName: 'allowance',
-            args: [accountAddress, KOL_ROUTER]
+            args: [accountAddress, FUJI_LFJ_KOL_ROUTER]
         }) as bigint;
 
         console.log(`Current allowance: ${currentAllowance}`);
@@ -133,7 +133,7 @@ export const checkAndApproveToken = async (
                 address: `0x${inputToken.address.slice(2)}`,
                 abi: erc20Abi,
                 functionName: 'approve',
-                args: [KOL_ROUTER, typedValueInParsed],
+                args: [FUJI_LFJ_KOL_ROUTER, typedValueInParsed],
                 chain: avalancheFuji,
                 account: account || null
             });
@@ -194,7 +194,7 @@ export const execute = async (
 
         // calculate net amount
         const netAmount = await publicClient.readContract({
-            address: KOL_ROUTER,
+            address: FUJI_LFJ_KOL_ROUTER as `0x${string}`,
             abi,
             functionName: 'calculateNetAmount',
             args: [typedValueInParsed],
@@ -276,7 +276,7 @@ export const execute = async (
             // Execute trade
             // -----------------------------------------------------------------
             const { request } = await publicClient.simulateContract({
-                address: KOL_ROUTER,
+                address: FUJI_LFJ_KOL_ROUTER as `0x${string}`,
                 abi,
                 functionName: methodName,
                 args,

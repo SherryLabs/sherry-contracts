@@ -79,6 +79,7 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
             msg.sender,
             inputToken,
             address(path[path.length - 1]),
+            netAmountData.netAmount,
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -128,6 +129,7 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
             msg.sender,
             inputToken,
             address(path[path.length - 1]),
+            amounts[0],
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -160,6 +162,7 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
             msg.sender,
             address(0),
             address(path[path.length - 1]),
+            netAmountData.netAmount,
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -209,6 +212,7 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
             msg.sender,
             inputToken,
             address(path[path.length - 1]),
+            amounts[0],
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -259,6 +263,7 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
             msg.sender,
             inputToken,
             address(path[path.length - 1]),
+            netAmountData.netAmount,
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee
@@ -299,6 +304,7 @@ contract KOLRouterPangolinV2 is KOLSwapRouterBase {
             msg.sender,
             address(0),
             address(path[path.length - 1]),
+            amounts[0],
             netAmountData.kolFee,
             netAmountData.foundationFee,
             netAmountData.treasuryFee

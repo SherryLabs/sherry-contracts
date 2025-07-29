@@ -1,6 +1,6 @@
 {
-  "SL1MessageSenderModule#SL1MessageSender": "0xe0e07c70b7fB31d58AFf69C1750520baebaa632D",
-  "SL1SenderModule#SL1Sender": "0x42E610784cf9fB37Ea0D33919100Cf7b54D87500",
-  "KOLFactoryTraderJoeModule#KOLFactoryTraderJoe": "0x05c9ff225F5F5720D61083F1616dbc8c2E5eADE4",
-  "KOLFactoryArenaSwapModule#KOLFactoryArenaSwap": "0x13F8A20fcdd364aE59355A1135CFe80A1CD7580d"
+  "SL1MessageReceiverModule#SL1MessageReceiver": "0x6B520163Db9eC91a34dDE572f4174e1de09A7E9D",
+  "SL1MessageSenderModule#SL1MessageSender": "0xe41C42Ccc6370Aef75Bca3287396659F39CC4f2D",
+  "KOLFactoryTraderJoeModule#KOLFactoryTraderJoe": "0x5F5Bb1bAdDB3B428874393e6E4F2623Fa67AF49c",
+  "KOLFactoryPangolinModule#KOLFactoryPangolin": "0xc96FC8c19D0b9f6D1B68114a4565aD40117e55B1"
 }
