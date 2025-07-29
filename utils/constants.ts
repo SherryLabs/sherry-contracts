@@ -1,13 +1,13 @@
 import { avalanche, avalancheFuji, sepolia } from "viem/chains";
 
-export const SHERRY_FUNDATION_ADDRESS = '0x23e5Cb3118106736277Bc1C2b5F7f8B83411409b';
-export const SHERRY_TREASURY_ADDRESS = '0xfE5E335363f0B95e5Ce15040976c6Cbab331491a';
 
 type ContractName =
   | "TRADER_JOE_ROUTER"
   | "UNISWAP_ROUTER"
   | "PANGOLIN_V2_ROUTER"
-  | "ARENA_SWAP_ROUTER";
+  | "ARENA_SWAP_ROUTER"
+  | "SHERRY_FUNDATION_ADDRESS"
+  | "SHERRY_TREASURY_ADDRESS";
 
 const CONTRACT_ADDRESSES: Record<ContractName, Partial<Record<number, string>>> = {
   TRADER_JOE_ROUTER: {
@@ -25,6 +25,12 @@ const CONTRACT_ADDRESSES: Record<ContractName, Partial<Record<number, string>>> 
   ARENA_SWAP_ROUTER: {
     [avalanche.id]: "0xF56D524D651B90E4B84dc2FffD83079698b9066E", // Arena Swap Router
   },
+  SHERRY_FUNDATION_ADDRESS: {
+    [avalancheFuji.id]: '0x23e5Cb3118106736277Bc1C2b5F7f8B83411409b',
+  },
+  SHERRY_TREASURY_ADDRESS: {
+    [avalancheFuji.id]: '0xfE5E335363f0B95e5Ce15040976c6Cbab331491a',
+  }
 }
 
 /**
