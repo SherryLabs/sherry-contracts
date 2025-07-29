@@ -19,6 +19,7 @@ contract SL1MessageSender {
         address destinationAddress,
         bytes32 destinationChain
     );
+    event Withdraw(address indexed owner, uint256 amount);
 
     /**
      * @dev Sets the Wormhole Relayer address and initializes the contract owner.
@@ -69,6 +70,7 @@ contract SL1MessageSender {
      * @param _contractToBeCalled The address of the contract to be called on the target chain.
      * @param _encodedFunctionCall The encoded function call data.
      * @param _gasLimit The gas limit for the cross-chain message.
+     * @param _receiverValue The value to be sent to the receiver on the target chain.
      */
     function sendMessage(
         uint16 _targetChain,
@@ -108,6 +110,17 @@ contract SL1MessageSender {
      */
     function setGasLimit(uint256 _gasLimit) external onlyOwner {
         GAS_LIMIT = _gasLimit;
+    }
+
+    /**
+     * @notice Withdraws the contract's native token balance to the owner.
+     * @dev Only the contract owner can call this function.
+     */
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        require(balance > 0, "No balance to withdraw");
+        payable(msg.sender).transfer(balance);
+        emit Withdraw(msg.sender, balance);
     }
 
     /**
