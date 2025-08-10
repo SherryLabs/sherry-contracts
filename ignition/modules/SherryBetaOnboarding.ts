@@ -1,6 +1,6 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 import hre from "hardhat";
-const { BETA_ONBOARD_MINTER,BETA_ONBOARD_METADATA_URI } = process.env;
+const { BETA_ONBOARD_MINTER } = process.env;
 
 
 const SherryBetaOnboardingModule = buildModule(
@@ -9,11 +9,7 @@ const SherryBetaOnboardingModule = buildModule(
     if (!BETA_ONBOARD_MINTER) {
       throw new Error("BETA_ONBOARD_MINTER is not defined in .env variables");
     }
-    if (!BETA_ONBOARD_METADATA_URI) {
-      throw new Error("BETA_ONBOARD_METADATA_URI is not defined in .env variables");
-    }
-
-    const args = [BETA_ONBOARD_METADATA_URI, BETA_ONBOARD_MINTER];
+    const args = [BETA_ONBOARD_MINTER];
     const nftContract = m.contract("SherryBetaOnboarding", args, {});
 
     console.log("\n==========================================================");
