@@ -2,5 +2,6 @@
   "SL1MessageSenderModule#SL1MessageSender": "0xd7a2e6Ee0A148A50EF7cac6730eEDaeecE59E388",
   "SL1MessageReceiverModule#SL1MessageReceiver": "0x40F9eDf329f43dB834Fb677B076FF1Ad7d165b57",
   "KOLFactoryTraderJoeModule#KOLFactoryTraderJoe": "0x331c5162aEe34Fa6Fb1d4Ac538264eBC376aB5c4",
-  "KOLFactoryPangolinModule#KOLFactoryPangolin": "0x0cbe9C578cc875Eee855483233d1222552068aA2"
+  "KOLFactoryPangolinModule#KOLFactoryPangolin": "0x0cbe9C578cc875Eee855483233d1222552068aA2",
+  "SherryBetaOnboardingModule#SherryBetaOnboarding": "0x487Df21F96F3af9A5De1AAF5478084D8e5D6b130"
 }

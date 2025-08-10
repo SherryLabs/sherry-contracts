@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
  * @title SherryBetaOnboarding
@@ -19,14 +20,14 @@ contract SherryBetaOnboarding is
     ReentrancyGuard
 {
     // Token metadata
-    string public name = 'Sherry Beta Onboarding NFT';
-    string public symbol = 'SHERRY';
+    string public name = "Sherry Beta Onboarding NFT";
+    string public symbol = "SHERRY";
 
     // Role definitions
     bytes32 public constant MINTER_ROLE = keccak256("MINTER");
 
     // One NFT per collection and per user tracking
-     mapping(uint256 => mapping(address => bool)) public hasMinted;
+    mapping(uint256 => mapping(address => bool)) public hasMinted;
 
     // Collection information for metadata
     struct CollectionInfo {
@@ -42,14 +43,18 @@ contract SherryBetaOnboarding is
         string miniAppId,
         string twitterHandle
     );
-    event CollectionMint(address indexed to, string miniAppId, string twitterHandle);
+    event CollectionMint(
+        address indexed to,
+        string miniAppId,
+        string twitterHandle
+    );
 
     // Custom errors
     error TransferNotAllowed();
     error CollectionNotExists();
     error AlreadyMinted();
 
-    constructor(string memory uri, address minter) ERC1155(uri) {
+    constructor(string memory baseUri, address minter) ERC1155(baseUri) {
         // Grant roles
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, minter);
@@ -75,7 +80,11 @@ contract SherryBetaOnboarding is
         // Mint the NFT (will be marked as soulbound in _update)
         _mint(to, collectionId, 1, "");
 
-        emit CollectionMint(to, collectionInfo[collectionId].miniAppId, twitterHandle);
+        emit CollectionMint(
+            to,
+            collectionInfo[collectionId].miniAppId,
+            twitterHandle
+        );
     }
 
     /**
@@ -115,7 +124,9 @@ contract SherryBetaOnboarding is
     }
 
     // Admin functions
-    function setMinterRole(address minter) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function setMinterRole(
+        address minter
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _grantRole(MINTER_ROLE, minter);
     }
 
@@ -127,7 +138,9 @@ contract SherryBetaOnboarding is
         _unpause();
     }
 
-    function setURI(string memory newuri) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function setURI(
+        string memory newuri
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _setURI(newuri);
     }
 
@@ -151,5 +164,17 @@ contract SherryBetaOnboarding is
         bytes4 interfaceId
     ) public view override(ERC1155, AccessControl) returns (bool) {
         return super.supportsInterface(interfaceId);
+    }
+
+    // Override to build full URI from baseURI variable
+    function uri(uint256 tokenId) public view override returns (string memory) {
+        return
+            string(
+                abi.encodePacked(
+                    super.uri(tokenId),
+                    Strings.toString(tokenId),
+                    ".json"
+                )
+            );
     }
 }
