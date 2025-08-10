@@ -54,7 +54,7 @@ contract SherryBetaOnboarding is
     error CollectionNotExists();
     error AlreadyMinted();
 
-    constructor(string memory baseUri, address minter) ERC1155(baseUri) {
+    constructor(address minter) ERC1155("") {
         // Grant roles
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, minter);
