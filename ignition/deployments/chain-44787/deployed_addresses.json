@@ -1,5 +1,4 @@
 {
   "SL1MessageReceiverModule#SL1MessageReceiver": "0x6cEc2B70F7D32f5DD5a2065DDEB8Ed16C7cf9a54",
-  "SL1MessageSenderModule#SL1MessageSender": "0x16546E8FE5Ea8277005c98B32C201f43B9b43C16",
-  "SherryBetaOnboardingModule#SherryBetaOnboarding": "0x49D3c640cB9990Be848ae267bE9D615BbE594e8B"
+  "SL1MessageSenderModule#SL1MessageSender": "0x16546E8FE5Ea8277005c98B32C201f43B9b43C16"
 }

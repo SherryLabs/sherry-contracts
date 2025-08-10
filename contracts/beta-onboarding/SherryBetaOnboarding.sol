@@ -5,7 +5,6 @@ import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
  * @title SherryBetaOnboarding
@@ -33,6 +32,7 @@ contract SherryBetaOnboarding is
     struct CollectionInfo {
         string miniAppId;
         string twitterHandle;
+        string metadataURI;
         bool exists;
     }
     mapping(uint256 => CollectionInfo) public collectionInfo;
@@ -92,18 +92,21 @@ contract SherryBetaOnboarding is
      * @param collectionId Unique identifier for the collection
      * @param miniAppId Display mini-app id of the collection
      * @param twitterHandle Display twitter handle of the mini app creator
+     * @param metadataURI Display nft metadata uri of the mini app creator
      * @param to Owner of the collection, used to self mint
      */
     function createCollection(
         uint256 collectionId,
         string calldata miniAppId,
         string calldata twitterHandle,
+        string calldata metadataURI,
         address to
     ) external onlyRole(MINTER_ROLE) {
         if (collectionInfo[collectionId].exists) revert CollectionNotExists();
         collectionInfo[collectionId] = CollectionInfo({
             miniAppId: miniAppId,
             twitterHandle: twitterHandle,
+            metadataURI: metadataURI,
             exists: true
         });
 
@@ -168,13 +171,7 @@ contract SherryBetaOnboarding is
 
     // Override to build full URI from baseURI variable
     function uri(uint256 tokenId) public view override returns (string memory) {
-        return
-            string(
-                abi.encodePacked(
-                    super.uri(tokenId),
-                    Strings.toString(tokenId),
-                    ".json"
-                )
-            );
+        require(collectionInfo[tokenId].exists, "Collection does not exist");
+        return collectionInfo[tokenId].metadataURI;
     }
 }
