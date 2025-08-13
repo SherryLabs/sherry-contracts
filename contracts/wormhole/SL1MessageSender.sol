@@ -20,6 +20,12 @@ contract SL1MessageSender {
         bytes32 destinationChain
     );
     event Withdraw(address indexed owner, uint256 amount);
+    event OwnershipTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
+    );
+
+    error OwnableInvalidOwner(address owner);
 
     /**
      * @dev Sets the Wormhole Relayer address and initializes the contract owner.
@@ -121,6 +127,15 @@ contract SL1MessageSender {
         require(balance > 0, "No balance to withdraw");
         payable(msg.sender).transfer(balance);
         emit Withdraw(msg.sender, balance);
+    }
+
+    function transferOwnership(address newOwner) public virtual onlyOwner {
+        if (newOwner == address(0)) {
+            revert OwnableInvalidOwner(address(0));
+        }
+        address oldOwner = owner;
+        owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
     }
 
     /**
