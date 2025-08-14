@@ -147,6 +147,7 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
 | `CaptureFlagWH`     | `0x812810512193d623a68e467cc314511a581E4546`   | `Celo Alfajores`    |
+| `SherryOnboarding`     | `0x22F9e2df310E48134a3923da16462ed22ae12696`   | `Celo (42220)`    |
 
 # Docs
 
