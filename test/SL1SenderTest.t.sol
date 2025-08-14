@@ -37,4 +37,41 @@ contract SL1MessagesenderTest is Test {
             _receiverValue
         );
     }
+
+    function testTransferOwnership() public {
+        address newOwner = address(0x456);
+        
+        // Verify current owner
+        assertEq(s_sender.owner(), address(this));
+        
+        // Transfer ownership
+        vm.expectEmit(true, true, false, true);
+        emit SL1MessageSender.OwnershipTransferred(address(this), newOwner);
+        s_sender.transferOwnership(newOwner);
+        
+        // Verify new owner
+        assertEq(s_sender.owner(), newOwner);
+        
+        // Test that only new owner can call onlyOwner functions
+        vm.prank(newOwner);
+        s_sender.setGasLimit(1_000_000);
+        
+        // Old owner should not be able to call onlyOwner functions
+        vm.expectRevert("Only the owner can call this function");
+        s_sender.setGasLimit(500_000);
+    }
+    
+    function testTransferOwnershipRevertZeroAddress() public {
+        vm.expectRevert(abi.encodeWithSelector(SL1MessageSender.OwnableInvalidOwner.selector, address(0)));
+        s_sender.transferOwnership(address(0));
+    }
+    
+    function testTransferOwnershipOnlyOwner() public {
+        address nonOwner = address(0x789);
+        address newOwner = address(0x456);
+        
+        vm.prank(nonOwner);
+        vm.expectRevert("Only the owner can call this function");
+        s_sender.transferOwnership(newOwner);
+    }
 }

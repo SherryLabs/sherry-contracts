@@ -19,6 +19,9 @@ contract SL1MessageReceiver is IWormholeReceiver {
     event RefundFailed(address recipient, uint256 amount);
     event SenderRegistered(uint16 sourceChain, bytes32 sourceAddress);
     event Withdraw(address indexed owner, uint256 amount);
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    error OwnableInvalidOwner(address owner);
 
     constructor(address _wormholeRelayer) {
         s_wormholeRelayer = IWormholeRelayer(_wormholeRelayer);
@@ -98,6 +101,15 @@ contract SL1MessageReceiver is IWormholeReceiver {
                 emit RefundFailed(sender, msg.value);
             }
         }
+    }
+
+    function transferOwnership(address newOwner) public virtual onlyOwner {
+        if (newOwner == address(0)) {
+            revert OwnableInvalidOwner(address(0));
+        }
+        address oldOwner = s_registrationOwner;
+        s_registrationOwner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
     }
 
     modifier onlyOwner() {

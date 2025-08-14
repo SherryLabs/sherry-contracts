@@ -57,6 +57,80 @@ contract SL1MessageSimpleTest is Test {
         assertEq(address(receiver).balance, 0);
     }
     
+    function testTransferOwnershipSender() public {
+        address newOwner = makeAddr("newOwner");
+        
+        // Verify current owner
+        assertEq(sender.owner(), address(this));
+        
+        // Transfer ownership
+        vm.expectEmit(true, true, false, true);
+        emit SL1MessageSender.OwnershipTransferred(address(this), newOwner);
+        sender.transferOwnership(newOwner);
+        
+        // Verify new owner
+        assertEq(sender.owner(), newOwner);
+        
+        // Test that only new owner can call onlyOwner functions
+        vm.prank(newOwner);
+        sender.setGasLimit(1_000_000);
+        
+        // Old owner should not be able to call onlyOwner functions
+        vm.expectRevert("Only the owner can call this function");
+        sender.setGasLimit(500_000);
+    }
+    
+    function testTransferOwnershipSenderRevertZeroAddress() public {
+        vm.expectRevert(abi.encodeWithSelector(SL1MessageSender.OwnableInvalidOwner.selector, address(0)));
+        sender.transferOwnership(address(0));
+    }
+    
+    function testTransferOwnershipSenderOnlyOwner() public {
+        address nonOwner = makeAddr("nonOwner");
+        address newOwner = makeAddr("newOwner");
+        
+        vm.prank(nonOwner);
+        vm.expectRevert("Only the owner can call this function");
+        sender.transferOwnership(newOwner);
+    }
+    
+    function testTransferOwnershipReceiver() public {
+        address newOwner = makeAddr("newOwner");
+        
+        // Verify current owner
+        assertEq(receiver.s_registrationOwner(), address(this));
+        
+        // Transfer ownership
+        vm.expectEmit(true, true, false, true);
+        emit SL1MessageReceiver.OwnershipTransferred(address(this), newOwner);
+        receiver.transferOwnership(newOwner);
+        
+        // Verify new owner
+        assertEq(receiver.s_registrationOwner(), newOwner);
+        
+        // Test that only new owner can call onlyOwner functions
+        vm.prank(newOwner);
+        receiver.setRegisteredSender(14, bytes32(uint256(uint160(makeAddr("sender")))));
+        
+        // Old owner should not be able to call onlyOwner functions
+        vm.expectRevert("Only the owner can call this function");
+        receiver.setRegisteredSender(15, bytes32(uint256(uint160(makeAddr("sender2")))));
+    }
+    
+    function testTransferOwnershipReceiverRevertZeroAddress() public {
+        vm.expectRevert(abi.encodeWithSelector(SL1MessageReceiver.OwnableInvalidOwner.selector, address(0)));
+        receiver.transferOwnership(address(0));
+    }
+    
+    function testTransferOwnershipReceiverOnlyOwner() public {
+        address nonOwner = makeAddr("nonOwner");
+        address newOwner = makeAddr("newOwner");
+        
+        vm.prank(nonOwner);
+        vm.expectRevert("Only the owner can call this function");
+        receiver.transferOwnership(newOwner);
+    }
+    
     function testDirectReceiver() public {
         // Test receiver directly without cross-chain simulation
         bytes memory payload = abi.encode(user, address(targetContract), abi.encodeWithSignature("setValue(uint256)", 42));
