@@ -134,8 +134,8 @@ For more informaction read the [KOLSwapRouter System](contracts/kol-router/READM
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryTraderJoe`     | `0xc96FC8c19D0b9f6D1B68114a4565aD40117e55B1`   | `Avalanche C-Chain`    |
-| `KOLFactoryTraderJoe`     | `0x0cbe9C578cc875Eee855483233d1222552068aA2`   | `Avalanche Fuji`    |
+| `KOLFactoryPangolin`     | `0xc96FC8c19D0b9f6D1B68114a4565aD40117e55B1`   | `Avalanche C-Chain`    |
+| `KOLFactoryPangolin`     | `0x0cbe9C578cc875Eee855483233d1222552068aA2`   | `Avalanche Fuji`    |
 
 #### Pangolin KOL Factory
 
