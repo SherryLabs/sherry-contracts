@@ -47,7 +47,7 @@
     "fs": "^0.0.1-security",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3",
-    "viem": "^2.28.0"
+    "viem": "^2.38.4"
   },
   "resolutions": {
     "jsbi": "^4.1.0"

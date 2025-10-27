@@ -7,7 +7,34 @@ import {
     celoAlfajores,
     sepolia,
     mainnet,
+    somniaTestnet,
 } from "viem/chains";
+import { defineChain } from "viem";
+
+export const somnia = defineChain({
+  id: 5031,
+  name: "Somnia Mainnet",
+  nativeCurrency: { name: "ST", symbol: "ST", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://somnia-rpc.publicnode.com"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Somnia Explorer",
+      url: "https://explorer.somnia.network/",
+      apiUrl: "https://explorer.somnia.network/api",
+    },
+  },
+  contracts: {
+    multicall3: {
+      address: "0x841b8199E6d3Db3C6f264f6C2bd8848b3cA64223",
+      blockCreated: 71314235,
+    },
+  },
+  testnet: false,
+});
 
 /* * This file contains the configuration for different blockchain networks.
  * Each network is represented as an object with properties such as name, chainIdWh,
@@ -96,4 +123,24 @@ export const chains = [
         wormholeRelayer: "0x306B68267Deb7c5DfCDa3619E22E9Ca39C374f84",
         mainnet: false
     },
+    {
+        name: "somnia",
+        chainIdWh: 25,
+        chainId: somnia.id,
+        rpc: somnia.rpcUrls.default.http[0],
+        wormhole: "0x1C6f653d3A5A9b13D4b4E3b3E2EAAe8dBf2bF051",
+    },
+    {
+        name: "somniaTestnet",
+        chainIdWh: 10025,
+        chainId: somniaTestnet.id,
+        rpc: somniaTestnet.rpcUrls.default.http[0],
+        wormhole: "0x1234567890abcdef1234567890abcdef12345678",
+        tokenBridge: "0x1234567890abcdef1234567890abcdef12345678",
+        wormholeRelayer: "0x1234567890abcdef1234567890abcdef12345678",
+        mainnet: false
+    }
 ];
+
+
+
