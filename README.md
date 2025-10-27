@@ -121,6 +121,7 @@ This contract handles the reception of messages from any L1 subnet within the Av
 ### KOL Router Factories
 
 These factories are used to deploy new KOL (Key Opinion Leader) specific routers for different DEX protocols.
+For more informaction read the [KOLSwapRouter System](contracts/kol-router/README.md) document.
 
 #### TraderJoe/LFJ KOL Factory
 
@@ -133,10 +134,10 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
-| `KOLFactoryTraderJoe`     | `0xc96FC8c19D0b9f6D1B68114a4565aD40117e55B1`   | `Avalanche C-Chain`    |
-| `KOLFactoryTraderJoe`     | `0x0cbe9C578cc875Eee855483233d1222552068aA2`   | `Avalanche Fuji`    |
+| `KOLFactoryPangolin`     | `0xc96FC8c19D0b9f6D1B68114a4565aD40117e55B1`   | `Avalanche C-Chain`    |
+| `KOLFactoryPangolin`     | `0x0cbe9C578cc875Eee855483233d1222552068aA2`   | `Avalanche Fuji`    |
 
-#### Uniswap KOL Factory
+#### Pangolin KOL Factory
 
 | Contract Name | Address | Chain |
 |---------------|----------------------------------------------|--------|
@@ -158,8 +159,7 @@ In order to learn more about Sherry go to our [docs](https://docs.sherry.social)
 <div align="center">
 
   [![Twitter](https://img.shields.io/twitter/follow/SherryProtocol?style=social)](https://twitter.com/SherryProtocol)
-  [![Discord](https://img.shields.io/discord/4HppNS46)](https://discord.gg/4HppNS46)
-  [![GitHub](https://img.shields.io/github/stars/sherry-protocol/sherry-contracts?style=social)](https://github.com/sherry-protocol/sherry-contracts)
+  [![GitHub](https://img.shields.io/github/stars/SherryLabs/sherry-contracts?style=social)](https://github.com/SherryLabs/sherry-contracts)
 
 </div>
 
