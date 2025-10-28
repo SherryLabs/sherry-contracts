@@ -1,6 +1,7 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 import { getContractAddress } from "../../utils/constants";
-import { avalanche, avalancheFuji } from "viem/chains";
+import { somniaTestnet } from "viem/chains";
+import { somnia } from "../../utils/chains";
 import hre from "hardhat";
 
 const KOLFactorySomniaModule = buildModule(
@@ -9,20 +10,20 @@ const KOLFactorySomniaModule = buildModule(
     let dexRouter, sherryFundationAddress, sherryTreasuryAddress: string | undefined;
 
     switch (hre.network.name) {
-      case "avalanche":
-        dexRouter = getContractAddress("SOMNIA_V2_ROUTER", avalanche.id);
-        sherryFundationAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", avalanche.id);
-        sherryTreasuryAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", avalanche.id);
+      case "somnia":
+        dexRouter = getContractAddress("SOMNIA_V2_ROUTER", somnia.id);
+        sherryFundationAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", somnia.id);
+        sherryTreasuryAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", somnia.id);
         break;
-      case "avalancheFuji":
-        dexRouter = getContractAddress("SOMNIA_V2_ROUTER", avalancheFuji.id);
-        sherryFundationAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", avalancheFuji.id);
-        sherryTreasuryAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", avalancheFuji.id);
+      case "somniaTestnet":
+        dexRouter = getContractAddress("SOMNIA_V2_ROUTER", somniaTestnet.id);
+        sherryFundationAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", somniaTestnet.id);
+        sherryTreasuryAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", somniaTestnet.id);
         break;
       case "hardhat":
-        dexRouter = getContractAddress("SOMNIA_V2_ROUTER", avalanche.id);
-        sherryFundationAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", avalanche.id);
-        sherryTreasuryAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", avalanche.id);
+        dexRouter = getContractAddress("SOMNIA_V2_ROUTER", somnia.id);
+        sherryFundationAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", somnia.id);
+        sherryTreasuryAddress = getContractAddress("SHERRY_FUNDATION_ADDRESS", somnia.id);
         break;
       default:
         throw new Error(`Unsupported network: ${hre.network.name}`);
@@ -32,17 +33,25 @@ const KOLFactorySomniaModule = buildModule(
       throw new Error("SOMNIA_V2_ROUTER is not defined in the constants variables");
     }
 
-    const args = [dexRouter, sherryFundationAddress, sherryTreasuryAddress];
-    const kolFactory = m.contract("KOLFactorySomnia", args, {});
+    // Deploy the implementation contract first
+    const implementation = m.contract("KOLRouterSomniaV2TwoFunc", [], {});
+
+    // Deploy the factory with the implementation address
+    const factoryArgs = [dexRouter, sherryFundationAddress, sherryTreasuryAddress, implementation];
+    const kolFactory = m.contract("KOLFactorySomniaCloneable", factoryArgs, {});
 
     console.log("\n==========================================================");
-    console.log("To verify the contract, run:");
+    console.log("To verify the implementation contract, run:");
     console.log(
-      `$ npx hardhat verify --network ${hre.network.name} CONTRACT_ADDRESS ${args.join(" ")}`
+      `$ npx hardhat verify --network ${hre.network.name} IMPLEMENTATION_ADDRESS`
+    );
+    console.log("\nTo verify the factory contract, run:");
+    console.log(
+      `$ npx hardhat verify --network ${hre.network.name} FACTORY_ADDRESS ${factoryArgs.join(" ")}`
     );
     console.log("==========================================================\n");
 
-    return { kolFactory };
+    return { implementation, kolFactory };
   }
 );
 

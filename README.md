@@ -142,6 +142,13 @@ These factories are used to deploy new KOL (Key Opinion Leader) specific routers
 |---------------|----------------------------------------------|--------|
 | `KOLFactoryUniswap`     | `0xB85cEcD024DCDd6eF3BBADabacd0CDEC4a71B3e4`   | `Ethereum Sepolia`    |
 
+#### Somnia KOL Factory
+
+| Contract Name | Address | Chain |
+|---------------|----------------------------------------------|--------|
+| `KOLRouterSomniaV2TwoFunc`     | `0x7F895FB1aFBce37f1eeb94e1A273542De657FeEE`   | `Somnia Testnet (50312)`    |
+| `KOLFactorySomniaCloneable`     | `0x36285B0876E0B45771C5c76885B35d4FE5b39b10`   | `Somnia Testnet (50312)`    |
+
 #### Other Contracts
 
 | Contract Name | Address | Chain |
