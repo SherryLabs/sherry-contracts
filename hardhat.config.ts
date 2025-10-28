@@ -12,6 +12,7 @@ import {
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomicfoundation/hardhat-viem";
 import * as dotenv from "dotenv"
+import { somnia } from "./utils/chains";
 
 dotenv.config();
 
@@ -101,7 +102,17 @@ const config: HardhatUserConfig = {
     monadTestnet: {
       url: "https://testnet-rpc.monad.xyz/",
       accounts: [deployer],
-    }
+    },
+    somniaTestnet: {
+      url: "https://dream-rpc.somnia.network",
+      accounts: [deployer],
+      chainId: 50312
+    },
+    somnia: {
+      url: "https://somnia-rpc.publicnode.com",
+      accounts: [deployer],
+      chainId: 5031
+    },
   },
   sourcify: {
     enabled: true,
@@ -115,6 +126,8 @@ const config: HardhatUserConfig = {
       avalancheFuji: process.env.AVALANCHE_FUJI_ETHERSCAN_API_KEY || "",
       avalanche: process.env.AVALANCHE_FUJI_ETHERSCAN_API_KEY || "",
       sepolia: process.env.SEPOLIA_ETHERSCAN_API_KEY || "",
+      somniaTestnet: "empty",
+      somnia: "empty",
     },
     customChains: [
       {
@@ -157,6 +170,22 @@ const config: HardhatUserConfig = {
           browserURL: "https://sepolia.etherscan.io",
         }
       },
+      {
+        network: "somnia-testnet",
+        chainId: 50312,
+        urls: {
+          apiURL: "https://verify-contract.xangle.io/somnia/api",
+          browserURL: "https://somnia-explorer.xangle.io"
+        }
+      },
+      {
+        network: "somnia",
+        chainId: 5031,
+        urls: {
+          apiURL: "https://verify-contract.xangle.io/somnia/api",
+          browserURL: "https://somnia-explorer.xangle.io"
+        }
+      }
     ]
   }
 };
