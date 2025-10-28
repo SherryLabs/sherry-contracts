@@ -1,5 +1,10 @@
-import { avalanche, avalancheFuji, sepolia } from "viem/chains";
-
+import {
+  avalanche,
+  avalancheFuji,
+  sepolia,
+  somniaTestnet,
+} from "viem/chains";
+import { somnia } from "./chains";
 
 type ContractName =
   | "TRADER_JOE_ROUTER"
@@ -7,9 +12,13 @@ type ContractName =
   | "PANGOLIN_V2_ROUTER"
   | "ARENA_SWAP_ROUTER"
   | "SHERRY_FUNDATION_ADDRESS"
-  | "SHERRY_TREASURY_ADDRESS";
+  | "SHERRY_TREASURY_ADDRESS"
+  | "SOMNIA_V2_ROUTER";
 
-const CONTRACT_ADDRESSES: Record<ContractName, Partial<Record<number, string>>> = {
+const CONTRACT_ADDRESSES: Record<
+  ContractName,
+  Partial<Record<number, string>>
+> = {
   TRADER_JOE_ROUTER: {
     [avalanche.id]: "0x18556DA13313f3532c54711497A8FedAC273220E", // LBRouter v2.2
     [avalancheFuji.id]: "0x18556DA13313f3532c54711497A8FedAC273220E", // LBRouter v2.2
@@ -26,14 +35,18 @@ const CONTRACT_ADDRESSES: Record<ContractName, Partial<Record<number, string>>> 
     [avalanche.id]: "0xF56D524D651B90E4B84dc2FffD83079698b9066E", // Arena Swap Router
   },
   SHERRY_FUNDATION_ADDRESS: {
-    [avalancheFuji.id]: '0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465',
-    [avalanche.id]: '0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465', // Sherry Foundation address on Avalanche
+    [avalancheFuji.id]: "0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465",
+    [avalanche.id]: "0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465", // Sherry Foundation address on Avalanche
   },
   SHERRY_TREASURY_ADDRESS: {
-    [avalancheFuji.id]: '0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465',
-    [avalanche.id]: '0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465', // Sherry Treasury address on Avalanche
-  }
-}
+    [avalancheFuji.id]: "0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465",
+    [avalanche.id]: "0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465", // Sherry Treasury address on Avalanche
+  },
+  SOMNIA_V2_ROUTER: {
+    [somnia.id]: "0xCdE9aFDca1AdAb5b5C6E4F9e16c9802C88Dc7e1A", // Somnia V2 Router
+    [somniaTestnet.id]: "0xb98c15a0dC1e271132e341250703c7e94c059e8D", // Somnia V2 Router on Somnia Testnet
+  },
+};
 
 /**
  * Helper to get a contract address for a specific chain.
@@ -54,4 +67,3 @@ export function getContractAddress(
   }
   return address;
 }
-
