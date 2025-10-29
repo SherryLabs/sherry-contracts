@@ -30,7 +30,7 @@ const config: HardhatUserConfig = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 200
+            runs: 999999
           }
         }
       },
@@ -39,7 +39,7 @@ const config: HardhatUserConfig = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 200
+            runs: 999999
           }
         }
       },
@@ -106,12 +106,16 @@ const config: HardhatUserConfig = {
     somniaTestnet: {
       url: "https://dream-rpc.somnia.network",
       accounts: [deployer],
-      chainId: 50312
+      chainId: 50312,
+      gas: 30000000,
+      gasPrice: 1000000000
     },
     somnia: {
       url: "https://somnia-rpc.publicnode.com",
       accounts: [deployer],
-      chainId: 5031
+      chainId: 5031,
+      gas: 30000000,
+      gasPrice: 1000000000
     },
   },
   sourcify: {
@@ -171,7 +175,7 @@ const config: HardhatUserConfig = {
         }
       },
       {
-        network: "somnia-testnet",
+        network: "somniaTestnet",
         chainId: 50312,
         urls: {
           apiURL: "https://verify-contract.xangle.io/somnia/api",

@@ -143,6 +143,15 @@ For more informaction read the [KOLSwapRouter System](contracts/kol-router/READM
 |---------------|----------------------------------------------|--------|
 | `KOLFactoryUniswap`     | `0xB85cEcD024DCDd6eF3BBADabacd0CDEC4a71B3e4`   | `Ethereum Sepolia`    |
 
+#### Somnia KOL Factory
+
+| Contract Name | Address | Chain | Explorer |
+|---------------|----------------------------------------------|--------|----------|
+| `KOLRouterSomniaV2TwoFunc`     | `0xa3CA6021b432a88EEFb5b53B31833e19195b4ecB`   | `Somnia Mainnet`    | [View Code](https://somnia-explorer.xangle.io/address/0xa3CA6021b432a88EEFb5b53B31833e19195b4ecB#code) |
+| `KOLFactorySomniaCloneable`     | `0x5aDDD36200C7Df43Ee655c872f40B460f7056f8d`   | `Somnia Mainnet`    | [View Code](https://somnia-explorer.xangle.io/address/0x5aDDD36200C7Df43Ee655c872f40B460f7056f8d#code) |
+| `KOLRouterSomniaV2TwoFunc`     | `0x7F895FB1aFBce37f1eeb94e1A273542De657FeEE`   | `Somnia Testnet (50312)`    | |
+| `KOLFactorySomniaCloneable`     | `0x36285B0876E0B45771C5c76885B35d4FE5b39b10`   | `Somnia Testnet (50312)`    | |
+
 #### Other Contracts
 
 | Contract Name | Address | Chain |

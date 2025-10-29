@@ -37,6 +37,8 @@ const CONTRACT_ADDRESSES: Record<
   SHERRY_FUNDATION_ADDRESS: {
     [avalancheFuji.id]: "0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465",
     [avalanche.id]: "0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465", // Sherry Foundation address on Avalanche
+    [somnia.id]: "0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465", 
+    [somniaTestnet.id]: "0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465",
   },
   SHERRY_TREASURY_ADDRESS: {
     [avalancheFuji.id]: "0x4Ad7706E20BCBb721b3CbDB4abcbCb4DF0FE1465",
